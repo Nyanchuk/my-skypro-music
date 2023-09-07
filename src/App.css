@@ -1,5 +1,5 @@
-.App {
-  text-align: center;
+.p {
+  color: rgba(254, 71, 71, 0.9);
 }
 
 .App-logo {
@@ -10,6 +10,9 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+  }
+  .p {
+    animation: p-scale infinite 5s linear;
   }
 }
 
@@ -24,15 +27,25 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes p-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    color: rgb(0, 183, 233);
+    /* text-shadow: 0 0 10px #ff7300; */
+  }
+  100% {
+    transform: scale(1);
   }
 }
