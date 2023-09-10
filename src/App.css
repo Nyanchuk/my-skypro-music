@@ -779,9 +779,9 @@ body {
   -ms-flex-pack: center;
   justify-content: center;
   margin-right: 12px;
-  -ms-grid-row: 1;
+  grid-row: 1;
   -ms-grid-row-span: 2;
-  -ms-grid-column: 1;
+  grid-column: 1;
   grid-area: image;
 }
 
@@ -793,8 +793,8 @@ body {
 }
 
 .track-play__author {
-  -ms-grid-row: 1;
-  -ms-grid-column: 2;
+  grid-row: 1;
+  grid-column: 2;
   grid-area: author;
   min-width: 49px;
 }
@@ -809,8 +809,8 @@ body {
 }
 
 .track-play__album {
-  -ms-grid-row: 2;
-  -ms-grid-column: 2;
+  grid-row: 2;
+  grid-column: 2;
   grid-area: album;
   min-width: 49px;
 }

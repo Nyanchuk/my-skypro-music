@@ -1,9 +1,8 @@
 import "./style.css";
 import logoModal from "../../img/logo_modal.png";
 
-export function registration() {
-    return (
-        <div className="wrapper">
+const Registration = () => {
+    return <div className="wrapper">
         <div className="container-signup">
           <div className="modal__block">
             <form className="modal__form-login">
@@ -39,5 +38,6 @@ export function registration() {
           </div>
         </div>
       </div>
-    ); 
-  }
+}
+
+export default Registration;

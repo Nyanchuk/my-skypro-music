@@ -2,9 +2,8 @@ import "./style.css";
 import logoModal from "../../img/logo_modal.png";
 
 
-export function autorization() {
-    return (
-    <div className="wrapper">
+const Autorization = () => {
+    return <div className="wrapper">
       <div className="container-enter">
         <div className="modal__block">
           <form className="modal__form-login" action="#">
@@ -36,5 +35,6 @@ export function autorization() {
         </div>
       </div>
     </div>
-    ); 
   }
+
+  export default Autorization;
