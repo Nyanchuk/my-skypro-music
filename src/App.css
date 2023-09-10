@@ -78,8 +78,10 @@ body {
 }
 
 ._btn-text:hover {
-  border-color: #d9b6ff;
-  color: #d9b6ff;
+  border-color: #a9fd0de0;
+  color: #a9fd0de0;
+  /* border-color: #d9b6ff;
+  color: #d9b6ff; */
   cursor: pointer;
 }
 
@@ -216,6 +218,7 @@ body {
 }
 
 .centerblock__h2 {
+  color: #a9fd0d;
   font-style: normal;
   font-weight: 400;
   font-size: 64px;
@@ -322,6 +325,7 @@ body {
   border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
+  transition: all .3s;
 }
 
 .filter__button:not(:last-child) {
@@ -532,25 +536,25 @@ body {
 }
 
 .sidebar__personal-name {
+  color: #ffffff;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #ffffff;
+  
   margin-right: 16px;
 }
 
 .sidebar__icon {
   width: 43px;
   height: 43px;
-  background-color: #313131;
   border-radius: 50%;
   cursor: pointer;
 }
 
 .sidebar__block {
   height: 100%;
-  padding: 240px 0 0 0;
+  padding: 140px 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -579,6 +583,11 @@ body {
 .sidebar__item {
   width: 250px;
   height: 150px;
+  transition: all .3s;
+}
+
+.sidebar__item:hover {
+  transform: scale(1.05);
 }
 
 .sidebar__item:not(:last-child) {
