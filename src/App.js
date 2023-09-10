@@ -1,12 +1,10 @@
 import './App.css';
-import React, { useState } from 'react';
+import Burger from './components/Burger/index';
 
 // Импорт картинок .png
-import logo from "./img/logo.png";
 import playlist1 from "./img/playlist01.png";
 import playlist2 from "./img/playlist02.png";
 import playlist3 from "./img/playlist03.png";
-import night_gay from "./img/night:sun.png";
 
 // Импорт картинок .svg
 import play from "./img/icon/play.svg";
@@ -23,41 +21,13 @@ import watch from "./img/icon/watch.svg";
 import volume from "./img/icon/volume.svg";
 
 function App() {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  console.log('Работает!')
   return ( 
     <div className="wrapper">
     <div className="container">
       <main className="main">
-        <nav className="main__nav nav">
-          <div className="nav__logo logo">
-            <img className="logo__image" src={logo} alt="logo" />
-          </div>
-          <div className="nav__burger burger" onClick={toggleMenu}>
-            <span className="burger__line"></span>
-            <span className="burger__line"></span>
-            <span className="burger__line"></span>
-          </div>
-          <div className={`nav__menu menu ${menuVisible ? "menu_visible" : ""}`}>
-            <ul className="menu__list">
-              <li className="menu__item">
-                <a href="#" className="menu__link">Главное</a>
-              </li>
-              <li className="menu__item">
-                <a href="#" className="menu__link">Мой плейлист</a>
-              </li>
-              <li className="menu__item">
-                <a href="#" className="menu__link">Войти</a>
-              </li>
-              <img
-                src={night_gay}
-                alt="day's playlist"
-              />
-            </ul>
-          </div> 
-        </nav>
+        <Burger />
+        {/* Далее изменяемая часть страницы */}
         <div className="main__centerblock centerblock">
           <div className="centerblock__search search">
             <svg className="search__svg">

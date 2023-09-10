@@ -1,12 +1,8 @@
 import "./style.css";
 import logoModal from "../../img/logo_modal.png";
-import { registration } from '../registration/registration'
 
 
 export function autorization() {
-    const handleClickSignUp = () => {
-        registration();
-      };
     return (
     <div className="wrapper">
       <div className="container-enter">
@@ -34,7 +30,6 @@ export function autorization() {
             </button>
             <button
               className="modal__btn-signup"
-              onClick={handleClickSignUp}
             > Зарегистрироваться
             </button>
           </form>
