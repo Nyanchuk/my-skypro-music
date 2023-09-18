@@ -80,6 +80,7 @@ const Bar = () => {
           </div>
         </div>
       </div>
+      
 }
 
 export default Bar;

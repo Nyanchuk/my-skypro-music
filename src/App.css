@@ -18,9 +18,6 @@ a:visited {
   cursor: pointer;
 }
 
-
-
-
 .menu {
   /* Другие стили */
   max-height: 0;
@@ -31,10 +28,6 @@ a:visited {
 .menu_visible {
   max-height: 500px; /* Установите максимальную высоту в соответствии с вашим меню */
 }
-
-
-
-
 
 button,
 ._btn {
@@ -48,8 +41,8 @@ ul li {
 /* @font-face {
   font-family: "StratosSkyeng";
   src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url("../../fonts/StratosSkyeng.woff2") format("woff2"),
-    url("../../fonts/StratosSkyeng.woff") format("woff");
+    url("./fonts/StratosSkyeng.woff2") format("woff2"),
+    url("./fonts/StratosSkyeng.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 } */
@@ -71,7 +64,7 @@ body {
 
 .container {
   max-width: 1920px;
-  height: 100vh;
+  height: auto;
   margin: 0 auto;
   position: relative;
   background-color: #181818;
@@ -242,6 +235,7 @@ body {
 }
 
 .centerblock__content {
+  padding-bottom: 50px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -328,7 +322,7 @@ body {
   transition: all .3s;
 }
 
-.filter__button:not(:last-child) {
+.filter__button {
   margin-right: 10px;
 }
 
@@ -434,7 +428,7 @@ body {
   width: 51px;
   height: 51px;
   padding: 16px;
-  background: #313131;
+  /* background: transparent; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -553,6 +547,7 @@ body {
 }
 
 .sidebar__block {
+  margin-bottom: 200px;
   height: 100%;
   padding: 140px 0 0 0;
   display: -webkit-box;
@@ -605,9 +600,10 @@ body {
 }
 
 .bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
+  top: auto;
   width: 100%;
   background: rgba(28, 28, 28, 0.5);
 }
@@ -902,5 +898,116 @@ body {
 }
 
 .volume__progress-line {
-  width: 109px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 3px;
+  background-color: #a9fd0d;
+}
+.volume__progress-line::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #a9fd0d;
+  background-color: #383838; 
+  cursor: pointer;
+}
+.volume__progress-line::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #a9fd0d;
+  background-color: #383838; 
+  cursor: pointer;
+}
+
+/* СКЕЛЕТОН ДЛЯ Sitebar */
+.sidebar__skeleton {
+  width: 250px;
+  height: 170px;
+  border-radius: 4px;
+  background-color: #e0e0e035;
+  animation: pulse 2s ease-in-out infinite;
+}
+/* СКЕЛЕТОН ДЛЯ ПЛЕЙЛИСТА */
+.track-skeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.track-skeleton__rectangle {
+  background-color: #e0e0e035;
+  border-radius: 5px;
+  height: 50px;
+  width: 20%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* АНИМАЦИЯ СКЕЛЕТОНА */
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e035;
+  }
+  50% {
+    background-color: #e0e0e050;
+  }
+  100% {
+    background-color: #e0e0e035;
+  }
+}
+
+/* АНИМАЦИЯ ВЫПАДАЮЩИХ СПИСКОВ */
+
+.filter__performers-wrapper {
+  position: relative;
+}
+.filter__performers-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  font-weight: 300;
+  font-size: 14px;
+  height: 200px;
+  position: absolute;
+  left: 15px;
+  right: 0;
+  padding: 10px;
+  width: 200px;
+  background-color: #454444;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  z-index: 1;
+  /* Добавьте отступ, если необходимо */
+  margin-top: 10px;
+  overflow-y: auto;
+}
+.filter__performer-item {
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all .5s;
+}
+  /* Стили при наведении */
+.filter__performer-item:hover {
+  color: #a9fd0d;
+  transform: scale(1.02);
+}
+
+/* СТИЛИЗАЦИЯ ПРОКРУТКИ */
+.filter__performers-list::-webkit-scrollbar {
+  border: 1px solid #5e5d5d;
+  border-radius: 10px;
+  width: 8px;
+  background-color: #5e5d5d;
+}
+
+.filter__performers-list::-webkit-scrollbar-thumb {
+  border: 1px solid #a9fd0d;
+  border-radius: 10px;
+  background-color: #a9fd0d;
 }
