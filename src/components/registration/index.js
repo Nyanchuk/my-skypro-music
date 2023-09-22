@@ -1,43 +1,38 @@
-import "./style.css";
 import logoModal from "../../img/logo_modal.png";
+import * as S from "./style"
 
 const Registration = () => {
-    return <div className="wrapper">
-        <div className="container-signup">
-          <div className="modal__block">
-            <form className="modal__form-login">
+    return <S.Wrapper>
+        <S.ContainerSignup>
+          <S.ModalBlock>
+            <S.ModalFormLogin>
               <a href="../">
-                <div className="modal__logo">
+                <S.ModalLogo>
                 <img src={logoModal} alt="logo" />
-                </div>
+                </S.ModalLogo>
               </a>
-              <input
-                className="modal__input login"
+              <S.ModalInput
                 type="text"
                 name="login"
                 placeholder="Почта"
               />
-              <input
-                className="modal__input password-first"
+              <S.ModalInput
                 type="password"
                 name="password"
                 placeholder="Пароль"
               />
-              <input
-                className="modal__input password-double"
+              <S.ModalInput
                 type="password"
                 name="password"
                 placeholder="Повторите пароль"
               />
-              <button
-              className="modal__btn-signup"
-              
+              <S.ModalBtnSignup
             > Зарегистрироваться
-            </button>
-            </form>
-          </div>
-        </div>
-      </div>
+            </S.ModalBtnSignup>
+            </S.ModalFormLogin>
+          </S.ModalBlock>
+        </S.ContainerSignup>
+      </S.Wrapper>
 }
 
 export default Registration;

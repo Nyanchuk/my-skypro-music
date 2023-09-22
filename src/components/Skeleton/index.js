@@ -1,16 +1,17 @@
 import React from 'react';
+import * as S from './style'
 
 function TrackSkeleton() {
   return (
-    <div className="playlist__item">
-      <div className="playlist__track track">
-        <div className="track-skeleton">
-          <div className="track-skeleton__rectangle" style={{ width: '5%' }}></div>
-          <div className="track-skeleton__rectangle" style={{ width: '80%', height: '30px' }}></div>
-          <div className="track-skeleton__rectangle" style={{ width: '15%', height: '30px' }}></div>
-        </div>
-      </div>
-    </div>
+    <S.PlaylistItem>
+      <S.PlaylistTrack>
+        <S.TrackSkeleton>
+          <S.TrackSkeletonRec style={{ width: '5%' }}></S.TrackSkeletonRec>
+          <S.TrackSkeletonRec style={{ width: '80%', height: '30px' }}></S.TrackSkeletonRec>
+          <S.TrackSkeletonRec style={{ width: '15%', height: '30px' }}></S.TrackSkeletonRec>
+        </S.TrackSkeleton>
+      </S.PlaylistTrack>
+    </S.PlaylistItem>
   );
 }
 

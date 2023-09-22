@@ -1,86 +1,82 @@
 import sprite from "../../img/icon/sprite.svg";
+import * as S from './style'
 
 const Bar = () => {
-    return <div className="bar">
-            <div className="bar__content">
-          <div className="bar__player-progress"></div>
-          <div className="bar__player-block">
-            <div className="bar__player player">
-              <div className="player__controls">
-                <div className="player__btn-prev">
-                  <svg className="player__btn-prev-svg" alt="prev">
-                    <use href={`${sprite}#icon-prev`} />
-                  </svg>
-                </div>
-                <div className="player__btn-play _btn">
-                  <svg className="player__btn-play-svg" alt="play">
-                    <use href={`${sprite}#icon-play`} />
-                  </svg>
-                </div>
-                <div className="player__btn-next">
-                  <svg className="player__btn-next-svg" alt="next">
-                    <use href={`${sprite}#icon-next`} />
-                  </svg>
-                </div>
-                <div className="player__btn-repeat _btn-icon">
-                  <svg className="player__btn-repeat-svg" alt="repeat">
-                    <use href={`${sprite}#icon-repeat`} />
-                  </svg>
-                </div>
-                <div className="player__btn-shuffle _btn-icon">
-                  <svg className="player__btn-shuffle-svg" alt="shuffle">
-                    <use href={`${sprite}#icon-shuffle`} />
-                  </svg>
-                </div>
-              </div>
-              <div className="player__track-play track-play">
-                <div className="track-play__contain">
-                  <div className="track-play__image">
-                    <svg className="track-play__svg" alt="music">
-                        <use href={`${sprite}#icon-note`} />
-                    </svg>
-                  </div>
-                  <div className="track-play__author">
-                    <a className="track-play__author-link" href="http://">Ты та...</a>
-                  </div>
-                  <div className="track-play__album">
-                    <a className="track-play__album-link" href="http://">Баста</a>
-                  </div>
-                </div>
-                <div className="track-play__like-dis">
-                  <div className="track-play__like _btn-icon">
-                    <svg className="track-play__like-svg" alt="like">
-                        <use href={`${sprite}#icon-like`} />
-                    </svg>
-                  </div>
-                  <div className="track-play__dislike _btn-icon">
-                    <svg className="track-play__dislike-svg" alt="dislike">
-                        <use href={`${sprite}#icon-dislike`} />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bar__volume-block volume">
-              <div className="volume__content">
-                <div className="volume__image">
-                  <svg className="volume__svg" alt="volume">
-                    <use href={`${sprite}#icon-volume`} />
-                  </svg>
-                </div>
-                <div className="volume__progress _btn">
-                  <input
-                    className="volume__progress-line _btn"
-                    type="range"
-                    name="range"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+    return <S.Bar>
+            <S.BarContent>
+              <S.BarPlayerProgress></S.BarPlayerProgress>
+              <S.BarPlayerBlock>
+                <S.BarPlayer>
+                  <S.PlayerControls>
+                    <S.PlayerBtnPrev>
+                      <S.BtnPrevSvg alt="prev">
+                        <use href={`${sprite}#icon-prev`} />
+                      </S.BtnPrevSvg>
+                    </S.PlayerBtnPrev>
+                    <S.PlayerButtonPlay>
+                      <S.BtnPlaySvg alt="play">
+                        <use href={`${sprite}#icon-play`} />
+                      </S.BtnPlaySvg>
+                    </S.PlayerButtonPlay>
+                    <S.PlayerButtonNext>
+                      <S.PlayerBtnNextSvg alt="next">
+                        <use href={`${sprite}#icon-next`} />
+                      </S.PlayerBtnNextSvg>
+                    </S.PlayerButtonNext>
+                    <S.PlayerBtnRepeat>
+                      <S.PlayerBtnRepeatSvg alt="repeat">
+                        <use href={`${sprite}#icon-repeat`} />
+                      </S.PlayerBtnRepeatSvg>
+                    </S.PlayerBtnRepeat>
+                    <S.PlayerBtnShuffle>
+                      <S.PlayerBtnShuffleSvg alt="shuffle">
+                        <use href={`${sprite}#icon-shuffle`} />
+                      </S.PlayerBtnShuffleSvg>
+                    </S.PlayerBtnShuffle>
+                  </S.PlayerControls>
+                  <S.TrackPlay>
+                    <S.TrackPlayContain>
+                      <S.TrackPlayImg>
+                        <S.TrackPlaySvg alt="music">
+                            <use href={`${sprite}#icon-note`} />
+                        </S.TrackPlaySvg>
+                      </S.TrackPlayImg>
+                      <S.TrackPlayAuthor>
+                        <S.TrackPlayAuthorLink href="http://">Ты та...</S.TrackPlayAuthorLink>
+                      </S.TrackPlayAuthor>
+                      <S.TrackPlayAlbum>
+                        <S.TrackPlayAlbumLink href="http://">Баста</S.TrackPlayAlbumLink>
+                      </S.TrackPlayAlbum>
+                    </S.TrackPlayContain>
+                    <S.TrackPlayLikeDis>
+                      <S.TrackPlayLike>
+                        <S.TrackPlayLikeSvg alt="like">
+                            <use href={`${sprite}#icon-like`} />
+                        </S.TrackPlayLikeSvg>
+                      </S.TrackPlayLike>
+                      <S.TrackPlayDislike>
+                        <S.TrackPlayDislikeSvg alt="dislike">
+                            <use href={`${sprite}#icon-dislike`} />
+                        </S.TrackPlayDislikeSvg>
+                      </S.TrackPlayDislike>
+                    </S.TrackPlayLikeDis>
+                  </S.TrackPlay>
+                </S.BarPlayer>
+                <S.BarVolumeBlock>
+                  <S.VolumeContent>
+                    <S.VolumeImg>
+                      <S.VolumeSvg alt="volume">
+                        <use href={`${sprite}#icon-volume`} />
+                      </S.VolumeSvg>
+                    </S.VolumeImg>
+                    <S.VolumeProgress>
+                      <S.VolumeProgressLine type="range" name="range" />
+                    </S.VolumeProgress>
+                  </S.VolumeContent>
+                </S.BarVolumeBlock>
+              </S.BarPlayerBlock>
+            </S.BarContent>
+    </S.Bar>    
 }
 
 export default Bar;

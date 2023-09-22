@@ -1,40 +1,34 @@
-import "./style.css";
 import logoModal from "../../img/logo_modal.png";
-
+import * as S from './style'
 
 const Autorization = () => {
-    return <div className="wrapper">
-      <div className="container-enter">
-        <div className="modal__block">
-          <form className="modal__form-login" action="#">
+    return <S.Wrapper>
+      <S.ContainerEnter>
+        <S.ModalBlock>
+          <S.ModalFormLogin action="#">
             <a href="../">
-              <div className="modal__logo">
+              <S.ModalLogo>
               <img src={logoModal} alt="logo" />
-              </div>
+              </S.ModalLogo>
             </a>
-            <input
-              className="modal__input login"
+            <S.ModalInput
               type="text"
               name="login"
               placeholder="Почта"
             />
-            <input
-              className="modal__input password"
+            <S.ModalInput
               type="password"
               name="password"
               placeholder="Пароль"
             />
-            <button className="modal__btn-enter">
+            <S.ModalBtnEnter>
               <a href="../index.html">Войти</a>
-            </button>
-            <button
-              className="modal__btn-signup"
-            > Зарегистрироваться
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+            </S.ModalBtnEnter>
+            <S.ModalBtnSignup>Зарегистрироваться</S.ModalBtnSignup>
+          </S.ModalFormLogin>
+        </S.ModalBlock>
+      </S.ContainerEnter>
+    </S.Wrapper>
   }
 
   export default Autorization;
