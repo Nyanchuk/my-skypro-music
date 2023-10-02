@@ -12,7 +12,7 @@ max-width: 100%;
 height: 100vh;
 margin: 0 auto;
 position: relative;
-background-color: rgba(0, 0, 0, 0.85);
+background: radial-gradient(ellipse at center, #9b5de5, black);
 `
 export const ModalBlock = styled.div`
 position: absolute;
@@ -60,16 +60,17 @@ padding: 8px 1px;
   line-height: 24px;
   letter-spacing: -0.05px;
   color: #d0cece;
+}
 `
 export const ModalBtnEnter = styled.button`
 font-weight: 400;
 font-size: 18px;
 line-height: 24px;
-color: #000000;
 width: 278px;
 height: 52px;
 background-color: #ad61ff;
-border-radius: 6px;
+color: #583282;
+border-radius: 10px;
 margin-top: 40px;
 margin-bottom: 20px;
 border: none;
@@ -93,18 +94,18 @@ transition: all .4s;
 export const ModalBtnSignup = styled.button`
 width: 278px;
 height: 52px;
-background-color: #a9fd0de0;
+background-color: #ad61ff;
+color: #583282;
 border: none;
-border-radius: 6px;
+border-radius: 10px;
 font-style: normal;
 font-weight: 400;
 font-size: 18px;
 line-height: 24px;
 letter-spacing: -0.05px;
-color: #639508e0;
+display: flex;
 display: -webkit-box;
 display: -ms-flexbox;
-display: flex;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
@@ -113,7 +114,7 @@ align-items: center;
 justify-content: center;
 transition: all .4s;
 &:hover {
-  background-color: #71a60de0;
+  background-color: #7542ab;
 }
 &:active {
   background-color: #d9d9d9;

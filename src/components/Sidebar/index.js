@@ -5,6 +5,8 @@ import playlist4 from "../../img/play4.JPEG";
 import sprite from "../../img/icon/sprite.svg";
 import React, { useState, useEffect } from 'react';
 import * as S from './style'
+import { Link } from 'react-router-dom';
+
 
 const Sidebar = () => {
 
@@ -27,34 +29,36 @@ const Sidebar = () => {
     return ( 
         <S.MainSidebar>
         <S.SidebarPersonal>
-        <S.SidebarPersonalName>Войти</S.SidebarPersonalName>
-        <S.Icon>
-            <svg alt="logout">
-                <use href={`${sprite}#logout`} />
-            </svg>
-        </S.Icon>
+            <Link to="/login"> 
+                <S.SidebarPersonalName>Выйти</S.SidebarPersonalName>
+            </Link>
+            <S.Icon>
+                <svg alt="logout">
+                    <use href={`${sprite}#logout`} />
+                </svg>
+            </S.Icon>
         </S.SidebarPersonal>
         <S.SidebarBlock>
             <S.SidebarList>
                 <S.SidebarItem>
-                <S.SidebarLink href="#">
-                {isLoading ? renderSkeleton() : renderImage(playlist1, "day's playlist")}
-                </S.SidebarLink>
+                    <Link to="category/1">
+                    {isLoading ? renderSkeleton() : renderImage(playlist1, "day's playlist")}
+                    </Link>
                 </S.SidebarItem>
                 <S.SidebarItem>
-                <S.SidebarLink href="#">
+                <Link to="category/2">
                 {isLoading ? renderSkeleton() : renderImage(playlist2, "day's playlist")}
-                </S.SidebarLink>
+                </Link>
                 </S.SidebarItem>
                 <S.SidebarItem>
-                <S.SidebarLink href="#">
+                <Link to="category/3">
                 {isLoading ? renderSkeleton() : renderImage(playlist3, "day's playlist")}
-                </S.SidebarLink>
+                </Link>
                 </S.SidebarItem>
                 <S.SidebarItem>
-                <S.SidebarLink href="#">
+                <Link to="category/4">
                 {isLoading ? renderSkeleton() : renderImage(playlist4, "day's playlist")}
-                </S.SidebarLink>
+                </Link>
                 </S.SidebarItem>
             </S.SidebarList>
         </S.SidebarBlock>

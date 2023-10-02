@@ -52,6 +52,11 @@ export const MenuLink = styled.a`
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  transition: all .3s;
+  &:hover {
+    text-shadow: 0 0 7px violet;
+    color: violet;
+  }
   `
 export const NavMenu = styled.div`
 display: block;

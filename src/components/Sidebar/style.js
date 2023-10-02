@@ -11,6 +11,7 @@ export const SidebarPersonal = styled.div`
 display: -webkit-box;
 display: -ms-flexbox;
 display: flex;
+flex-wrap: wrap;
 -webkit-box-orient: horizontal;
 -webkit-box-direction: normal;
 -ms-flex-direction: row;
@@ -30,6 +31,11 @@ font-weight: 400;
 font-size: 16px;
 line-height: 24px;
 margin-right: 16px;
+transition: all .3s;
+&:hover {
+  text-shadow: 0 0 7px violet;
+  color: violet;
+}
 `
 export const Icon = styled.div`
 width: 43px;

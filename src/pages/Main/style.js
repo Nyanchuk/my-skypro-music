@@ -103,7 +103,7 @@ color: #ffffff;
 }
 `
 export const CenterBlockH2 = styled.h2`
-color: #a9fd0d;
+color: violet;
 font-style: normal;
 font-weight: 400;
 font-size: 64px;
@@ -153,16 +153,16 @@ border-radius: 10px;
 z-index: 1;
 margin-top: 10px;
 overflow-y: auto;
-&:-webkit-scrollbar {
+&::-webkit-scrollbar {
   border: 1px solid #5e5d5d;
   border-radius: 10px;
   width: 8px;
   background-color: #5e5d5d;
 }
-&:-webkit-scrollbar-thumb {
-  border: 1px solid #a9fd0d;
+&::-webkit-scrollbar-thumb {
+  border: 1px solid violet;
   border-radius: 10px;
-  background-color: #a9fd0d;
+  background-color: violet;
 }
 `
 export const FilterPerformItem = styled.div`
@@ -170,7 +170,7 @@ padding: 5px 10px;
 cursor: pointer;
 transition: all .5s;
 &:hover {
-  color: #a9fd0d;
+  color: violet;
   transform: scale(1.02);
 }
 `
