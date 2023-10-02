@@ -1,15 +1,10 @@
-import logo from './logo.png';
-import './App.css';
+import { AppRoutes } from "./routes";
 
 function App() {
+  const user = localStorage.getItem('user');
   return (
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="p">
-          Здесь скоро появится сайт "Skypro-music"
-        </p>
-      </header>
-  );
+    <AppRoutes user={user} />
+  )
 }
 
 export default App;
