@@ -12,7 +12,7 @@ export const AppRoutes = ({ user }) => {
         <Routes>
             {/* Незащищенные страницы */}
             <Route path="/login" element= {<Authorization />}></Route>
-            <Route path="registration" element= {<Registration />}></Route>
+            <Route path="/register" element= {<Registration />}></Route>
 
             {/* Защищенные страницы */}
 
@@ -28,7 +28,7 @@ export const AppRoutes = ({ user }) => {
             </ProtectedRoute>
             }></Route>
 
-            <Route path="/myTracks" element= {
+            <Route path="/favorites" element= {
                 <ProtectedRoute isAllowed={Boolean(user)}>
                     <MyTracks />
             </ProtectedRoute>

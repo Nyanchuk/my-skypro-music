@@ -47,7 +47,7 @@ const Autorization = () => {
             Войти
           </S.ModalBtnEnter>
           <S.ModalBtnSignup>
-              <Link to="/registration">Зарегистрироваться</Link>
+              <Link to="/register">Зарегистрироваться</Link>
           </S.ModalBtnSignup>
         </S.ModalFormLogin>
       </S.ModalBlock>

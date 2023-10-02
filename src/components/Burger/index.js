@@ -36,7 +36,7 @@ const Burger = () => {
             <StyledLink to="/">Главное</StyledLink>
             </S.MenuItem>
             <S.MenuItem>
-            <StyledLink to="/myTracks" >Мой плейлист</StyledLink>
+            <StyledLink to="/favorites" >Мой плейлист</StyledLink>
             </S.MenuItem>
             <S.MenuItem>
             <StyledLink to="/login">Выйти</StyledLink>
