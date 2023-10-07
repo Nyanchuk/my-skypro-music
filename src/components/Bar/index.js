@@ -1,7 +1,33 @@
+import { useEffect, useState, useRef } from "react";
 import sprite from "../../img/icon/sprite.svg";
 import * as S from './style'
 
-const Bar = () => {
+const Bar = ({track}) => {
+
+  const audioRef = useRef();                            // Создаем ref для проигрывания трека
+  const [isPlaying, setIsPlaying] = useState(false);    // Состояние для остановки трека
+
+  useEffect(() => {
+    if (track && audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(true);
+  
+      setTimeout(() => {
+        audioRef.current.play();
+      }, 100);                                          // Ждём перед воспроизведением
+    }
+  }, [track]);
+
+  // Функция для начала и остановки воспроизведения
+  const handlePlayPauseClick = () => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.pause();
+    } else if (!isPlaying && audioRef.current) {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);                           // Обновляем состояние воспроизведения
+  };
+
     return <S.Bar>
             <S.BarContent>
               <S.BarPlayerProgress></S.BarPlayerProgress>
@@ -13,11 +39,23 @@ const Bar = () => {
                         <use href={`${sprite}#icon-prev`} />
                       </S.BtnPrevSvg>
                     </S.PlayerBtnPrev>
-                    <S.PlayerButtonPlay>
-                      <S.BtnPlaySvg alt="play">
-                        <use href={`${sprite}#icon-play`} />
-                      </S.BtnPlaySvg>
+
+
+                    
+                    <S.PlayerButtonPlay onClick={handlePlayPauseClick}>
+                    <audio src={track?.track_file} ref={audioRef} controls style={{ display: "none" }}></audio>
+                      {isPlaying 
+                      ? <S.BtnPlaySvg alt="pause"> 
+                          <use href={`${sprite}#icon-pause`} />
+                        </S.BtnPlaySvg> 
+                      : <S.BtnPlaySvg alt="play"> 
+                          <use href={`${sprite}#icon-play`} />
+                        </S.BtnPlaySvg>
+                    }
                     </S.PlayerButtonPlay>
+
+
+
                     <S.PlayerButtonNext>
                       <S.PlayerBtnNextSvg alt="next">
                         <use href={`${sprite}#icon-next`} />
@@ -42,10 +80,10 @@ const Bar = () => {
                         </S.TrackPlaySvg>
                       </S.TrackPlayImg>
                       <S.TrackPlayAuthor>
-                        <S.TrackPlayAuthorLink href="http://">Ты та...</S.TrackPlayAuthorLink>
+                        <S.TrackPlayAuthorLink href="http://">{track.name}</S.TrackPlayAuthorLink>
                       </S.TrackPlayAuthor>
                       <S.TrackPlayAlbum>
-                        <S.TrackPlayAlbumLink href="http://">Баста</S.TrackPlayAlbumLink>
+                        <S.TrackPlayAlbumLink href="http://">{track.author}</S.TrackPlayAlbumLink>
                       </S.TrackPlayAlbum>
                     </S.TrackPlayContain>
                     <S.TrackPlayLikeDis>
