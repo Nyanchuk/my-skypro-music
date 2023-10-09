@@ -6,7 +6,17 @@ const Bar = ({track}) => {
 
   const audioRef = useRef();                            // Создаем ref для проигрывания трека
   const [isPlaying, setIsPlaying] = useState(false);    // Состояние для остановки трека
+  const [volume, setVolume] = useState(1.0);            // Состояние начальной максимальной громкости
+  const [isLooping, setIsLooping] = useState(false);    // Состояние:изначально трек не зациклен
+  const [currentTime, setCurrentTime] = useState(0);    // Состояние для текущево времени трека
+  const [duration, setDuration] = useState(0);          // Состояние для общей продолжительности трека
+  
 
+
+
+
+
+  // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
     if (track && audioRef.current) {
       audioRef.current.pause();
@@ -14,23 +24,100 @@ const Bar = ({track}) => {
   
       setTimeout(() => {
         audioRef.current.play();
-      }, 100);                                          // Ждём перед воспроизведением
+      }, 100);
     }
   }, [track]);
 
-  // Функция для начала и остановки воспроизведения
   const handlePlayPauseClick = () => {
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
     } else if (!isPlaying && audioRef.current) {
       audioRef.current.play();
     }
-    setIsPlaying(!isPlaying);                           // Обновляем состояние воспроизведения
+    setIsPlaying(!isPlaying);
   };
 
+
+
+
+
+  // ВСЕ ЧТО КАСАЕТСЯ ИЗМЕНЕНИЯ ГРОМКОСТИ ТРЕКА
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+  
+  const handleVolumeChange = (event) => {
+    let value = event.target.value;
+    setVolume(value / 100);
+  };
+
+
+
+
+
+  // ВСЕ ЧТО КАСАЕТСЯ ЗАЦИКЛИВАНИЯ ТРЕКА
+  const handleLoopClick = () => {
+    setIsLooping(!isLooping);
+  };
+  
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.loop = isLooping;
+    }
+  }, [isLooping]);
+
+
+
+
+
+  // ВСЕ ЧТО КАСАЕТСЯ ОБНОВЛЕНИЯ ТЕКУЩЕГО ВОСПРОИЗВЕДЕНИЯ ТРЕКА
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (audioRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+      }
+    }, 500);
+  
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  // обработчик события загрузки метаданных
+  const handleMetadataLoad = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  // обработчик события клика по полосе прогресса
+  const handleProgressClick = (event) => {
+    if (audioRef.current) {
+      setCurrentTime(event.target.value);
+      audioRef.current.currentTime = event.target.value;
+    }
+  };
+
+
+
+
+  
     return <S.Bar>
             <S.BarContent>
-              <S.BarPlayerProgress></S.BarPlayerProgress>
+
+
+            
+              <S.BarPlayerProgress
+              type="range" 
+              value={currentTime}
+              max={duration}
+              onChange={handleProgressClick}>
+              </S.BarPlayerProgress>
+
+
+
               <S.BarPlayerBlock>
                 <S.BarPlayer>
                   <S.PlayerControls>
@@ -43,7 +130,13 @@ const Bar = ({track}) => {
 
                     
                     <S.PlayerButtonPlay onClick={handlePlayPauseClick}>
-                    <audio src={track?.track_file} ref={audioRef} controls style={{ display: "none" }}></audio>
+                    <audio 
+                    onLoadedMetadata={handleMetadataLoad}
+                    src={track?.track_file} 
+                    ref={audioRef} 
+                    controls 
+                    style={{ display: "none" }}></audio>
+
                       {isPlaying 
                       ? <S.BtnPlaySvg alt="pause"> 
                           <use href={`${sprite}#icon-pause`} />
@@ -61,11 +154,20 @@ const Bar = ({track}) => {
                         <use href={`${sprite}#icon-next`} />
                       </S.PlayerBtnNextSvg>
                     </S.PlayerButtonNext>
-                    <S.PlayerBtnRepeat>
+
+
+
+                    <S.PlayerBtnRepeat onClick={handleLoopClick}>
                       <S.PlayerBtnRepeatSvg alt="repeat">
-                        <use href={`${sprite}#icon-repeat`} />
+                      {isLooping 
+                        ? <use href={`${sprite}#icon-repeat`} />
+                        : <use href={`${sprite}#icon-norepeat`} />
+                      }
                       </S.PlayerBtnRepeatSvg>
                     </S.PlayerBtnRepeat>
+
+
+
                     <S.PlayerBtnShuffle>
                       <S.PlayerBtnShuffleSvg alt="shuffle">
                         <use href={`${sprite}#icon-shuffle`} />
@@ -108,7 +210,7 @@ const Bar = ({track}) => {
                       </S.VolumeSvg>
                     </S.VolumeImg>
                     <S.VolumeProgress>
-                      <S.VolumeProgressLine type="range" name="range" />
+                    <S.VolumeProgressLine type="range" name="range" value={volume * 100} max={100} onChange={handleVolumeChange}/>
                     </S.VolumeProgress>
                   </S.VolumeContent>
                 </S.BarVolumeBlock>
