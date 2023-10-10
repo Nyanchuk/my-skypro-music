@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import * as S from './style'
 import { getFetchTracks } from '../../api';
 
-function Main() {
+function Main({track}) {
 
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
 
@@ -60,6 +60,7 @@ function Main() {
   };
 
 // ВРЕМЯ ТРЕКА В МИНУТАХ
+
   function convertSecondsToMinutes(timeInSeconds) {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;

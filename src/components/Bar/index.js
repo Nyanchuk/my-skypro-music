@@ -10,11 +10,6 @@ const Bar = ({track}) => {
   const [isLooping, setIsLooping] = useState(false);    // Состояние:изначально трек не зациклен
   const [currentTime, setCurrentTime] = useState(0);    // Состояние для текущево времени трека
   const [duration, setDuration] = useState(0);          // Состояние для общей продолжительности трека
-  
-
-
-
-
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
@@ -37,10 +32,6 @@ const Bar = ({track}) => {
     setIsPlaying(!isPlaying);
   };
 
-
-
-
-
   // ВСЕ ЧТО КАСАЕТСЯ ИЗМЕНЕНИЯ ГРОМКОСТИ ТРЕКА
   useEffect(() => {
     if (audioRef.current) {
@@ -53,10 +44,6 @@ const Bar = ({track}) => {
     setVolume(value / 100);
   };
 
-
-
-
-
   // ВСЕ ЧТО КАСАЕТСЯ ЗАЦИКЛИВАНИЯ ТРЕКА
   const handleLoopClick = () => {
     setIsLooping(!isLooping);
@@ -67,10 +54,6 @@ const Bar = ({track}) => {
       audioRef.current.loop = isLooping;
     }
   }, [isLooping]);
-
-
-
-
 
   // ВСЕ ЧТО КАСАЕТСЯ ОБНОВЛЕНИЯ ТЕКУЩЕГО ВОСПРОИЗВЕДЕНИЯ ТРЕКА
   useEffect(() => {
@@ -100,24 +83,25 @@ const Bar = ({track}) => {
     }
   };
 
+  // ВСЕ ЧТО КАСАЕТСЯ ВИЗУАЛИЗАЦИИ ТАЙМИНГА ТРЕКА
+  const formatTime = (time) => {
+    const roundTime = Math.round(time);
+    const minutes = Math.floor(roundTime / 60);
+    const seconds = roundTime - minutes * 60;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
 
+    return `${minutes}:${formattedSeconds}`;
+  };
 
-  
     return <S.Bar>
             <S.BarContent>
-
-
-            
               <S.BarPlayerProgress
               type="range" 
               value={currentTime}
               max={duration}
               onChange={handleProgressClick}>
               </S.BarPlayerProgress>
-
-
-
               <S.BarPlayerBlock>
                 <S.BarPlayer>
                   <S.PlayerControls>
@@ -126,9 +110,6 @@ const Bar = ({track}) => {
                         <use href={`${sprite}#icon-prev`} />
                       </S.BtnPrevSvg>
                     </S.PlayerBtnPrev>
-
-
-                    
                     <S.PlayerButtonPlay onClick={handlePlayPauseClick}>
                     <audio 
                     onLoadedMetadata={handleMetadataLoad}
@@ -146,17 +127,11 @@ const Bar = ({track}) => {
                         </S.BtnPlaySvg>
                     }
                     </S.PlayerButtonPlay>
-
-
-
                     <S.PlayerButtonNext>
                       <S.PlayerBtnNextSvg alt="next">
                         <use href={`${sprite}#icon-next`} />
                       </S.PlayerBtnNextSvg>
                     </S.PlayerButtonNext>
-
-
-
                     <S.PlayerBtnRepeat onClick={handleLoopClick}>
                       <S.PlayerBtnRepeatSvg alt="repeat">
                       {isLooping 
@@ -165,9 +140,6 @@ const Bar = ({track}) => {
                       }
                       </S.PlayerBtnRepeatSvg>
                     </S.PlayerBtnRepeat>
-
-
-
                     <S.PlayerBtnShuffle>
                       <S.PlayerBtnShuffleSvg alt="shuffle">
                         <use href={`${sprite}#icon-shuffle`} />
@@ -199,11 +171,13 @@ const Bar = ({track}) => {
                             <use href={`${sprite}#icon-dislike`} />
                         </S.TrackPlayDislikeSvg>
                       </S.TrackPlayDislike>
+                      <S.CurrentTime> {formatTime(currentTime)} </S.CurrentTime>
                     </S.TrackPlayLikeDis>
                   </S.TrackPlay>
                 </S.BarPlayer>
                 <S.BarVolumeBlock>
                   <S.VolumeContent>
+                  <S.RemainingTime> {formatTime(duration - currentTime)} </S.RemainingTime>
                     <S.VolumeImg>
                       <S.VolumeSvg alt="volume">
                         <use href={`${sprite}#icon-volume`} />

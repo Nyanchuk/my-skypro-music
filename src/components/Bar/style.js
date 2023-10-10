@@ -420,3 +420,10 @@ export const VolumeProgressLine = styled.input.attrs( props => ({
      cursor: pointer;
    }
   `;
+
+  export const RemainingTime = styled.div`
+  margin-right: 25px;
+  `
+  export const CurrentTime = styled.div`
+  margin-left: 25px;
+  `
