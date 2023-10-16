@@ -3,16 +3,32 @@ import playlist2 from "../../img/play2.JPEG";
 import playlist3 from "../../img/play3.JPEG";
 import playlist4 from "../../img/play4.JPEG";
 import sprite from "../../img/icon/sprite.svg";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import * as S from './style'
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../Context';
 
 
 const Sidebar = () => {
-
-    // функция для СКЕЛЕТОН
+    const { username } = useContext(UserContext);
+    const [user, setUser] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
+    // ФУНКЦИЯ ДЛЯ СБРОСА ПОЛЬЗОВАТЕЛЯ
+    useEffect(() => {
+        const storedUser = localStorage.getItem('User');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        }
+    }, []);
+
+    const handleLogout = () => {
+      localStorage.removeItem('User');
+      setUser(null);
+    };
+
+    // ФУНКЦИЯ ДЛЯ СКЕЛЕТОНА КАТЕГОРИЙ
     useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 5000);
         return () => clearTimeout(timer);
@@ -29,14 +45,14 @@ const Sidebar = () => {
     return ( 
         <S.MainSidebar>
         <S.SidebarPersonal>
+                <S.SidebarPersonalName>{username}</S.SidebarPersonalName>
             <Link to="/login"> 
-                <S.SidebarPersonalName>Выйти</S.SidebarPersonalName>
+                <S.Icon onClick={handleLogout}>
+                    <svg alt="logout">
+                        <use href={`${sprite}#logout`} />
+                    </svg>
+                </S.Icon>
             </Link>
-            <S.Icon>
-                <svg alt="logout">
-                    <use href={`${sprite}#logout`} />
-                </svg>
-            </S.Icon>
         </S.SidebarPersonal>
         <S.SidebarBlock>
             <S.SidebarList>

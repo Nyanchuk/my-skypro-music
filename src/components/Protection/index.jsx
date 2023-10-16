@@ -1,9 +1,11 @@
-import { Navigate } from "react-router-dom"
+import { useUser } from '../../Context';
+import { useNavigate } from 'react-router-dom';
 
-export const ProtectedRoute = ({ children, redirectPath = "/login", isAllowed }) => {
-    const user = localStorage.getItem('user');
-    if(!user) {
-        return <Navigate to = {redirectPath} replace={true} />
-    }
-    return children;
-}
+export const ProtectedRoute = ({ isAllowed, children }) => {
+  const { userToken } = useUser();
+  let navigate = useNavigate(); //use navigate
+
+  return isAllowed && Boolean(userToken)
+    ? children
+    : navigate("/login");
+};

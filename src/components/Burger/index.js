@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style'
 import logo from "../../img/logo.png";
 import night_gay from "../../img/night:sun.png";
@@ -17,7 +17,25 @@ const StyledLink = styled(RouterLink)`
 `;
 
 const Burger = () => {
-    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);        // Состояние на развердки меню
+    const [user, setUser] = useState(null);                       // Состояние для удаления записи в Local Storage
+
+    // ФУНКЦИЯ ДЛЯ СБРОСА ПОЛЬЗОВАТЕЛЯ
+    useEffect(() => {
+      const storedUser = localStorage.getItem('User');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('User');
+    setUser(null);
+  };
+
+
+
     const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
@@ -39,7 +57,7 @@ const Burger = () => {
             <StyledLink to="/favorites" >Мой плейлист</StyledLink>
             </S.MenuItem>
             <S.MenuItem>
-            <StyledLink to="/login">Выйти</StyledLink>
+            <StyledLink onClick={handleLogout} to="/login">Выйти</StyledLink>
             </S.MenuItem>
             <img src={night_gay} alt="day's playlist"/>
           </S.MenuList>

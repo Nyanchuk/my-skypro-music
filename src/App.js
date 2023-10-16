@@ -1,10 +1,13 @@
+import { UserProvider } from "./Context";
 import { AppRoutes } from "./routes";
 
 function App() {
-  const user = localStorage.getItem('user');
+  const user = localStorage.getItem("user");
   return (
-    <AppRoutes user={user} />
-  )
+    <UserProvider>
+      <AppRoutes />
+    </UserProvider>
+  );
 }
 
 export default App;
