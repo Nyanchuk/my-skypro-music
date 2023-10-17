@@ -6,11 +6,12 @@ import { ProtectedRoute } from "./components/Protection"
 import PlaylistPage from "./pages/Playlists/PlaylistPage"
 import { useParams } from "react-router-dom";
 import MyTracks from "./pages/My tracks"
-import { useUser } from "./Context"
+import UserContext, { useUser } from "./Context"
+import { useContext } from "react"
 
 export const AppRoutes = () => {
 
-    const { userToken } = useUser(); // Получаем userToken из контекста
+    const { userToken } = useContext(UserContext); // Получаем userToken из контекста
 
     return (
         <Routes>
@@ -31,12 +32,12 @@ export const AppRoutes = () => {
                     <Main />
             </ProtectedRoute>
             }></Route>
-{/* 
+
             <Route path="/favorites" element= {
-                <ProtectedRoute isAllowed={Boolean(user)}>
+                <ProtectedRoute isAllowed={Boolean(userToken)}>
                     <MyTracks />
             </ProtectedRoute>
-            }></Route> */}
+            }></Route>
         </Routes>
     )
 }

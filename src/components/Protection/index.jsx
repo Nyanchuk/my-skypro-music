@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
-import { useUser } from '../../Context';
+import { useContext, useEffect } from 'react';
+import UserContext, { useUser } from '../../Context';
 import { useNavigate } from 'react-router-dom';
 
 export const ProtectedRoute = ({ isAllowed, children }) => {
-  const { userToken } = useUser();
+  const { userToken } = useContext(UserContext);
+  
   let navigate = useNavigate(); //use navigate
 
   // ДЛЯ редиректа на страницу логина
