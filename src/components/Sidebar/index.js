@@ -9,24 +9,45 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context';
 
 
+
 const Sidebar = () => {
-    const { username } = useContext(UserContext);
-    const [user, setUser] = useState(null);
+    const { username, setUsername } = useContext(UserContext); // предполагается, что setUsername доступна в контексте
     const [isLoading, setLoading] = useState(true);
 
     // ФУНКЦИЯ ДЛЯ СБРОСА ПОЛЬЗОВАТЕЛЯ
     useEffect(() => {
-        const storedUser = localStorage.getItem('User');
-        if (storedUser) {
-          const parsedUser = JSON.parse(storedUser);
-          setUser(parsedUser);
+        const storedUserData = localStorage.getItem('UserData');
+        if (storedUserData) {
+          const parsedUserData = JSON.parse(storedUserData);
+          setUsername(parsedUserData.username); // обновляем значение username в контексте
         }
     }, []);
 
     const handleLogout = () => {
-      localStorage.removeItem('User');
-      setUser(null);
-    };
+        localStorage.removeItem('UserData');
+        localStorage.removeItem('User'); // удаление токена пользователя
+        setUsername(null);
+      };
+
+
+// const Sidebar = () => {
+//     const { username } = useContext(UserContext);
+//     const [user, setUser] = useState(null);
+//     const [isLoading, setLoading] = useState(true);
+
+//     // ФУНКЦИЯ ДЛЯ СБРОСА ПОЛЬЗОВАТЕЛЯ
+//     useEffect(() => {
+//         const storedUser = localStorage.getItem('User');
+//         if (storedUser) {
+//           const parsedUser = JSON.parse(storedUser);
+//           setUser(parsedUser);
+//         }
+//     }, []);
+
+//     const handleLogout = () => {
+//       localStorage.removeItem('User');
+//       setUser(null);
+//     };
 
     // ФУНКЦИЯ ДЛЯ СКЕЛЕТОНА КАТЕГОРИЙ
     useEffect(() => {

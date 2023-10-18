@@ -31,6 +31,7 @@ const Burger = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('User');
+    localStorage.removeItem('UserData');
     setUser(null);
   };
 

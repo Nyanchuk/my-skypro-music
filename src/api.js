@@ -52,7 +52,7 @@ export const registerUser = async ({email, password, username}) => {
           username: email,
       }),
   });
-  // localStorage.setItem('User', JSON.stringify(data)); // в data.user мы предполагаем, что у вас содержится информация о пользователе
+  localStorage.setItem('UserData', JSON.stringify(data)); 
   const data = await response.json();
 
   if (!response.ok) {
@@ -84,7 +84,7 @@ export const login = async ({email, password}) => {
     error.statusCode = response.status; // Добавили statusCode в объект ошибки
     throw error;
   }
-  // localStorage.setItem('User', JSON.stringify(data)); // в data.user мы предполагаем, что у вас содержится информация о пользователе
+  localStorage.setItem('UserData', JSON.stringify(data)); 
   return data;
 }
 
