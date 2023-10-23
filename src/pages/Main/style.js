@@ -2,29 +2,42 @@ import styled, { css, keyframes } from 'styled-components';
 
 const pulse = keyframes`
   0% {
-    transform: scale(1);
+    transform: scale(.7);
   }
   50% {
-    transform: scale(1.2);
+    transform: scale(1);
   }
   100% {
-    transform: scale(1);
+    transform: scale(.7);
   }
 `;
 
 // Стили для главной страницы
 export const TrackTitleSvg = styled.svg`
-width: 18px;
-height: 17px;
-fill: transparent;
-stroke: #4e4e4e;
-${({ $isPlaying }) => 
-    $isPlaying &&
-    css`
-      animation: ${pulse} 1s infinite linear;
-    `
+  width: 18px;
+  height: 17px;
+  fill: transparent;
+  stroke: #4e4e4e;
+  
+  /* Сделать иконку невидимой, когда музыка играет */
+  use {
+    visibility: ${({$isPlaying}) => $isPlaying ? 'hidden' : 'visible'};
+  }
+  
+  /* Сделать круг невидимым, когда музыка не играет,
+     и применить анимацию, когда музыка играет */
+  circle {
+    visibility: ${({$isPlaying}) => $isPlaying ? 'visible' : 'hidden'};
+    transform-origin: 50% 50%; /* Центр окружности */
+    ${({$isPlaying}) =>
+        $isPlaying &&
+        css`
+            animation: ${pulse} 1s infinite linear;
+        `
+    }
   }
 `
+
 export const Wrapper = styled.div`
 width: 100%;
 min-height: 100%;

@@ -179,6 +179,7 @@ const handleTrackClick = (track) => {
                       <S.TrackTitle>
                         <S.TrackTitleImg>
                           <S.TrackTitleSvg $isPlaying={playingTrackId === track.id} alt="music">
+                            <circle cx="9" cy="9" r="7" stroke="#b7ff00" strokeWidth="1.2" fill="#222222" />
                             <use href={`${sprite}#icon-note`} />
                           </S.TrackTitleSvg>
                         </S.TrackTitleImg>
