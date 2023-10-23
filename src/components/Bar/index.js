@@ -17,15 +17,34 @@ const Bar = () => {
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
     if (track?.track_file && audioRef.current) {
+      setIsPlaying(false); // Останавливаем воспроизведение
       audioRef.current.src = track.track_file;
       audioRef.current.load();
-      setIsPlaying(true);
-    }
-    
+      setIsPlaying(true);  // Задаем новый трек к воспроизведению
+    }if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setTimeout(() => {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }, 500);
+    } 
+
     return () => {
       setIsPlaying(false);  // этот код выполнится, когда трек будет сменен
     };
   }, [track]);
+  // useEffect(() => {
+  //   if (track?.track_file && audioRef.current) {
+  //     audioRef.current.src = track.track_file;
+  //     audioRef.current.load();
+  //     setIsPlaying(true);
+  //   }
+    
+  //   return () => {
+  //     setIsPlaying(false);  // этот код выполнится, когда трек будет сменен
+  //   };
+  // }, [track]);
   
   useEffect(() => {
     if (isPlaying && audioRef.current) {

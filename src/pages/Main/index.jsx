@@ -22,7 +22,8 @@ function Main() {
   const [years, setYears] = useState([]);                     // Состояние для года
   const [genres, setGenres] = useState([]);                   // Состояние для жанров
   const [error, setError] = useState(null);                   // Состояние  ошибке загрузки
-  const [selectedTrack, setSelectedTrack] = useState(null);   // Состояние для трека
+  const [isPlaying, setIsPlaying] = useState(false);          // Состояние для трека
+ 
 
   useEffect(() => {
     getFetchTracks()
@@ -74,6 +75,7 @@ function Main() {
 // ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
 const handleTrackClick = (track) => {
   dispatch(setCurrentTrack(track));
+  setIsPlaying(true);
 };
 
   return ( 
@@ -213,7 +215,7 @@ const handleTrackClick = (track) => {
         </S.MainCenterBlock>
         <Sidebar />
       </S.Main>
-      <Bar />
+      {isPlaying && <Bar />} 
       <S.Footer></S.Footer>
     </S.Container>
     </S.Wrapper>
