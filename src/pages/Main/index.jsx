@@ -22,7 +22,7 @@ function Main() {
   const [years, setYears] = useState([]);                     // Состояние для года
   const [genres, setGenres] = useState([]);                   // Состояние для жанров
   const [error, setError] = useState(null);                   // Состояние  ошибке загрузки
-  const [isPlaying, setIsPlaying] = useState(false);          // Состояние для трека
+  const [playingTrackId, setPlayingTrackId] = useState(null);          // Состояние для трека
  
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function Main() {
 // ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
 const handleTrackClick = (track) => {
   dispatch(setCurrentTrack(track));
-  setIsPlaying(true);
+  setPlayingTrackId(track.id);
 };
 
   return ( 
@@ -178,7 +178,7 @@ const handleTrackClick = (track) => {
                     <S.PlaylistTrack>
                       <S.TrackTitle>
                         <S.TrackTitleImg>
-                          <S.TrackTitleSvg alt="music">
+                          <S.TrackTitleSvg $isPlaying={playingTrackId === track.id} alt="music">
                             <use href={`${sprite}#icon-note`} />
                           </S.TrackTitleSvg>
                         </S.TrackTitleImg>
@@ -215,7 +215,7 @@ const handleTrackClick = (track) => {
         </S.MainCenterBlock>
         <Sidebar />
       </S.Main>
-      {isPlaying && <Bar />} 
+      {playingTrackId !== null && <Bar />}  
       <S.Footer></S.Footer>
     </S.Container>
     </S.Wrapper>
