@@ -1,8 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import sprite from "../../img/icon/sprite.svg";
 import * as S from './style'
+import { useSelector } from 'react-redux';
 
-const Bar = ({track}) => {
+const Bar = () => {
+
+  const track = useSelector(state => state.player.currentTrack) || {};
 
   const audioRef = useRef();                            // Создаем ref для проигрывания трека
   const [isPlaying, setIsPlaying] = useState(false);    // Состояние для остановки трека
@@ -13,23 +16,43 @@ const Bar = ({track}) => {
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
-    if (track && audioRef.current) {
-      audioRef.current.pause();
+    if (track?.track_file && audioRef.current) {
+      audioRef.current.src = track.track_file;
+      audioRef.current.load();
       setIsPlaying(true);
-  
-      setTimeout(() => {
-        audioRef.current.play();
-      }, 100);
     }
+    
+    return () => {
+      setIsPlaying(false);  // этот код выполнится, когда трек будет сменен
+    };
   }, [track]);
+  
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      const playPromise = audioRef.current.play();
+    
+      if (playPromise !== undefined) {
+        playPromise
+          .then(_ => {})
+          .catch(error => {
+            console.log(error);
+            setIsPlaying(false);
+          });
+      }
+    } else if (!isPlaying && audioRef.current) {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
   const handlePlayPauseClick = () => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.pause();
-    } else if (!isPlaying && audioRef.current) {
-      audioRef.current.play();
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     }
-    setIsPlaying(!isPlaying);
   };
 
   // ВСЕ ЧТО КАСАЕТСЯ ИЗМЕНЕНИЯ ГРОМКОСТИ ТРЕКА

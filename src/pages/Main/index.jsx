@@ -7,8 +7,12 @@ import TrackSkeleton from '../../components/Skeleton/index';
 import React, { useState, useEffect } from 'react';
 import * as S from './style'
 import { getFetchTracks } from '../../api';
+import { useDispatch } from 'react-redux';
+import { setCurrentTrack } from '../../store/actions/creators/playerActions';
 
-function Main({track}) {
+function Main() {
+  const dispatch = useDispatch();
+
 
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
 
@@ -69,7 +73,7 @@ function Main({track}) {
 
 // ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
 const handleTrackClick = (track) => {
-  setSelectedTrack(track);
+  dispatch(setCurrentTrack(track));
 };
 
   return ( 
@@ -209,7 +213,7 @@ const handleTrackClick = (track) => {
         </S.MainCenterBlock>
         <Sidebar />
       </S.Main>
-      {selectedTrack && <Bar track={selectedTrack} />}
+      <Bar />
       <S.Footer></S.Footer>
     </S.Container>
     </S.Wrapper>
