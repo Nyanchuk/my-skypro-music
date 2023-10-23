@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING } from '../actions/types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE } from '../actions/types/playerActionTypes.js';
 
 const initialState = {
   currentTrack: null,
@@ -17,6 +17,10 @@ export default function playerReducer(state = initialState, action) {
       return { ...state, volume: action.payload };
     case SET_LOOPING:
       return { ...state, isLooping: action.payload };
+
+      case PLAY_PAUSE:
+        return {...state, isPlaying: action.payload };
+        
     default:
       return state;
   }

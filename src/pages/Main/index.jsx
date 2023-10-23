@@ -7,11 +7,12 @@ import TrackSkeleton from '../../components/Skeleton/index';
 import React, { useState, useEffect } from 'react';
 import * as S from './style'
 import { getFetchTracks } from '../../api';
-import { useDispatch } from 'react-redux';
-import { setCurrentTrack } from '../../store/actions/creators/playerActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { playPause, setCurrentTrack } from '../../store/actions/creators/playerActions';
 
 function Main() {
   const dispatch = useDispatch();
+  const isPlayingGlobal = useSelector(state => state.player.isPlaying);
 
 
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
@@ -76,6 +77,7 @@ function Main() {
 const handleTrackClick = (track) => {
   dispatch(setCurrentTrack(track));
   setPlayingTrackId(track.id);
+  dispatch(playPause(true));
 };
 
   return ( 
@@ -178,7 +180,7 @@ const handleTrackClick = (track) => {
                     <S.PlaylistTrack>
                       <S.TrackTitle>
                         <S.TrackTitleImg>
-                          <S.TrackTitleSvg $isPlaying={playingTrackId === track.id} alt="music">
+                          <S.TrackTitleSvg $isPlaying={isPlayingGlobal && playingTrackId === track.id && playingTrackId === track.id} alt="music">
                             <circle cx="9" cy="9" r="7" stroke="#b7ff00" strokeWidth="1.2" fill="#222222" />
                             <use href={`${sprite}#icon-note`} />
                           </S.TrackTitleSvg>

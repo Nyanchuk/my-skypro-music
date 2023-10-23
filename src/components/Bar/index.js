@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import sprite from "../../img/icon/sprite.svg";
 import * as S from './style'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { playPause } from "../../store/actions/creators/playerActions";
 
 const Bar = () => {
 
+  const dispatch = useDispatch();
   const track = useSelector(state => state.player.currentTrack) || {};
 
   const audioRef = useRef();                            // Создаем ref для проигрывания трека
@@ -71,6 +73,7 @@ const Bar = () => {
         audioRef.current.play();
       }
       setIsPlaying(!isPlaying);
+      dispatch(playPause(!isPlaying));
     }
   };
 
