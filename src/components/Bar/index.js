@@ -24,8 +24,13 @@ const Bar = () => {
   };
   
   const handlePrevTrack = () => {
-    dispatch(previousTrack());
-    dispatch(playPause(true));
+    if (currentTime > 5) {
+      setCurrentTime(0);
+      audioRef.current.currentTime = 0;
+    } else {
+      dispatch(previousTrack());
+      dispatch(playPause(true));
+    }
   };
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
