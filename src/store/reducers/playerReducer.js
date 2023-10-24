@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA } from '../actions/types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX } from '../actions/types/playerActionTypes.js';
 
 const initialState = {
   currentTrack: null,
@@ -6,6 +6,7 @@ const initialState = {
   volume: 1.0,
   isLooping: false,
   tracksData: [],
+  currentTrackIndex: null,
 };
 
 export default function playerReducer(state = initialState, action) {
@@ -30,16 +31,18 @@ export default function playerReducer(state = initialState, action) {
     if (previousIndex < 0) {
       return state;
     }
-    return {...state, currentTrack: state.tracksData[previousIndex]};
-
+    return {...state, currentTrack: state.tracksData[previousIndex], currentTrackIndex: previousIndex};
   case NEXT_TRACK: 
     const nextIndex = state.tracksData.findIndex(track => track.id === state.currentTrack.id) + 1;
     if (nextIndex >= state.tracksData.length) {
       return state; 
     }
-    return {...state, currentTrack: state.tracksData[nextIndex]};
+    return {...state, currentTrack: state.tracksData[nextIndex], currentTrackIndex: nextIndex};
 
-
+    case SET_CURRENT_TRACK_INDEX:
+      return {...state, currentTrackIndex: action.payload};
+    case GET_CURRENT_TRACK_INDEX:
+      return {...state, currentTrackIndex: state.currentTrackIndex};
 
     default:
       return state;

@@ -8,22 +8,24 @@ import React, { useState, useEffect } from 'react';
 import * as S from './style'
 import { getFetchTracks } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { playPause, setCurrentTrack, setTracks } from '../../store/actions/creators/playerActions';
+import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../../store/actions/creators/playerActions';
 
 function Main() {
+
+  // Работа с Redux Store
   const dispatch = useDispatch();
   const isPlayingGlobal = useSelector(state => state.player.isPlaying);
+  const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
 
 
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
-
   const [isLoading, setIsLoading] = useState(true);
   const [tracksData, setTracksData] = useState([]);
-  const [performers, setPerformers] = useState([]);           // Состояние для исполнителей
-  const [years, setYears] = useState([]);                     // Состояние для года
-  const [genres, setGenres] = useState([]);                   // Состояние для жанров
-  const [error, setError] = useState(null);                   // Состояние  ошибке загрузки
-  const [playingTrackId, setPlayingTrackId] = useState(null);          // Состояние для трека
+  const [performers, setPerformers] = useState([]);                     // Состояние для исполнителей
+  const [years, setYears] = useState([]);                               // Состояние для года
+  const [genres, setGenres] = useState([]);                             // Состояние для жанров
+  const [error, setError] = useState(null);                             // Состояние  ошибке загрузки
+  const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
  
 
   useEffect(() => {
@@ -75,10 +77,11 @@ function Main() {
   }
 
 // ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
-const handleTrackClick = (track) => {
-  dispatch(setCurrentTrack(track));
-  setPlayingTrackId(track.id);
-  dispatch(playPause(true));
+const handleTrackClick = (track, index) => {
+  dispatch(setCurrentTrack(track));                   // Трек из Redux Store
+  dispatch(setCurrentTrackIndex(index));              // Индекс для визуализации трека
+  setPlayingTrackId(track.id);                        // Видимость Bar
+  dispatch(playPause(true));                          // Для отключения визуализации трека при паузе
 };
 
   return ( 
@@ -176,12 +179,12 @@ const handleTrackClick = (track) => {
               : ( 
               <>
               {!isLoading &&
-                tracksData.map((track) => (
-                  <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track)}>
+                tracksData.map((track, index) => (
+                  <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track, index)}>
                     <S.PlaylistTrack>
                       <S.TrackTitle>
                         <S.TrackTitleImg>
-                          <S.TrackTitleSvg $isPlaying={isPlayingGlobal && playingTrackId === track.id && playingTrackId === track.id} alt="music">
+                          <S.TrackTitleSvg $isPlaying={isPlayingGlobal && index === currentTrackIndex && index === currentTrackIndex} alt="music">
                             <circle cx="9" cy="9" r="7" stroke="#b7ff00" strokeWidth="1.2" fill="#222222" />
                             <use href={`${sprite}#icon-note`} />
                           </S.TrackTitleSvg>

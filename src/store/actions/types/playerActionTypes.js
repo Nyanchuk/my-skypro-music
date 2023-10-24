@@ -9,3 +9,6 @@ export const PREVIOUS_TRACK = 'PREVIOUS_TRACK';
 export const NEXT_TRACK = 'NEXT_TRACK';
 
 export const SET_TRACKS_DATA = 'SET_TRACKS_DATA';
+// анимация пульсации
+export const SET_CURRENT_TRACK_INDEX = 'SET_CURRENT_TRACK_INDEX';
+export const GET_CURRENT_TRACK_INDEX = 'GET_CURRENT_TRACK_INDEX';
