@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE } from '../types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA } from '../types/playerActionTypes.js';
 
 export const setCurrentTrack = (track) => ({
   type: SET_CURRENT_TRACK,
@@ -26,3 +26,15 @@ export const playPause = (isPlaying) => ({
   payload: isPlaying
 });
 
+export const previousTrack = () => ({
+  type: PREVIOUS_TRACK,
+});
+
+export const nextTrack = () => ({
+  type: NEXT_TRACK,
+});
+
+export const setTracks = (tracks) => ({
+  type: SET_TRACKS_DATA,
+  payload: tracks
+});

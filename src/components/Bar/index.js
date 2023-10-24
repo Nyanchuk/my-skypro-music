@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import sprite from "../../img/icon/sprite.svg";
 import * as S from './style'
 import { useDispatch, useSelector } from 'react-redux';
-import { playPause } from "../../store/actions/creators/playerActions";
+import { previousTrack, nextTrack, playPause } from "../../store/actions/creators/playerActions";
 
 const Bar = () => {
 
@@ -15,6 +15,18 @@ const Bar = () => {
   const [isLooping, setIsLooping] = useState(false);    // Состояние:изначально трек не зациклен
   const [currentTime, setCurrentTime] = useState(0);    // Состояние для текущево времени трека
   const [duration, setDuration] = useState(0);          // Состояние для общей продолжительности трека
+
+  // Треки вперед/назад
+
+  const handleNextTrack = () => {
+    dispatch(nextTrack());
+    dispatch(playPause(true));
+  };
+  
+  const handlePrevTrack = () => {
+    dispatch(previousTrack());
+    dispatch(playPause(true));
+  };
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
@@ -36,17 +48,6 @@ const Bar = () => {
       setIsPlaying(false);  // этот код выполнится, когда трек будет сменен
     };
   }, [track]);
-  // useEffect(() => {
-  //   if (track?.track_file && audioRef.current) {
-  //     audioRef.current.src = track.track_file;
-  //     audioRef.current.load();
-  //     setIsPlaying(true);
-  //   }
-    
-  //   return () => {
-  //     setIsPlaying(false);  // этот код выполнится, когда трек будет сменен
-  //   };
-  // }, [track]);
   
   useEffect(() => {
     if (isPlaying && audioRef.current) {
@@ -150,7 +151,7 @@ const Bar = () => {
               <S.BarPlayerBlock>
                 <S.BarPlayer>
                   <S.PlayerControls>
-                    <S.PlayerBtnPrev>
+                    <S.PlayerBtnPrev onClick={handlePrevTrack}>
                       <S.BtnPrevSvg alt="prev">
                         <use href={`${sprite}#icon-prev`} />
                       </S.BtnPrevSvg>
@@ -172,7 +173,7 @@ const Bar = () => {
                         </S.BtnPlaySvg>
                     }
                     </S.PlayerButtonPlay>
-                    <S.PlayerButtonNext>
+                    <S.PlayerButtonNext onClick={handleNextTrack}>
                       <S.PlayerBtnNextSvg alt="next">
                         <use href={`${sprite}#icon-next`} />
                       </S.PlayerBtnNextSvg>

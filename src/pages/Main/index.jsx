@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import * as S from './style'
 import { getFetchTracks } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { playPause, setCurrentTrack } from '../../store/actions/creators/playerActions';
+import { playPause, setCurrentTrack, setTracks } from '../../store/actions/creators/playerActions';
 
 function Main() {
   const dispatch = useDispatch();
@@ -30,6 +30,7 @@ function Main() {
     getFetchTracks()
       .then(data => {
         setTracksData(data);
+        dispatch(setTracks(data));
         setIsLoading(false);
         console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
