@@ -164,6 +164,7 @@ const Bar = () => {
                     <S.PlayerButtonPlay onClick={handlePlayPauseClick}>
                     <audio 
                     onLoadedMetadata={handleMetadataLoad}
+                    onEnded={handleNextTrack}
                     src={track?.track_file} 
                     ref={audioRef} 
                     controls 
