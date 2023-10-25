@@ -21,9 +21,11 @@ const Bar = () => {
 
   const handleNextTrack = () => {
     const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
+    if (currentTrackIndex < tracksData.length - 1) {
     dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
-    dispatch(nextTrack());
     dispatch(playPause(true));
+    }
+    dispatch(nextTrack());
   };
   
   const handlePrevTrack = () => {
@@ -31,12 +33,33 @@ const Bar = () => {
     if (currentTime > 5) {
       setCurrentTime(0);
       audioRef.current.currentTime = 0;
-    } else {
-      dispatch(setCurrentTrackIndex((currentTrackIndex - 1 + tracksData.length) % tracksData.length));
-      dispatch(previousTrack());
+    } else if (currentTrackIndex > 0) { // проверяем, что это не первый трек
+      dispatch(setCurrentTrackIndex(currentTrackIndex - 1));
       dispatch(playPause(true));
     }
+    else {
+      dispatch(previousTrack());
+    }
   };
+
+  // const handleNextTrack = () => {
+  //   const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
+  //   dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
+  //   dispatch(nextTrack());
+  //   dispatch(playPause(true));
+  //   };
+    
+  //   const handlePrevTrack = () => {
+  //   const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
+  //   if (currentTime > 5) {
+  //   setCurrentTime(0);
+  //   audioRef.current.currentTime = 0;
+  //   } else {
+  //   dispatch(setCurrentTrackIndex((currentTrackIndex - 1 + tracksData.length) % tracksData.length));
+  //   dispatch(previousTrack());
+  //   dispatch(playPause(true));
+  //   }
+  //   };
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
