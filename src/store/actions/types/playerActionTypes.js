@@ -12,3 +12,5 @@ export const SET_TRACKS_DATA = 'SET_TRACKS_DATA';
 // анимация пульсации
 export const SET_CURRENT_TRACK_INDEX = 'SET_CURRENT_TRACK_INDEX';
 export const GET_CURRENT_TRACK_INDEX = 'GET_CURRENT_TRACK_INDEX';
+// Для рандома треков
+export const SET_SHUFFLE = 'SET_SHUFFLE';

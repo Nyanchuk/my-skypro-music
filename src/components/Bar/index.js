@@ -2,13 +2,15 @@ import { useEffect, useState, useRef } from "react";
 import sprite from "../../img/icon/sprite.svg";
 import * as S from './style'
 import { useDispatch, useSelector } from 'react-redux';
-import { previousTrack, nextTrack, playPause, setCurrentTrackIndex, getCurrentTrackIndex } from "../../store/actions/creators/playerActions";
+import { previousTrack, nextTrack, playPause, setCurrentTrackIndex, getCurrentTrackIndex, setShuffle } from "../../store/actions/creators/playerActions";
 
 const Bar = () => {
 
   const dispatch = useDispatch();
   const track = useSelector(state => state.player.currentTrack) || {};
   const tracksData = useSelector(state => state.player.tracksData);
+  const shuffleMode = useSelector(state => state.player.shuffleMode);
+  const playlistOrder = useSelector(state => state.player.playlistOrder);
 
   const audioRef = useRef();                            // Создаем ref для проигрывания трека
   const [isPlaying, setIsPlaying] = useState(false);    // Состояние для остановки трека
@@ -17,18 +19,47 @@ const Bar = () => {
   const [currentTime, setCurrentTime] = useState(0);    // Состояние для текущево времени трека
   const [duration, setDuration] = useState(0);          // Состояние для общей продолжительности трека
 
+  const handleShuffleClick = () => {
+    console.log("shuffle button clicked");
+    dispatch(setShuffle(!shuffleMode));
+  };
+
   // Треки вперед/назад
 
   const handleNextTrack = () => {
-    const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
-    if (currentTrackIndex < tracksData.length - 1) {
-    dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
+    const playlistIndex = dispatch(getCurrentTrackIndex()).payload;
+    if (shuffleMode) {
+      const currentTrackIndex = playlistOrder.indexOf(playlistIndex);
+
+      if (currentTrackIndex < playlistOrder.length - 1) {   
+          dispatch(setCurrentTrackIndex(playlistOrder[currentTrackIndex + 1]));
+          
+      }
+      else {
+          dispatch(setCurrentTrackIndex(playlistOrder[0]));
+      }
+  }
+  else {
+    if (playlistIndex < tracksData.length - 1) {
+    dispatch(setCurrentTrackIndex((playlistIndex + 1) % tracksData.length));
     dispatch(playPause(true));
     }
     dispatch(nextTrack());
+  }
   };
   
   const handlePrevTrack = () => {
+    if (shuffleMode) {
+      const currentTrackIndex = playlistOrder.indexOf(currentTrackIndex);
+      
+      if (currentTrackIndex > 0) {
+          dispatch(setCurrentTrackIndex(playlistOrder[currentTrackIndex - 1]));
+      }
+      else {
+          dispatch(setCurrentTrackIndex(playlistOrder[playlistOrder.length - 1]));
+      }    
+  }
+  else {
     const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
     if (currentTime > 5) {
       setCurrentTime(0);
@@ -40,26 +71,8 @@ const Bar = () => {
     else {
       dispatch(previousTrack());
     }
+  }
   };
-
-  // const handleNextTrack = () => {
-  //   const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
-  //   dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
-  //   dispatch(nextTrack());
-  //   dispatch(playPause(true));
-  //   };
-    
-  //   const handlePrevTrack = () => {
-  //   const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
-  //   if (currentTime > 5) {
-  //   setCurrentTime(0);
-  //   audioRef.current.currentTime = 0;
-  //   } else {
-  //   dispatch(setCurrentTrackIndex((currentTrackIndex - 1 + tracksData.length) % tracksData.length));
-  //   dispatch(previousTrack());
-  //   dispatch(playPause(true));
-  //   }
-  //   };
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА
   useEffect(() => {
@@ -220,7 +233,7 @@ const Bar = () => {
                       }
                       </S.PlayerBtnRepeatSvg>
                     </S.PlayerBtnRepeat>
-                    <S.PlayerBtnShuffle>
+                    <S.PlayerBtnShuffle onClick={handleShuffleClick}>
                       <S.PlayerBtnShuffleSvg alt="shuffle">
                         <use href={`${sprite}#icon-shuffle`} />
                       </S.PlayerBtnShuffleSvg>

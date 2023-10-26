@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX } from '../types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE } from '../types/playerActionTypes.js';
 
 export const setCurrentTrack = (track) => ({
   type: SET_CURRENT_TRACK,
@@ -47,3 +47,11 @@ export const setCurrentTrackIndex = (index) => ({
 export const getCurrentTrackIndex = () => ({
   type: GET_CURRENT_TRACK_INDEX
 });
+
+export const setShuffle = (shuffleMode) => {
+  console.log("setShuffle action dispatched with shuffleMode:" + shuffleMode);
+  return {
+    type: SET_SHUFFLE,
+    payload: shuffleMode,
+  };
+};
