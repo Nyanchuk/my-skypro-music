@@ -49,10 +49,10 @@ const Bar = () => {
   
   const handlePrevTrack = () => {
     if (shuffleMode) {
-      const currentTrackIndex = playlistOrder.indexOf(currentTrackIndex);
+      const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);
       
       if (currentTrackIndex > 0) {
-          dispatch(setCurrentTrackIndex(playlistOrder[currentTrackIndex - 1]));
+          dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex - 1]));
       }
       else {
           dispatch(setCurrentTrackIndex(playlistOrder[playlistOrder.length - 1]));
