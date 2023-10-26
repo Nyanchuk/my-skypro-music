@@ -66,6 +66,7 @@ export default function playerReducer(state = initialState, action) {
     return {...state, currentTrack: state.tracksData[nextIndex], currentTrackIndex: nextIndex};
 
     case SET_CURRENT_TRACK_INDEX:
+      console.log('SET_CURRENT_TRACK_INDEX reducer called with payload', action.payload);
       return {...state, currentTrackIndex: action.payload};
     case GET_CURRENT_TRACK_INDEX:
       return {...state, currentTrackIndex: state.currentTrackIndex};

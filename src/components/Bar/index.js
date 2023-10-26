@@ -11,6 +11,8 @@ const Bar = () => {
   const tracksData = useSelector(state => state.player.tracksData);
   const shuffleMode = useSelector(state => state.player.shuffleMode);
   const playlistOrder = useSelector(state => state.player.playlistOrder);
+  const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
+  
 
   const audioRef = useRef();                            // Создаем ref для проигрывания трека
   const [isPlaying, setIsPlaying] = useState(false);    // Состояние для остановки трека
@@ -27,25 +29,22 @@ const Bar = () => {
   // Треки вперед/назад
 
   const handleNextTrack = () => {
-    const playlistIndex = dispatch(getCurrentTrackIndex()).payload;
     if (shuffleMode) {
-      const currentTrackIndex = playlistOrder.indexOf(playlistIndex);
-
-      if (currentTrackIndex < playlistOrder.length - 1) {   
-          dispatch(setCurrentTrackIndex(playlistOrder[currentTrackIndex + 1]));
-          
-      }
+      const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);
+    if (currentOrderIndex < playlistOrder.length - 1) {
+      dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex + 1]));  
+    } 
       else {
           dispatch(setCurrentTrackIndex(playlistOrder[0]));
       }
-  }
-  else {
-    if (playlistIndex < tracksData.length - 1) {
-    dispatch(setCurrentTrackIndex((playlistIndex + 1) % tracksData.length));
-    dispatch(playPause(true));
     }
-    dispatch(nextTrack());
-  }
+    else {
+      if (currentTrackIndex < tracksData.length - 1) {
+        dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
+        dispatch(playPause(true));
+      }
+      dispatch(nextTrack());
+    }
   };
   
   const handlePrevTrack = () => {
