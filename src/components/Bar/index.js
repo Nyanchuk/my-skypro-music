@@ -234,7 +234,10 @@ const Bar = () => {
                     </S.PlayerBtnRepeat>
                     <S.PlayerBtnShuffle onClick={handleShuffleClick}>
                       <S.PlayerBtnShuffleSvg alt="shuffle">
-                        <use href={`${sprite}#icon-shuffle`} />
+                      {shuffleMode 
+                        ? <use href={`${sprite}#icon-shuffled`} /> 
+                        : <use href={`${sprite}#icon-shuffle`} />
+                      }
                       </S.PlayerBtnShuffleSvg>
                     </S.PlayerBtnShuffle>
                   </S.PlayerControls>
