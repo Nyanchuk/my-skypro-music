@@ -43,7 +43,7 @@ const Bar = () => {
         dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
         dispatch(playPause(true));
       }
-      dispatch(nextTrack());
+      // dispatch(nextTrack());
     }
   };
   
