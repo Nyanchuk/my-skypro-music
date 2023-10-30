@@ -14,3 +14,7 @@ export const SET_CURRENT_TRACK_INDEX = 'SET_CURRENT_TRACK_INDEX';
 export const GET_CURRENT_TRACK_INDEX = 'GET_CURRENT_TRACK_INDEX';
 // Для рандома треков
 export const SET_SHUFFLE = 'SET_SHUFFLE';
+// Для добавления треков в "Избранное"
+export const ADD_TRACK_FAVORITES = 'ADD_TRACK_FAVORITES';
+// Для удаления треков в "Избранное"
+export const REMOVE_TRACK_FAVORITES = 'REMOVE_TRACK_FAVORITES';
