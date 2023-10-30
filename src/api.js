@@ -20,23 +20,27 @@ export async function getFetchTracks() {
 }
 
 // АПИ КАТЕГОРИЙ
-  export async function getFetchTracksFavorite() {
-    const token = localStorage.getItem('User');
-    try {
-        const response = await fetch(trackFavorite, {
-            headers: {
-            'Authorization': `Bearer ${token}`
-            }
-        });
-        if (!response.ok) {
-            throw new Error('Ошибка получения данных');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-       console.error('Ошибка получения данных:', error);
-       throw error;
+export async function getFetchTracksFavorite() {
+  try {
+    const tokenArray = JSON.parse(localStorage.getItem('User'));
+    const token = tokenArray.access;
+    
+    const response = await fetch(trackFavorite, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка получения данных');
     }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Ошибка получения данных:', error);
+    throw error;
+  }
 }
 
 // АПИ РЕГИСТРАЦИИ
