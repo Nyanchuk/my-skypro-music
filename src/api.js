@@ -21,11 +21,11 @@ export async function getFetchTracks() {
 
 // АПИ КАТЕГОРИЙ
   export async function getFetchTracksFavorite() {
-    const your_token = '';
+    const token = localStorage.getItem('User');
     try {
         const response = await fetch(trackFavorite, {
             headers: {
-            'Authorization': `Bearer ${your_token}`
+            'Authorization': `Bearer ${token}`
             }
         });
         if (!response.ok) {
