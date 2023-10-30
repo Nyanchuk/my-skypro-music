@@ -6,6 +6,7 @@ import Bar from '../../components/Bar/index';
 import TrackSkeleton from '../../components/Skeleton/index'; 
 import React, { useState, useEffect } from 'react';
 import * as S from './style'
+import { getFetchTracksFavorite } from '../../api';
 
 const performers = ["Nero", "Dynoro, Outwork, Mr. Gee", "Ali Bakgor", "Стоункат, Psychopath"];
 const years = ["1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000"];
@@ -91,39 +92,58 @@ const tracksData = [
 
 function MyTracks() {
 
-// СКЕЛЕТОН
   const [isLoading, setIsLoading] = useState(true);
+  const [tracksData, setTracksData] = useState([]);
+  const [performers, setPerformers] = useState([]);     // state 1
+  const [years, setYears] = useState([]);               // state 2
+  const [genres, setGenres] = useState([]);             // state 3
+  const [error, setError] = useState(null);             // Ошибка при подгрузке треков
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
+    getFetchTracksFavorite()
+      .then(data => {
+        setTracksData(data);
+        setIsLoading(false);
+        console.log(data);
+        const uniquePerformers = [...new Set(data.map((track) => track.author))];
+        setPerformers(uniquePerformers);      // Заполнение state 1 с исполнителями, полученными из GET-запроса
+        const uniqueYears = [...new Set(data.map((track) => track.release_date))];
+        setYears(uniqueYears);                // Заполнение state 2 с годами, полученными из GET-запроса
+        const uniqueGenres = [...new Set(data.map((track) => track.genre))];
+        setGenres(uniqueGenres);              // Заполнение state 3 с жанрами, полученными из GET-запроса
+      })
+      .catch(error => {
+        setError("Произошла ошибка при загрузке треков: " + error.message);
+        setIsLoading(false);
+      });
   }, []);
 
-  const grayRectangles = Array(15).fill({});
+// СКЕЛЕТОН
 
-// -----ИСПОЛНИТЕЛИ-----
-  const [showPerformers, setShowPerformers] = useState(false);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setIsLoading(false);
+  }, 5000);
 
-  const handlePerformersClick = () => {
-    setShowPerformers((prev) => !prev);
-  };
+  return () => clearTimeout(timer);
+}, []);
 
-// -----ГОД ВЫПУСКА-----
-  const [showYears, setShowYears] = useState(false);
+const grayRectangles = Array(15).fill({});
 
-  const handleYearsClick = () => {
-    setShowYears((prev) => !prev);
-  };
+// УНИВЕРСАЛЬНЫЙ ФИЛЬТР
 
-// -----ЖАНРЫ-----
-  const [showGenres, setshowGenres] = useState(false);
+const [activeFilter, setActiveFilter] = useState(null); // 'performers', 'years', 'genres' или null, если нет активных фильтров
 
-  const handleGenresClick = () => {
-    setshowGenres((prev) => !prev);
-  };
+const handleFilterClick = (filterName) => {
+  setActiveFilter(prev => prev === filterName ? null : filterName); // если фильтр уже активен, мы его деактивируем (устанавливаем null), в противном случае активируем нажатый фильтр
+};
+
+// ВРЕМЯ ТРЕКА В МИНУТАХ
+function convertSecondsToMinutes(timeInSeconds) {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = timeInSeconds % 60;
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
 
   return ( 
     <S.Wrapper>
@@ -141,16 +161,16 @@ function MyTracks() {
           <S.CenterBlockFilter>
             <S.FilterTitle>Искать по:</S.FilterTitle>
 
-          {/* ПОИСК ПО ИСПОЛНИТЕЛЮ */}
+         {/* ПОИСК ПО ИСПОЛНИТЕЛЮ */}
 
-            <S.FilterPerformWrap>
+         <S.FilterPerformWrap>
               <div
                 className="filter__button _btn-text"
-                onClick={handlePerformersClick}
+                onClick={() => handleFilterClick('performers')}
               >Исполнителю
               </div>
 
-              {showPerformers && (
+              {activeFilter === 'performers' && (
                 <S.FilterPerformList>
                   {performers.map((performer, index) => (
                     <S.FilterPerformItem key={index}>
@@ -166,11 +186,11 @@ function MyTracks() {
             <S.FilterPerformWrap>
               <div
                 className="filter__button button-author _btn-text"
-                onClick={handleYearsClick}
+                onClick={() => handleFilterClick('years')}
               >году выпуска 
               </div>
 
-              {showYears && (
+              {activeFilter === 'years' && (
                 <S.FilterPerformList>
                   {years.map((years, index) => (
                     <S.FilterPerformItem key={index}>
@@ -186,11 +206,11 @@ function MyTracks() {
             <S.FilterPerformWrap>
               <div
                 className="filter__button button-author _btn-text"
-                onClick={handleGenresClick}
+                onClick={() => handleFilterClick('genres')}
               >жанру
               </div>
 
-              {showGenres && (
+              {activeFilter === 'genres' && (
                 <S.FilterPerformList>
                   {genres.map((genres, index) => (
                     <S.FilterPerformItem key={index}>
@@ -214,7 +234,7 @@ function MyTracks() {
               </S.PlaylistTitleCol>
             </S.ContentTitle>
             <S.ContentPlaylist>
-
+            {error && <p>{error}</p>}
             {isLoading
               ? Array.from({ length: 11 }).map((_, index) => <TrackSkeleton key={index} />)
               : ( 
@@ -231,7 +251,7 @@ function MyTracks() {
                         </S.TrackTitleImg>
                         <S.TrackTitleText>
                           <S.TrackTitleLink href="http://">
-                            {track.title}
+                            {track.name}
                             {track.subtitle && <S.TrackTitleSpan>{track.subtitle}</S.TrackTitleSpan>}
                           </S.TrackTitleLink>
                         </S.TrackTitleText>
@@ -250,7 +270,7 @@ function MyTracks() {
                         <S.TrackTimeSvg alt="time">
                           <use href={`${sprite}#icon-like`} />
                         </S.TrackTimeSvg>
-                        <S.TrackTimeText>{track.time}</S.TrackTimeText>
+                        <S.TrackTimeText>{convertSecondsToMinutes(track.duration_in_seconds)}</S.TrackTimeText>
                       </S.TrackTime>
                     </S.PlaylistTrack>
                   </S.PlaylistItem>

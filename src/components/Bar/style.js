@@ -17,11 +17,36 @@ display: flex;
 -ms-flex-direction: column;
 flex-direction: column;
 `
-export const BarPlayerProgress = styled.div`
-width: 100%;
-height: 5px;
-background: #2e2e2e;
+export const BarPlayerProgress = styled.input.attrs( props => ({
+  style: {
+    background: `linear-gradient(
+      to right, 
+      #a9fd0d 0%, #a9fd0d ${(props.value / props.max) * 100}%, 
+      #383838 ${(props.value / props.max) * 100}%, #383838 100%
+    )`
+  },
+  type: 'range',
+}))
 `
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  outline: none;
+  transition: opacity .2s;
+  border-radius: 1.3px;
+  &::-webkit-slider-thumb {
+     -webkit-appearance: none;
+     height: 18px;
+     width: 18px;
+     border-radius: 50%;
+     cursor: pointer;
+     margin-top: -5px;
+     border: 1px solid #a9fd0d;
+     background-color: #383838;
+  }
+  `;
+
 export const BarPlayerBlock = styled.div`
 height: 73px;
 display: -webkit-box;
@@ -151,6 +176,7 @@ ${StyledGlobalButtonIcon} {
     stroke: #ffffff;
     
 }
+}
 `
 export const PlayerBtnRepeatSvg = styled.svg`
 width: 18px;
@@ -175,6 +201,7 @@ ${StyledGlobalButtonIcon} {
     fill: transparent;
     stroke: #ffffff;
     
+}
 }
 `
 export const PlayerBtnShuffleSvg = styled.svg`
@@ -280,6 +307,7 @@ ${StyledGlobalButtonIcon} {
     fill: transparent;
     stroke: #ffffff; 
 }
+}
 `
 export const TrackPlayLikeSvg = styled.svg`
 width: 14px;
@@ -299,6 +327,7 @@ ${StyledGlobalButtonIcon} {
   &:active svg {
     fill: transparent;
     stroke: #ffffff; 
+}
 }
 `
 export const TrackPlayDislikeSvg = styled.svg`
@@ -351,31 +380,50 @@ ${StyledGlobalButtonStyles} {
   cursor: pointer;
 }
 `
-export const VolumeProgressLine = styled.input`
--webkit-appearance: none;
-appearance: none;
-height: 3px;
-border-radius: 3px;
-background-color: #a9fd0d;
-&::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid #a9fd0d;
-  background-color: #383838; 
-  cursor: pointer;
-}
-&::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid #a9fd0d;
-  background-color: #383838; 
-  cursor: pointer;
-}
-${StyledGlobalButtonStyles} {
-  cursor: pointer;
-}
+
+export const VolumeProgressLine = styled.input.attrs( props => ({
+  style: {
+    background: `linear-gradient(
+      to right, 
+      #a9fd0d 0%, #a9fd0d ${(props.value / props.max) * 100}%, 
+      #383838 ${(props.value / props.max) * 100}%, #383838 100%
+    )`
+  },
+  type: 'range',
+}))
 `
+  -webkit-appearance: none; 
+  appearance: none;
+  height: 3px;
+  outline: none;
+  transition: opacity .2s;
+  border-radius: 1.3px;
+  &::-webkit-slider-thumb {
+     -webkit-appearance: none;
+     height: 18px;
+     width: 18px;
+     border-radius: 50%;
+     cursor: pointer;
+     margin-top: -3px;
+     border: 1px solid #a9fd0d;
+     background-color: #383838;
+  }
+  &::-moz-range-thumb {
+     width: 18px;
+     height: 18px;
+     border-radius: 50%;
+     border: 1px solid #a9fd0d;
+     background-color: #383838; 
+     cursor: pointer;
+   }
+   ${StyledGlobalButtonStyles} {
+     cursor: pointer;
+   }
+  `;
+
+  export const RemainingTime = styled.div`
+  margin-right: 25px;
+  `
+  export const CurrentTime = styled.div`
+  margin-left: 25px;
+  `

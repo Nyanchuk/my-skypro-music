@@ -25,6 +25,7 @@ export const ModalFormLogin = styled.form`
 width: 366px;
 height: 439px;
 background-color: #FFFFFF;
+box-shadow: 0 0 7px #ffffff;
 border-radius: 12px;
 display: -webkit-box;
 display: -ms-flexbox;
@@ -90,4 +91,35 @@ transition: all .4s;
 &:active {
   background-color: #d9d9d9;
 }
+`
+export const ModalInputError = styled.div`
+max-width: 366px;
+padding-top: 5px;
+padding-bottom: 5px;
+margin-top: 10px;
+margin-bottom: 10px;
+text-align: center;
+color: black;
+background-color: #b7e900;
+border: 1px solid #b7e900;
+box-shadow: 0 0 5px #b7e900;
+border-radius: 10px;
+transition: all .3s;
+`
+export const ModalError = styled.div`
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+margin-top: 10px;
+background-color: #b7e900;
+border: 1px solid #b7e900;
+border-radius: 10px;
+box-shadow: 0 0 7px #b7e900;
+width: 366px;
+height: 40px;
+`
+export const ModalErrorText = styled.a`
+text-align: center;
+color: black;
 `
