@@ -1,17 +1,14 @@
 import { Route, Routes } from "react-router-dom"
 import Authorization from "./pages/Authorization/index"
 import Registration from "./pages/Registration/index"
-import Main from "./pages/Main/index"
+import PageLayout from "./pages/PageLoyuot/index"
 import { ProtectedRoute } from "./components/Protection"
-import PlaylistPage from "./pages/Playlists/PlaylistPage"
-import { useParams } from "react-router-dom";
-import MyTracks from "./pages/My tracks"
-import UserContext, { useUser } from "./Context"
+import UserContext from "./Context"
 import { useContext } from "react"
 
 export const AppRoutes = () => {
 
-    const { userToken } = useContext(UserContext); // Получаем userToken из контекста
+    const { userToken } = useContext(UserContext); // Получаем userToken для входа
 
     return (
         <Routes>
@@ -27,17 +24,23 @@ export const AppRoutes = () => {
                 </ProtectedRoute>
             } /> */}
 
-            <Route path="/" element= {
+            <Route
+                path="/"
+                element={
                 <ProtectedRoute isAllowed={Boolean(userToken)}>
-                    <Main />
-            </ProtectedRoute>
-            }></Route>
+                    <PageLayout />
+                </ProtectedRoute>
+                }
+            />
 
-            <Route path="/favorites" element= {
+            <Route
+                path="/favorites"
+                element={
                 <ProtectedRoute isAllowed={Boolean(userToken)}>
-                    <MyTracks />
-            </ProtectedRoute>
-            }></Route>
+                    <PageLayout />
+                </ProtectedRoute>
+                }
+            />
         </Routes>
     )
 }

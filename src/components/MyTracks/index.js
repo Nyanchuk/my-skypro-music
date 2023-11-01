@@ -7,97 +7,24 @@ import TrackSkeleton from '../../components/Skeleton/index';
 import React, { useState, useEffect } from 'react';
 import * as S from './style'
 import { getFetchTracksFavorite } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../../store/actions/creators/playerActions';
 
-const performers = ["Nero", "Dynoro, Outwork, Mr. Gee", "Ali Bakgor", "Стоункат, Psychopath"];
-const years = ["1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000"];
-const genres = ["Классическая музыка", "Народная музыка", "Латиноамериканская музыка", "Блюз", "Ритм-н-блюз", "Джаз", "Шансон", "Электронная музыка", "Рок", "Рок-н-ролл"];
+function MyTracks({ onTrackClick }) {
 
-const tracksData = [
-  {
-    id: 1,
-    title: "Guilt",
-    author: "Nero",
-    album: "Welcome Reality",
-    time: "4:44",
-  },
-  {
-    id: 2,
-    title: "Elektro",
-    author: "Dynoro, Outwork, Mr. Gee",
-    album: "Elektro",
-    time: "2:22",
-  },
-  {
-    id: 3,
-    title: "I'm Fire",
-    author: "Ali Bakgor",
-    album: "I’m Fire",
-    time: "2:22",
-  },
-  {
-    id: 4,
-    title: "Non Stop",
-    author: "Стоункат, Psychopath",
-    album: "Non Stop",
-    subtitle: "(Remix)",
-    time: "4:12",
-  },
-  {
-    id: 5,
-    title: "Run Run",
-    author: "Jaded, Will Clarke, AR/CO",
-    album: "Run Run",
-    subtitle: "(feat. AR/CO)",
-    time: "2:54",
-  },
-  {
-    id: 6,
-    title: "Eyes on Fire",
-    author: "Blue Foundation, Zeds Dead",
-    album: "Eyes on Fire",
-    subtitle: "(Zeds Dead Remix)",
-    time: "5:20",
-  },
-  {
-    id: 7,
-    title: "Mucho Bien",
-    author: "HYBIT, Mr. Black, Offer Nissim, Hi Profile",
-    album: "Mucho Bien",
-    subtitle: "(Hi Profile Remix)",
-    time: "3:41",
-  },
-  {
-    id: 8,
-    title: "Knives n Cherries",
-    author: "minthaze",
-    album: "Captivating",
-    time: "1:48",
-  },
-  {
-    id: 9,
-    title: "Knives n Cherries",
-    author: "minthaze",
-    album: "Captivating",
-    subtitle: "(Hi Profile Remix)",
-    time: "1:48",
-  },
-  {
-    id: 10,
-    title: "How Deep Is Your Love",
-    author: "Calvin Harris, Disciples",
-    album: "How Deep Is Your Love",
-    time: "3:32",
-  },
-];
+    const dispatch = useDispatch();
+    const isPlayingGlobal = useSelector(state => state.player.isPlaying);
+    const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
 
-function MyTracks() {
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [tracksData, setTracksData] = useState([]);
-  const [performers, setPerformers] = useState([]);     // state 1
-  const [years, setYears] = useState([]);               // state 2
-  const [genres, setGenres] = useState([]);             // state 3
-  const [error, setError] = useState(null);             // Ошибка при подгрузке треков
+    // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
+    const [isLoading, setIsLoading] = useState(true);
+    const [tracksData, setTracksData] = useState([]);
+    const [performers, setPerformers] = useState([]);                     // Состояние для исполнителей
+    const [years, setYears] = useState([]);                               // Состояние для года
+    const [genres, setGenres] = useState([]);                             // Состояние для жанров
+    const [error, setError] = useState(null);                             // Состояние  ошибке загрузки
+    const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
+   
 
   useEffect(() => {
     getFetchTracksFavorite()
@@ -145,11 +72,24 @@ function convertSecondsToMinutes(timeInSeconds) {
   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
+// ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
+const handleTrackClick = (track, index) => {
+    dispatch(setCurrentTrack(track));                   // Трек из Redux Store
+    dispatch(setCurrentTrackIndex(index));              // Индекс для визуализации трека
+  //   setPlayingTrackId(track.id);                        // Видимость Bar
+    dispatch(playPause(true));                          // Для отключения визуализации трека при паузе
+    onTrackClick(track, index);
+  };
+  
+  useEffect(() => {
+      if (playingTrackId !== null) {
+        const selectedTrack = tracksData.find((track) => track.id === playingTrackId);
+        const selectedIndex = tracksData.indexOf(selectedTrack);
+        handleTrackClick(selectedTrack, selectedIndex);
+      }
+    }, [playingTrackId]);
+
   return ( 
-    <S.Wrapper>
-    <S.Container>
-      <S.Main>
-        <Burger />
         <S.MainCenterBlock>
           <S.CenterBlockSearch>
             <S.SearchSvg>
@@ -240,17 +180,18 @@ function convertSecondsToMinutes(timeInSeconds) {
               : ( 
               <>
               {!isLoading &&
-                tracksData.map((track) => (
-                  <S.PlaylistItem key={track.id}>
+                tracksData.map((track, index) => (
+                  <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track, index)}>
                     <S.PlaylistTrack>
                       <S.TrackTitle>
                         <S.TrackTitleImg>
-                          <S.TrackTitleSvg alt="music">
+                        <S.TrackTitleSvg $isPlaying={isPlayingGlobal && index === currentTrackIndex && index === currentTrackIndex} alt="music">
+                            <circle cx="9" cy="9" r="7" stroke="#b7ff00" strokeWidth="1.2" fill="#222222" />
                             <use href={`${sprite}#icon-note`} />
-                          </S.TrackTitleSvg>
+                        </S.TrackTitleSvg>
                         </S.TrackTitleImg>
                         <S.TrackTitleText>
-                          <S.TrackTitleLink href="http://">
+                          <S.TrackTitleLink>
                             {track.name}
                             {track.subtitle && <S.TrackTitleSpan>{track.subtitle}</S.TrackTitleSpan>}
                           </S.TrackTitleLink>
@@ -280,12 +221,6 @@ function convertSecondsToMinutes(timeInSeconds) {
             </S.ContentPlaylist>
           </S.CenterBlockContent>
         </S.MainCenterBlock>
-        <Sidebar />
-      </S.Main>
-      <Bar />
-      <S.Footer></S.Footer>
-    </S.Container>
-    </S.Wrapper>
   ); 
 }
 
