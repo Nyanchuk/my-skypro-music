@@ -30,6 +30,7 @@ function MyTracks({ onTrackClick }) {
     getFetchTracksFavorite()
       .then(data => {
         setTracksData(data);
+        dispatch(setTracks(data));
         setIsLoading(false);
         console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
