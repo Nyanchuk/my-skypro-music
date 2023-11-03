@@ -30,7 +30,7 @@ const Main = ({ onTrackClick }) => {
     getFetchTracks()
       .then(data => {
         setTracksData(data);
-        dispatch(setTracks(data));
+        // dispatch(setTracks(data));
         setIsLoading(false);
         console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
@@ -76,10 +76,11 @@ const Main = ({ onTrackClick }) => {
 
 // ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
 const handleTrackClick = (track, index) => {
-  dispatch(setCurrentTrack(track));                   // Трек из Redux Store
-  dispatch(setCurrentTrackIndex(index));              // Индекс для визуализации трека
-//   setPlayingTrackId(track.id);                        // Видимость Bar
-  dispatch(playPause(true));                          // Для отключения визуализации трека при паузе
+    dispatch(setTracks(tracksData)); // Отправляем массив в стор
+    dispatch(setCurrentTrack(track));  // Трек из Redux Store
+    dispatch(setCurrentTrackIndex(index)); // Индекс для визуализации трека
+//   setPlayingTrackId(track.id);  // Видимость Bar
+  dispatch(playPause(true)); // Для отключения визуализации трека при паузе
   onTrackClick(track, index);
 };
 

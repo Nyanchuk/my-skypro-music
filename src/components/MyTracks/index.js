@@ -30,7 +30,7 @@ function MyTracks({ onTrackClick }) {
     getFetchTracksFavorite()
       .then(data => {
         setTracksData(data);
-        dispatch(setTracks(data));
+        // dispatch(setTracks(data));
         setIsLoading(false);
         console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
@@ -75,6 +75,7 @@ function convertSecondsToMinutes(timeInSeconds) {
 
 // ФУНКЦИЯ ПРИ НАЖАТИИ НА ТРЕК
 const handleTrackClick = (track, index) => {
+    dispatch(setTracks(tracksData));
     dispatch(setCurrentTrack(track));                   // Трек из Redux Store
     dispatch(setCurrentTrackIndex(index));              // Индекс для визуализации трека
   //   setPlayingTrackId(track.id);                        // Видимость Bar
