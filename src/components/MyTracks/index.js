@@ -77,7 +77,7 @@ function convertSecondsToMinutes(timeInSeconds) {
 const handleTrackClick = (track, index) => {
     dispatch(setTracks(tracksData));
     dispatch(setCurrentTrack(track));                   // Трек из Redux Store
-    dispatch(setCurrentTrackIndex(index));              // Индекс для визуализации трека
+    dispatch(setCurrentTrackIndex(track));            // Индекс для визуализации трека
   //   setPlayingTrackId(track.id);                        // Видимость Bar
     dispatch(playPause(true));                          // Для отключения визуализации трека при паузе
     onTrackClick(track, index);
@@ -182,12 +182,12 @@ const handleTrackClick = (track, index) => {
               : ( 
               <>
               {!isLoading &&
-                tracksData.map((track, index) => (
-                  <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track, index)}>
+                tracksData.map((track) => (
+                  <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track)}>
                     <S.PlaylistTrack>
                       <S.TrackTitle>
                         <S.TrackTitleImg>
-                        <S.TrackTitleSvg $isPlaying={isPlayingGlobal && index === currentTrackIndex && index === currentTrackIndex} alt="music">
+                        <S.TrackTitleSvg $isPlaying={isPlayingGlobal && track.id === currentTrackIndex} alt="music">
                             <circle cx="9" cy="9" r="7" stroke="#b7ff00" strokeWidth="1.2" fill="#222222" />
                             <use href={`${sprite}#icon-note`} />
                         </S.TrackTitleSvg>

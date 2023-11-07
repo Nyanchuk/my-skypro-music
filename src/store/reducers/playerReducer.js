@@ -51,19 +51,22 @@ export default function playerReducer(state = initialState, action) {
     // Для переключения треков вперед/назад
     case SET_TRACKS_DATA:
       return {...state, tracksData: action.payload};
-    case PREVIOUS_TRACK: 
-    const previousIndex = state.tracksData.findIndex(track => track.id === state.currentTrack.id) - 1;
-    if (previousIndex < 0) {
-      return state;
-    }
-    return {...state, currentTrack: state.tracksData[previousIndex], currentTrackIndex: previousIndex};
+      case PREVIOUS_TRACK:
+        const previousId = state.currentTrack.id - 1;
+        const previousTrack = state.tracksData.find(track => track.id === previousId);
+        if (!previousTrack) {
+          return state;
+        }
+        return {...state, currentTrack: previousTrack, currentTrackIndex: previousId};
     
-    case NEXT_TRACK: 
-    const nextIndex = state.tracksData.findIndex(track => track.id === state.currentTrack.id) + 1;
-    if (nextIndex >= state.tracksData.length) {
-      return state; 
-    }
-    return {...state, currentTrack: state.tracksData[nextIndex], currentTrackIndex: nextIndex};
+        case NEXT_TRACK:
+          const nextId = state.currentTrack.id + 1;
+          const nextTrack = state.tracksData.find(track => track.id === nextId);
+          if (!nextTrack) {
+            return state; 
+          }
+          return {...state, currentTrack: nextTrack, currentTrackIndex: nextId};
+        
 
     // case SET_CURRENT_TRACK_INDEX:
     //   console.log('SET_CURRENT_TRACK_INDEX reducer called with payload', action.payload);

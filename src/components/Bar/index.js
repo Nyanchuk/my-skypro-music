@@ -7,8 +7,9 @@ import { previousTrack, nextTrack, playPause, setCurrentTrackIndex, getCurrentTr
 const Bar = () => {
 
   const dispatch = useDispatch();
-  const track = useSelector(state => state.player.currentTrack) || {};
+  const currentTrackId = useSelector(state => state.player.currentTrackIndex) || {};
   const tracksData = useSelector(state => state.player.tracksData);
+  const track = tracksData.find(track => track.id === currentTrackId) || {};
   const shuffleMode = useSelector(state => state.player.shuffleMode);
   const playlistOrder = useSelector(state => state.player.playlistOrder);
   const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
@@ -28,49 +29,101 @@ const Bar = () => {
 
   // Треки вперед/назад
 
+  // // СТАРЫЙ
+  // const handleNextTrack = () => {
+  //   if (shuffleMode) {
+  //     const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
+  //     if (currentOrderIndex < playlistOrder.length - 1) {
+  //       dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex + 1]));
+  //     } else {
+  //       dispatch(setCurrentTrackIndex(playlistOrder[0]));
+  //     }
+  //   }
+  //     else {
+  //     if (currentTrackId < tracksData.length - 1) {
+  //       const nextTrack = tracksData.find(track => track.id === (currentTrackId + 1));
+  //       if (nextTrack) {
+  //         dispatch(setCurrentTrackIndex(nextTrack));
+  //         dispatch(playPause(true));
+  //       }
+  //     }
+  //   }
+  // };
+
+  // НОВЫЙ
   const handleNextTrack = () => {
     if (shuffleMode) {
-      const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);
-    if (currentOrderIndex < playlistOrder.length - 1) {
-      dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex + 1]));  
-    } 
+      const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
+      if (currentOrderIndex < playlistOrder.length - 1) {
+        dispatch(setCurrentTrackIndex(tracksData[playlistOrder[currentOrderIndex + 1]]));  
+      } 
       else {
-          dispatch(setCurrentTrackIndex(playlistOrder[0]));
+        dispatch(setCurrentTrackIndex(tracksData[playlistOrder[0]]));
       }
     }
     else {
-      if (currentTrackIndex < tracksData.length - 1) {
-        dispatch(setCurrentTrackIndex((currentTrackIndex + 1) % tracksData.length));
-        dispatch(playPause(true));
+      if (currentTrackId < tracksData.length - 1) {
+        const nextTrack = tracksData.find(track => track.id === (currentTrackId + 1));
+        if (nextTrack) {
+          dispatch(setCurrentTrackIndex(nextTrack));
+          dispatch(playPause(true));
+        }
       }
-      // dispatch(nextTrack());
     }
   };
   
+  // СТАРЫЙ
+  // const handlePrevTrack = () => {
+  //   if (shuffleMode) {
+  //     const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);
+      
+  //     if (currentTrackIndex > 0) {
+  //         dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex - 1]));
+  //     }
+  //     else {
+  //         dispatch(setCurrentTrackIndex(playlistOrder[playlistOrder.length - 1]));
+  //     }    
+  // }
+  // else {
+  //   const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
+  //   if (currentTime > 5) {
+  //     setCurrentTime(0);
+  //     audioRef.current.currentTime = 0;
+  //   } else if (currentTrackIndex > 0) { // проверяем, что это не первый трек
+  //     dispatch(setCurrentTrackIndex(currentTrackIndex - 1));
+  //     dispatch(playPause(true));
+  //   }
+  //   else {
+  //     dispatch(previousTrack());
+  //   }
+  // }
+  // };
+
+  // НОВЫЙ
   const handlePrevTrack = () => {
     if (shuffleMode) {
-      const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);
+      const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
       
-      if (currentTrackIndex > 0) {
-          dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex - 1]));
-      }
-      else {
-          dispatch(setCurrentTrackIndex(playlistOrder[playlistOrder.length - 1]));
+      if (currentOrderIndex > 0) {
+        dispatch(setCurrentTrackIndex(tracksData[playlistOrder[currentOrderIndex - 1]]));
+      } else {
+        dispatch(setCurrentTrackIndex(tracksData[playlistOrder[playlistOrder.length - 1]]));
       }    
-  }
-  else {
-    const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
-    if (currentTime > 5) {
-      setCurrentTime(0);
-      audioRef.current.currentTime = 0;
-    } else if (currentTrackIndex > 0) { // проверяем, что это не первый трек
-      dispatch(setCurrentTrackIndex(currentTrackIndex - 1));
-      dispatch(playPause(true));
+    } else {
+      if (currentTime > 5) {
+        setCurrentTime(0);
+        audioRef.current.currentTime = 0;
+      } else if (currentTrackId > 0) {
+        const prevTrack = tracksData.find(track => track.id === (currentTrackId - 1));
+        if (prevTrack) {
+          dispatch(setCurrentTrackIndex(prevTrack));
+          dispatch(playPause(true));
+        }
+        else {
+          dispatch(previousTrack());
+        }
+      }
     }
-    else {
-      dispatch(previousTrack());
-    }
-  }
   };
 
   // ВСЕ ЧТО КАСАЕТСЯ ВКЛЮЧЕНИЯ ТРЕКА

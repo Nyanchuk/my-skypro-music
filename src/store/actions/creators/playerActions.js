@@ -39,11 +39,11 @@ export const setTracks = (tracks) => ({
   payload: tracks
 });
 
-export const setCurrentTrackIndex = (index) => {
-  console.log('setCurrentTrackIndex called with index', index);
+export const setCurrentTrackIndex = (track) => {
+  console.log('setCurrentTrackIndex called with id', track.id);
   return {
     type: SET_CURRENT_TRACK_INDEX,
-    payload: index
+    payload: track.id
   }
 };
 
