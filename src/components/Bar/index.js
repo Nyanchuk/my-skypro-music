@@ -27,30 +27,6 @@ const Bar = () => {
     dispatch(setShuffle(!shuffleMode));
   };
 
-  // Треки вперед/назад
-
-  // // СТАРЫЙ
-  // const handleNextTrack = () => {
-  //   if (shuffleMode) {
-  //     const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
-  //     if (currentOrderIndex < playlistOrder.length - 1) {
-  //       dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex + 1]));
-  //     } else {
-  //       dispatch(setCurrentTrackIndex(playlistOrder[0]));
-  //     }
-  //   }
-  //     else {
-  //     if (currentTrackId < tracksData.length - 1) {
-  //       const nextTrack = tracksData.find(track => track.id === (currentTrackId + 1));
-  //       if (nextTrack) {
-  //         dispatch(setCurrentTrackIndex(nextTrack));
-  //         dispatch(playPause(true));
-  //       }
-  //     }
-  //   }
-  // };
-
-  // НОВЫЙ
   const handleNextTrack = () => {
     if (shuffleMode) {
       const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
@@ -72,7 +48,6 @@ const Bar = () => {
     }
   };
   
-  // СТАРЫЙ
   // const handlePrevTrack = () => {
   //   if (shuffleMode) {
   //     const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);

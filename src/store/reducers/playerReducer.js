@@ -7,7 +7,6 @@ const initialState = {
   isLooping: false,
   tracksData: [],
   currentTrackIndex: null,
-  // Для рандомных треков
   shuffleMode: false,
   playlistOrder: [],
 };
@@ -25,59 +24,45 @@ export default function playerReducer(state = initialState, action) {
     case PLAY_PAUSE:
       return {...state, isPlaying: action.payload };
 
+    case SET_SHUFFLE: {
+      let playlistOrder = state.playlistOrder;
+      if (action.payload) {
+        let order = Array.from({length: state.tracksData.length}, (_, i) => i);
+        for (let i = order.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [order[i], order[j]] = [order[j], order[i]];
+        }
+        playlistOrder = order;
+      } else {
+        playlistOrder = Array.from({length: state.tracksData.length}, (_, i) => i);
+      } 
+      console.log("SET_SHUFFLE reducer called with shuffleMode: " + action.payload);
+      console.log("Playlist order: " + playlistOrder);
+      return {...state, shuffleMode: action.payload, playlistOrder};
+    }
 
-      case SET_SHUFFLE: {
-        
-        let playlistOrder = state.playlistOrder;
-        if (action.payload) {
-          // если shuffle активирован, создаем новый перемешанный порядок воспроизведения
-          let order = Array.from({length: state.tracksData.length}, (_, i) => i);
-          // здесь воспользовались тем же алгоритмом "Тасование Фишера — Йетса"
-          for (let i = order.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [order[i], order[j]] = [order[j], order[i]];
-          }
-          playlistOrder = order;
-        } else {
-          // если shuffle отключен, возвращаем порядок воспроизведения по умолчанию
-          playlistOrder = Array.from({length: state.tracksData.length}, (_, i) => i);
-        } 
-        console.log("SET_SHUFFLE reducer called with shuffleMode: " + action.payload);
-        console.log("Playlist order: " + playlistOrder);
-        return {...state, shuffleMode: action.payload, playlistOrder};
-      }
-
-
-    // Для переключения треков вперед/назад
     case SET_TRACKS_DATA:
       return {...state, tracksData: action.payload};
-      case PREVIOUS_TRACK:
-        const previousId = state.currentTrack.id - 1;
-        const previousTrack = state.tracksData.find(track => track.id === previousId);
-        if (!previousTrack) {
-          return state;
-        }
-        return {...state, currentTrack: previousTrack, currentTrackIndex: previousId};
-    
-        case NEXT_TRACK:
-          const nextId = state.currentTrack.id + 1;
-          const nextTrack = state.tracksData.find(track => track.id === nextId);
-          if (!nextTrack) {
-            return state; 
-          }
-          return {...state, currentTrack: nextTrack, currentTrackIndex: nextId};
-        
 
-    // case SET_CURRENT_TRACK_INDEX:
-    //   console.log('SET_CURRENT_TRACK_INDEX reducer called with payload', action.payload);
-    //   return {...state, currentTrackIndex: action.payload};
+    case PREVIOUS_TRACK:
+      const previousId = state.currentTrack.id - 1;
+      const previousTrack = state.tracksData.find(track => track.id === previousId);
+      if (!previousTrack) {
+        return state;
+      }
+      return {...state, currentTrack: previousTrack, currentTrackIndex: previousId};
+    
+    case NEXT_TRACK:
+      const nextId = state.currentTrack.id + 1;
+      const nextTrack = state.tracksData.find(track => track.id === nextId);
+      if (!nextTrack) {
+        return state; 
+      }
+      return {...state, currentTrack: nextTrack, currentTrackIndex: nextId};
 
     case SET_CURRENT_TRACK_INDEX:
-  return {
-    ...state,
-    currentTrackIndex: action.payload,
-    currentTrack: state.tracksData[action.payload],
-  };
+      return {...state, currentTrackIndex: action.payload, currentTrack: state.tracksData[action.payload],};
+
     case GET_CURRENT_TRACK_INDEX:
       return {...state, currentTrackIndex: state.currentTrackIndex};
 
