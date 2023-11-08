@@ -3,10 +3,9 @@ import * as S from './style'
 import sprite from "../../img/icon/sprite.svg";
 import TrackSkeleton from '../../components/Skeleton/index'; 
 import React, { useState, useEffect } from 'react';
-import { getFetchTracks } from '../../api';
+import { getFetchTracks, likeTrack, dislikeTrack } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../../store/actions/creators/playerActions';
-
+import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex, dislikeTrackAction, likeTrackAction } from '../../store/actions/creators/playerActions';
 
 const Main = ({ onTrackClick }) => {
 
@@ -14,7 +13,7 @@ const Main = ({ onTrackClick }) => {
   const dispatch = useDispatch();
   const isPlayingGlobal = useSelector(state => state.player.isPlaying);
   const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
-
+  const likedTracks = useSelector(state => state.player.likedTracks); // Получение списка лайкнутых треков
 
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +29,6 @@ const Main = ({ onTrackClick }) => {
     getFetchTracks()
       .then(data => {
         setTracksData(data);
-        // dispatch(setTracks(data));
         setIsLoading(false);
         console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
@@ -45,6 +43,34 @@ const Main = ({ onTrackClick }) => {
         setIsLoading(false);
       });
   }, []);
+
+  // Функция для обработки лайка или дизлайка трека
+  const handleLikeDislike = (track) => {
+    const isLiked = likedTracks[track.id];
+    if (isLiked) {
+      console.log(track);  // Выведем в консоль объект track перед вызовом функции
+      dislikeTrack(track.id)
+        .then((response) => {
+          if (response.status === 'success') {
+            dispatch(dislikeTrackAction(track.id));
+          }
+        })
+        .catch((error) => {
+          console.error('Ошибка при дизлайке трека:', error);
+        });
+    } else {
+      console.log(track);
+      likeTrack(track.id)
+        .then((response) => {
+          if (response.status === 'success') {
+            dispatch(likeTrackAction(track.id));
+          }
+        })
+        .catch((error) => {
+          console.error('Ошибка при лайке трека:', error);
+        });
+    }
+  };
 
 // СКЕЛЕТОН
 
@@ -210,9 +236,16 @@ return (<S.MainCenterBlock>
                   </S.TrackAlbumLink>
                 </S.TrackAlbum>
                 <S.TrackTime>
-                  <S.TrackTimeSvg alt="time">
-                    <use href={`${sprite}#icon-like`} />
-                  </S.TrackTimeSvg>
+                <S.TrackTimeSvg alt="time" onClick={(e) => {
+                e.stopPropagation(); // Остановка всплытия события, чтобы не вызывался handleTrackClick
+                handleLikeDislike(track); // Вызов функции для обработки лайка или дизлайка трека
+                }}>
+                {likedTracks && likedTracks[track.id] ? (
+                <use href={`${sprite}#icon-activelike`}/>
+              ) : (
+                <use href={`${sprite}#icon-like`}/>
+              )}
+                </S.TrackTimeSvg>
                   <S.TrackTimeText>{convertSecondsToMinutes(track.duration_in_seconds)}</S.TrackTimeText>
                 </S.TrackTime>
               </S.PlaylistTrack>

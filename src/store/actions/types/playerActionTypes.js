@@ -16,3 +16,6 @@ export const GET_CURRENT_TRACK_INDEX = 'GET_CURRENT_TRACK_INDEX';
 export const SET_SHUFFLE = 'SET_SHUFFLE';
 // Для добавления треков в "Избранное"
 export const ADD_TRACK_FAVORITES = 'ADD_TRACK_FAVORITES';
+// Для отслеживания состояния лайка
+export const LIKE_TRACK = 'LIKE_TRACK';
+export const DISLIKE_TRACK = 'DISLIKE_TRACK';

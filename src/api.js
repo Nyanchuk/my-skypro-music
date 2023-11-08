@@ -113,3 +113,47 @@ export const getToken = async ({email, password}) => {
   localStorage.setItem('User', JSON.stringify(data));
   return data;
 }
+
+// Функция для отправки запроса на лайк трека
+export const likeTrack = async (id) => {
+    const tokenArray = JSON.parse(localStorage.getItem('User'));
+    const token = tokenArray.access;
+  try {
+    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при отправке запроса на лайк трека');
+    }
+    
+    return response.json(); 
+  } catch (error) {
+    throw new Error(`Ошибка при лайке трека: ${error.message}`);
+  }
+};
+
+// Функция для отправки запроса на дизлайк трека
+export const dislikeTrack = async (id) => {
+  const tokenArray = JSON.parse(localStorage.getItem('User'));
+  const token = tokenArray.access;
+  try {
+    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+      method: 'DELETE', 
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при отправке запроса на дизлайк трека');
+    }
+
+    return response.json(); // Возможно, вам нужно будет обработать ответ сервера
+  } catch (error) {
+    throw new Error(`Ошибка при дизлайке трека: ${error.message}`);
+  }
+};

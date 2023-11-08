@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE } from '../types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE, IS_LIKED, LIKE_TRACK, DISLIKE_TRACK } from '../types/playerActionTypes.js';
 
 export const setCurrentTrack = (track) => ({
   type: SET_CURRENT_TRACK,
@@ -58,3 +58,13 @@ export const setShuffle = (shuffleMode) => {
     payload: shuffleMode,
   };
 };
+
+export const likeTrackAction = (track) => ({
+  type: LIKE_TRACK,
+  payload: track.id,
+});
+
+export const dislikeTrackAction = (track) => ({
+  type: DISLIKE_TRACK,
+  payload: track.id,
+});

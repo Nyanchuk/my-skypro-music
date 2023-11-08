@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE } from '../actions/types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE, IS_LIKED, LIKE_TRACK, DISLIKE_TRACK } from '../actions/types/playerActionTypes.js';
 
 const initialState = {
   currentTrack: null,
@@ -9,6 +9,7 @@ const initialState = {
   currentTrackIndex: null,
   shuffleMode: false,
   playlistOrder: [],
+  likedTracks: [], // массив с идентификаторами лайкнутых треков
 };
 
 export default function playerReducer(state = initialState, action) {
@@ -23,7 +24,17 @@ export default function playerReducer(state = initialState, action) {
       return { ...state, isLooping: action.payload };
     case PLAY_PAUSE:
       return {...state, isPlaying: action.payload };
-
+      case LIKE_TRACK:
+        return {
+          ...state,
+          likedTracks: {...state.likedTracks, [action.payload]: true},
+        };
+      case DISLIKE_TRACK:
+        const {[action.payload]: _, ...others} = state.likedTracks;
+        return {
+          ...state,
+          likedTracks: others,
+        };
     case SET_SHUFFLE: {
       let playlistOrder = state.playlistOrder;
       if (action.payload) {
