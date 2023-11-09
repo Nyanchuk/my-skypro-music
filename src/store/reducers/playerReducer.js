@@ -27,13 +27,12 @@ export default function playerReducer(state = initialState, action) {
       case LIKE_TRACK:
         return {
           ...state,
-          likedTracks: {...state.likedTracks, [action.payload]: true},
+          likedTracks: [...state.likedTracks, action.payload],
         };
-      case DISLIKE_TRACK:
-        const {[action.payload]: _, ...others} = state.likedTracks;
+        case DISLIKE_TRACK:
         return {
           ...state,
-          likedTracks: others,
+          likedTracks: state.likedTracks.filter(trackId => trackId !== action.payload),
         };
     case SET_SHUFFLE: {
       let playlistOrder = state.playlistOrder;

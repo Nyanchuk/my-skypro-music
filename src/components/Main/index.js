@@ -3,9 +3,10 @@ import * as S from './style'
 import sprite from "../../img/icon/sprite.svg";
 import TrackSkeleton from '../../components/Skeleton/index'; 
 import React, { useState, useEffect } from 'react';
-import { getFetchTracks, likeTrack, dislikeTrack } from '../../api';
+import { getFetchTracks } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex, dislikeTrackAction, likeTrackAction } from '../../store/actions/creators/playerActions';
+import { likeTrackThunk, dislikeTrackThunk } from '../../store/actions/thunks/playerThunks';
 
 const Main = ({ onTrackClick }) => {
 
@@ -46,29 +47,12 @@ const Main = ({ onTrackClick }) => {
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {
-    const isLiked = likedTracks[track.id];
+    const isLiked = likedTracks.includes(track.id);
+    console.log(isLiked)
     if (isLiked) {
-      console.log(track);  // Выведем в консоль объект track перед вызовом функции
-      dislikeTrack(track.id)
-        .then((response) => {
-          if (response.status === 'success') {
-            dispatch(dislikeTrackAction(track.id));
-          }
-        })
-        .catch((error) => {
-          console.error('Ошибка при дизлайке трека:', error);
-        });
+      dispatch(dislikeTrackThunk(track.id));
     } else {
-      console.log(track);
-      likeTrack(track.id)
-        .then((response) => {
-          if (response.status === 'success') {
-            dispatch(likeTrackAction(track.id));
-          }
-        })
-        .catch((error) => {
-          console.error('Ошибка при лайке трека:', error);
-        });
+      dispatch(likeTrackThunk(track.id));
     }
   };
 
@@ -237,10 +221,10 @@ return (<S.MainCenterBlock>
                 </S.TrackAlbum>
                 <S.TrackTime>
                 <S.TrackTimeSvg alt="time" onClick={(e) => {
-                e.stopPropagation(); // Остановка всплытия события, чтобы не вызывался handleTrackClick
-                handleLikeDislike(track); // Вызов функции для обработки лайка или дизлайка трека
+                e.stopPropagation(); 
+                handleLikeDislike(track);
                 }}>
-                {likedTracks && likedTracks[track.id] ? (
+                {likedTracks.includes(track.id) ? (
                 <use href={`${sprite}#icon-activelike`}/>
               ) : (
                 <use href={`${sprite}#icon-like`}/>

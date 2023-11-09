@@ -152,7 +152,7 @@ export const dislikeTrack = async (id) => {
       throw new Error('Ошибка при отправке запроса на дизлайк трека');
     }
 
-    return response.json(); // Возможно, вам нужно будет обработать ответ сервера
+    return response.json();
   } catch (error) {
     throw new Error(`Ошибка при дизлайке трека: ${error.message}`);
   }
