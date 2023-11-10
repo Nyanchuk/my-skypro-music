@@ -1,15 +1,18 @@
-import { dislikeTrack, likeTrack } from "../../../api";
-import { DISLIKE_TRACK, LIKE_TRACK } from "../types/playerActionTypes";
+import { dislikeTrack, getFetchTracksFavorite, likeTrack } from "../../../api";
+import { DISLIKE_TRACK, LIKE_TRACK, SET_LIKED_TRACKS } from "../types/playerActionTypes";
 
-export const likeTrackThunk = (track) => {
+export const likeTrackThunk = (trackId) => {
+    console.log("likeTrackThunk has been called with trackId:", trackId);
     return (dispatch, getState) => {
-      likeTrack(track)
+      likeTrack(trackId)
         .then((response) => {
+            console.log("Received response from likeTrack API:", response); 
           if (response.status === 'success') {
             dispatch({
               type: LIKE_TRACK,
-              payload: track.id,
+              payload: trackId,
             });
+            console.log("LIKE_TRACK action dispatched with trackId:", trackId);
           }
         })
         .catch((error) => {
@@ -22,19 +25,35 @@ export const likeTrackThunk = (track) => {
     };
   };
   
-  export const dislikeTrackThunk = (track) => {
+  export const dislikeTrackThunk = (trackId) => {
     return (dispatch, getState) => {
-      dislikeTrack(track)
+      dislikeTrack(trackId)
         .then((response) => {
           if (response.status === 'success') {
             dispatch({
               type: DISLIKE_TRACK,
-              payload: track.id,
+              payload: trackId,
             });
           }
         })
         .catch((error) => {
           console.error('Ошибка при дизлайке трека:', error);
         });
+    };
+  };
+
+  export const fetchLikedTracksThunk = () => {
+    return async (dispatch) => {
+      try {
+        const data = await getFetchTracksFavorite();
+  
+        dispatch({
+          type: SET_LIKED_TRACKS,
+          payload: data.map(track => track.id),
+        });
+        
+      } catch (error) {
+        console.log('Ошибка при получении лайкнутых треков:', error);
+      }
     };
   };

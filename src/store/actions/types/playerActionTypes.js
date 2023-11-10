@@ -19,3 +19,4 @@ export const ADD_TRACK_FAVORITES = 'ADD_TRACK_FAVORITES';
 // Для отслеживания состояния лайка
 export const LIKE_TRACK = 'LIKE_TRACK';
 export const DISLIKE_TRACK = 'DISLIKE_TRACK';
+export const SET_LIKED_TRACKS = 'SET_LIKED_TRACKS';

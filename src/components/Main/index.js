@@ -5,7 +5,7 @@ import TrackSkeleton from '../../components/Skeleton/index';
 import React, { useState, useEffect } from 'react';
 import { getFetchTracks } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex, dislikeTrackAction, likeTrackAction } from '../../store/actions/creators/playerActions';
+import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../../store/actions/creators/playerActions';
 import { likeTrackThunk, dislikeTrackThunk } from '../../store/actions/thunks/playerThunks';
 
 const Main = ({ onTrackClick }) => {
@@ -54,6 +54,7 @@ const Main = ({ onTrackClick }) => {
     } else {
       dispatch(likeTrackThunk(track.id));
     }
+    console.log('After dispatch:', likedTracks);
   };
 
 // СКЕЛЕТОН

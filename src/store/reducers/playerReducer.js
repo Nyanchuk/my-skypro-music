@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE, IS_LIKED, LIKE_TRACK, DISLIKE_TRACK } from '../actions/types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE, IS_LIKED, LIKE_TRACK, DISLIKE_TRACK, SET_LIKED_TRACKS } from '../actions/types/playerActionTypes.js';
 
 const initialState = {
   currentTrack: null,
@@ -34,6 +34,11 @@ export default function playerReducer(state = initialState, action) {
           ...state,
           likedTracks: state.likedTracks.filter(trackId => trackId !== action.payload),
         };
+        case SET_LIKED_TRACKS:
+      return {
+        ...state,
+        likedTracks: action.payload,
+      };
     case SET_SHUFFLE: {
       let playlistOrder = state.playlistOrder;
       if (action.payload) {

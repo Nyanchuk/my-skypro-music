@@ -1,10 +1,12 @@
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 import store from './store/store';
 import { UserProvider } from "./Context";
 import { AppRoutes } from "./routes";
+import { fetchLikedTracksThunk } from './store/actions/thunks/playerThunks';
 
 function App() {
+
   return (
     <Provider store={store}>
       <UserProvider>
@@ -15,18 +17,4 @@ function App() {
 }
 
 export default App;
-
-
-// import { UserProvider } from "./Context";
-// import { AppRoutes } from "./routes";
-
-// function App() {
-//   return (
-//     <UserProvider>
-//       <AppRoutes />
-//     </UserProvider>
-//   );
-// }
-
-// export default App;
 

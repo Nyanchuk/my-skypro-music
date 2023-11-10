@@ -3,12 +3,20 @@ import Burger from '../../components/Burger/index';
 import Main from '../../components/Main/index'; 
 import Sidebar from '../../components/Sidebar/index'; 
 import Bar from '../../components/Bar/index';  
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style'
 import { useLocation } from 'react-router-dom';
 import MyTracks from '../../components/MyTracks';
+import { useDispatch } from 'react-redux';
+import { fetchLikedTracksThunk } from '../../store/actions/thunks/playerThunks';
 
 function PageLayuot() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchLikedTracksThunk());
+  }, [dispatch]);
 
   const location = useLocation();
   const [isTrackClicked, setIsTrackClicked] = useState(false);

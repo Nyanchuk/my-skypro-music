@@ -1,8 +1,5 @@
 import './App.css';
 import sprite from "../../img/icon/sprite.svg";
-import Burger from '../../components/Burger/index'; 
-import Sidebar from '../../components/Sidebar/index'; 
-import Bar from '../../components/Bar/index'; 
 import TrackSkeleton from '../../components/Skeleton/index'; 
 import React, { useState, useEffect } from 'react';
 import * as S from './style'
@@ -30,7 +27,6 @@ function MyTracks({ onTrackClick }) {
     getFetchTracksFavorite()
       .then(data => {
         setTracksData(data);
-        // dispatch(setTracks(data));
         setIsLoading(false);
         console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
