@@ -115,7 +115,7 @@ export const getToken = async ({email, password}) => {
 }
 
 // Функция для отправки запроса на лайк трека
-export const likeTrack = async (id) => {
+export const likeTrack = async (id, navigate) => {
     const tokenArray = JSON.parse(localStorage.getItem('User'));
     const token = tokenArray.access;
   try {
@@ -125,6 +125,10 @@ export const likeTrack = async (id) => {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (response.status === 401) {
+      navigate('/login');
+    }
 
     if (!response.ok) {
       throw new Error('Ошибка при отправке запроса на лайк трека');
@@ -137,7 +141,7 @@ export const likeTrack = async (id) => {
 };
 
 // Функция для отправки запроса на дизлайк трека
-export const dislikeTrack = async (id) => {
+export const dislikeTrack = async (id, navigate) => {
   const tokenArray = JSON.parse(localStorage.getItem('User'));
   const token = tokenArray.access;
   try {
@@ -147,6 +151,10 @@ export const dislikeTrack = async (id) => {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (response.status === 401) {
+      navigate('/login');
+    }
 
     if (!response.ok) {
       throw new Error('Ошибка при отправке запроса на дизлайк трека');

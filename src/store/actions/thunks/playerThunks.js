@@ -1,10 +1,10 @@
 import { dislikeTrack, getFetchTracksFavorite, likeTrack } from "../../../api";
 import { DISLIKE_TRACK, LIKE_TRACK, SET_LIKED_TRACKS } from "../types/playerActionTypes";
 
-export const likeTrackThunk = (trackId) => {
+export const likeTrackThunk = (trackId, navigate) => {
     console.log("likeTrackThunk has been called with trackId:", trackId);
     return (dispatch, getState) => {
-      likeTrack(trackId)
+      likeTrack(trackId, navigate)
         .then((response) => {
             console.log("Received response from likeTrack API:", response); 
             dispatch({
@@ -23,9 +23,9 @@ export const likeTrackThunk = (trackId) => {
     };
   };
   
-  export const dislikeTrackThunk = (trackId) => {
+  export const dislikeTrackThunk = (trackId, navigate) => {
     return (dispatch, getState) => {
-      dislikeTrack(trackId)
+      dislikeTrack(trackId, navigate)
         .then((response) => {
             dispatch({
               type: DISLIKE_TRACK,

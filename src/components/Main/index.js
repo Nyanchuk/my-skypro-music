@@ -7,11 +7,13 @@ import { getFetchTracks } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../../store/actions/creators/playerActions';
 import { likeTrackThunk, dislikeTrackThunk } from '../../store/actions/thunks/playerThunks';
+import { useNavigate } from 'react-router-dom';
 
 const Main = ({ onTrackClick }) => {
 
   // Работа с Redux Store
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isPlayingGlobal = useSelector(state => state.player.isPlaying);
   const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
   const likedTracks = useSelector(state => state.player.likedTracks); // Получение списка лайкнутых треков
@@ -51,9 +53,9 @@ const Main = ({ onTrackClick }) => {
     const isLiked = likedTracks.includes(track.id);
     console.log(isLiked)
     if (isLiked) {
-      dispatch(dislikeTrackThunk(track.id));
+      dispatch(dislikeTrackThunk(track.id, navigate));
     } else {
-      dispatch(likeTrackThunk(track.id));
+      dispatch(likeTrackThunk(track.id, navigate));
     }
     console.log('After dispatch:', likedTracks);
   };
