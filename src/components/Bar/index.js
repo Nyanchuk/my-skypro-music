@@ -3,6 +3,7 @@ import sprite from "../../img/icon/sprite.svg";
 import * as S from './style'
 import { useDispatch, useSelector } from 'react-redux';
 import { previousTrack, nextTrack, playPause, setCurrentTrackIndex, getCurrentTrackIndex, setShuffle } from "../../store/actions/creators/playerActions";
+import { dislikeTrackThunk, likeTrackThunk } from "../../store/actions/thunks/playerThunks";
 
 const Bar = () => {
 
@@ -12,15 +13,25 @@ const Bar = () => {
   const track = tracksData.find(track => track.id === currentTrackId) || {};
   const shuffleMode = useSelector(state => state.player.shuffleMode);
   const playlistOrder = useSelector(state => state.player.playlistOrder);
-  const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
+  const likedTracks = useSelector(state => state.player.likedTracks); // Получение списка лайкнутых треков
   
-
   const audioRef = useRef();                            // Создаем ref для проигрывания трека
   const [isPlaying, setIsPlaying] = useState(false);    // Состояние для остановки трека
   const [volume, setVolume] = useState(1.0);            // Состояние начальной максимальной громкости
   const [isLooping, setIsLooping] = useState(false);    // Состояние:изначально трек не зациклен
   const [currentTime, setCurrentTime] = useState(0);    // Состояние для текущево времени трека
   const [duration, setDuration] = useState(0);          // Состояние для общей продолжительности трека
+
+  const handleLikeDislike = (track) => {
+    const isLiked = likedTracks.includes(track.id);
+    console.log(isLiked)
+    if (isLiked) {
+      dispatch(dislikeTrackThunk(track.id));
+    } else {
+      dispatch(likeTrackThunk(track.id));
+    }
+    console.log('After dispatch:', likedTracks);
+  };
 
   const handleShuffleClick = () => {
     console.log("shuffle button clicked");
@@ -259,14 +270,21 @@ const Bar = () => {
                     </S.TrackPlayContain>
                     <S.TrackPlayLikeDis>
                       <S.TrackPlayLike>
-                        <S.TrackPlayLikeSvg alt="like">
-                            <use href={`${sprite}#icon-like`} />
+                        <S.TrackPlayLikeSvg alt="like"onClick={(e) => {
+                          e.stopPropagation(); 
+                          handleLikeDislike(track);
+                          }}>
+                          {likedTracks.includes(track.id) ? (
+                          <use href={`${sprite}#icon-activelike`}/>
+                        ) : (
+                          <use href={`${sprite}#icon-like`}/>
+                        )}
                         </S.TrackPlayLikeSvg>
                       </S.TrackPlayLike>
                       <S.TrackPlayDislike>
-                        <S.TrackPlayDislikeSvg alt="dislike">
+                        {/* <S.TrackPlayDislikeSvg alt="dislike">
                             <use href={`${sprite}#icon-dislike`} />
-                        </S.TrackPlayDislikeSvg>
+                        </S.TrackPlayDislikeSvg> */}
                       </S.TrackPlayDislike>
                       <S.CurrentTime> {formatTime(currentTime)} </S.CurrentTime>
                     </S.TrackPlayLikeDis>

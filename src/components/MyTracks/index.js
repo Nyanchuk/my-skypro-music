@@ -6,12 +6,16 @@ import * as S from './style'
 import { getFetchTracksFavorite } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../../store/actions/creators/playerActions';
+import { dislikeTrackThunk, likeTrackThunk } from '../../store/actions/thunks/playerThunks';
 
 function MyTracks({ onTrackClick }) {
 
     const dispatch = useDispatch();
     const isPlayingGlobal = useSelector(state => state.player.isPlaying);
     const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
+    const likedTracks = useSelector(state => state.player.likedTracks); // Получение списка лайкнутых треков
+    
+
 
     // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
     const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +45,20 @@ function MyTracks({ onTrackClick }) {
         setIsLoading(false);
       });
   }, []);
+
+  const filteredTracks = tracksData.filter((track) => likedTracks.includes(track.id));
+
+  // Функция для обработки лайка или дизлайка трека
+  const handleLikeDislike = (track) => {
+    const isLiked = likedTracks.includes(track.id);
+    console.log(isLiked)
+    if (isLiked) {
+      dispatch(dislikeTrackThunk(track.id));
+    } else {
+      dispatch(likeTrackThunk(track.id));
+    }
+    console.log('After dispatch:', likedTracks);
+  };
 
 // СКЕЛЕТОН
 
@@ -178,7 +196,7 @@ const handleTrackClick = (track, index) => {
               : ( 
               <>
               {!isLoading &&
-                tracksData.map((track) => (
+                filteredTracks.map(track => (
                   <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track)}>
                     <S.PlaylistTrack>
                       <S.TrackTitle>
@@ -206,9 +224,16 @@ const handleTrackClick = (track, index) => {
                         </S.TrackAlbumLink>
                       </S.TrackAlbum>
                       <S.TrackTime>
-                        <S.TrackTimeSvg alt="time">
-                          <use href={`${sprite}#icon-like`} />
-                        </S.TrackTimeSvg>
+                      <S.TrackTimeSvg alt="time" onClick={(e) => {
+                        e.stopPropagation(); 
+                        handleLikeDislike(track);
+                        }}>
+                        {likedTracks.includes(track.id) ? (
+                        <use href={`${sprite}#icon-activelike`}/>
+                      ) : (
+                        <use href={`${sprite}#icon-like`}/>
+                      )}
+                      </S.TrackTimeSvg>
                         <S.TrackTimeText>{convertSecondsToMinutes(track.duration_in_seconds)}</S.TrackTimeText>
                       </S.TrackTime>
                     </S.PlaylistTrack>
