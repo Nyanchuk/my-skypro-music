@@ -1,15 +1,13 @@
-import { SET_CURRENT_TRACK, SET_PLAY_STATUS, SET_VOLUME, SET_LOOPING, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE, IS_LIKED, LIKE_TRACK, DISLIKE_TRACK, SET_LIKED_TRACKS } from '../actions/types/playerActionTypes.js';
+import { SET_CURRENT_TRACK, SET_PLAY_STATUS, PLAY_PAUSE, PREVIOUS_TRACK, NEXT_TRACK, SET_TRACKS_DATA, SET_CURRENT_TRACK_INDEX, GET_CURRENT_TRACK_INDEX, SET_SHUFFLE, IS_LIKED, LIKE_TRACK, DISLIKE_TRACK, SET_LIKED_TRACKS } from '../actions/types/playerActionTypes.js';
 
 const initialState = {
-  currentTrack: null,
-  isPlaying: false,
-  volume: 1.0,
-  isLooping: false,
-  tracksData: [],
-  currentTrackIndex: null,
-  shuffleMode: false,
-  playlistOrder: [],
-  likedTracks: [], // массив с идентификаторами лайкнутых треков
+  currentTrack: null,       // содержит информацию о текущем треке
+  isPlaying: false,         // определяет, проигрывается ли трек в данный момент
+  tracksData: [],           // массив, хранящий информацию о треках. Изначально пуст.
+  currentTrackIndex: null,  // содержит id текущего трека в tracksData. Изначально равно null.
+  shuffleMode: false,       // булево состояние, определяющее, включен ли режим произвольного воспроизведения
+  playlistOrder: [],        // массив, хранящий порядок воспроизведения треков в плейлисте.
+  likedTracks: [],          // массив с идентификаторами лайкнутых треков
 };
 
 export default function playerReducer(state = initialState, action) {
@@ -18,10 +16,6 @@ export default function playerReducer(state = initialState, action) {
       return { ...state, currentTrack: action.payload };
     case SET_PLAY_STATUS:
       return { ...state, isPlaying: action.payload };
-    case SET_VOLUME:
-      return { ...state, volume: action.payload };
-    case SET_LOOPING:
-      return { ...state, isLooping: action.payload };
     case PLAY_PAUSE:
       return {...state, isPlaying: action.payload };
       case LIKE_TRACK:

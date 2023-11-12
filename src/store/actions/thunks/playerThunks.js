@@ -7,13 +7,11 @@ export const likeTrackThunk = (trackId) => {
       likeTrack(trackId)
         .then((response) => {
             console.log("Received response from likeTrack API:", response); 
-          if (response.status === 'success') {
             dispatch({
               type: LIKE_TRACK,
               payload: trackId,
             });
             console.log("LIKE_TRACK action dispatched with trackId:", trackId);
-          }
         })
         .catch((error) => {
           console.error('Ошибка при лайке трека:', error);
@@ -29,12 +27,10 @@ export const likeTrackThunk = (trackId) => {
     return (dispatch, getState) => {
       dislikeTrack(trackId)
         .then((response) => {
-          if (response.status === 'success') {
             dispatch({
               type: DISLIKE_TRACK,
               payload: trackId,
             });
-          }
         })
         .catch((error) => {
           console.error('Ошибка при дизлайке трека:', error);

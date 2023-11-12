@@ -16,6 +16,7 @@ const Main = ({ onTrackClick }) => {
   const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
   const likedTracks = useSelector(state => state.player.likedTracks); // Получение списка лайкнутых треков
 
+
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
   const [isLoading, setIsLoading] = useState(true);
   const [tracksData, setTracksData] = useState([]);
@@ -90,10 +91,9 @@ const handleTrackClick = (track, index) => {
     dispatch(setTracks(tracksData)); // Отправляем массив в стор
     dispatch(setCurrentTrack(track));  // Трек из Redux Store
     dispatch(setCurrentTrackIndex(track)); // Индекс для визуализации трека
-//   setPlayingTrackId(track.id);  // Видимость Bar
-  dispatch(playPause(true)); // Для отключения визуализации трека при паузе
-  onTrackClick(track, index);
-};
+    dispatch(playPause(true)); // Для отключения визуализации трека при паузе
+    onTrackClick(track, index);
+  };
 
 useEffect(() => {
     if (playingTrackId !== null) {

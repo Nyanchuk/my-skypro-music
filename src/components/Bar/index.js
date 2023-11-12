@@ -47,32 +47,6 @@ const Bar = () => {
       }
     }
   };
-  
-  // const handlePrevTrack = () => {
-  //   if (shuffleMode) {
-  //     const currentOrderIndex = playlistOrder.indexOf(currentTrackIndex);
-      
-  //     if (currentTrackIndex > 0) {
-  //         dispatch(setCurrentTrackIndex(playlistOrder[currentOrderIndex - 1]));
-  //     }
-  //     else {
-  //         dispatch(setCurrentTrackIndex(playlistOrder[playlistOrder.length - 1]));
-  //     }    
-  // }
-  // else {
-  //   const currentTrackIndex = dispatch(getCurrentTrackIndex()).payload;
-  //   if (currentTime > 5) {
-  //     setCurrentTime(0);
-  //     audioRef.current.currentTime = 0;
-  //   } else if (currentTrackIndex > 0) { // проверяем, что это не первый трек
-  //     dispatch(setCurrentTrackIndex(currentTrackIndex - 1));
-  //     dispatch(playPause(true));
-  //   }
-  //   else {
-  //     dispatch(previousTrack());
-  //   }
-  // }
-  // };
 
   // НОВЫЙ
   const handlePrevTrack = () => {
