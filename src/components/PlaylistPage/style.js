@@ -1,6 +1,39 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const pulse = keyframes`
+  0% {
+    transform: scale(.7);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(.7);
+  }
+`;
 
 // Стили для главной страницы
+export const TrackTitleSvg = styled.svg`
+  width: 18px;
+  height: 17px;
+  fill: transparent;
+  stroke: #4e4e4e;
+  
+  use {
+    visibility: ${({$isPlaying}) => $isPlaying ? 'hidden' : 'visible'};
+  }
+  
+  circle {
+    visibility: ${({$isPlaying}) => $isPlaying ? 'visible' : 'hidden'};
+    transform-origin: 50% 50%; /* Центр окружности */
+    ${({$isPlaying}) =>
+        $isPlaying &&
+        css`
+            animation: ${pulse} 1s infinite linear;
+        `
+    }
+  }
+`
 
 export const Wrapper = styled.div`
 width: 100%;
@@ -297,12 +330,7 @@ align-items: center;
 justify-content: center;
 margin-right: 17px;
 `
-export const TrackTitleSvg = styled.svg`
-width: 18px;
-height: 17px;
-fill: transparent;
-stroke: #4e4e4e;
-`
+
 export const TrackTitleText = styled.div`
 font-style: normal;
 font-weight: 400;

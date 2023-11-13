@@ -18,11 +18,14 @@ export const AppRoutes = () => {
 
             {/* Защищенные страницы */}
 
-            {/* <Route path="/category/:id" element={
-                <ProtectedRoute isAllowed={Boolean(user)}>
-                    <PlaylistPage id={useParams().id} />
+            <Route
+                path="/category/:id"
+                element={
+                <ProtectedRoute isAllowed={Boolean(userToken)}>
+                    <PageLayout />
                 </ProtectedRoute>
-            } /> */}
+                }
+            />
 
             <Route
                 path="/"

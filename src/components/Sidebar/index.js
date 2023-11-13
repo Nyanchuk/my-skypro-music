@@ -1,7 +1,6 @@
-import playlist1 from "../../img/play1.JPEG";
-import playlist2 from "../../img/play2.JPEG";
-import playlist3 from "../../img/play3.JPEG";
-import playlist4 from "../../img/play4.JPEG";
+import playlist1 from "../../img/PLAY4.jpg";
+import playlist2 from "../../img/PLAY3.jpg";
+import playlist3 from "../../img/PLAY1.jpg";
 import sprite from "../../img/icon/sprite.svg";
 import React, { useState, useEffect, useContext } from 'react';
 import * as S from './style'
@@ -28,26 +27,6 @@ const Sidebar = () => {
         localStorage.removeItem('User'); // удаление токена пользователя
         setUsername(null);
       };
-
-
-// const Sidebar = () => {
-//     const { username } = useContext(UserContext);
-//     const [user, setUser] = useState(null);
-//     const [isLoading, setLoading] = useState(true);
-
-//     // ФУНКЦИЯ ДЛЯ СБРОСА ПОЛЬЗОВАТЕЛЯ
-//     useEffect(() => {
-//         const storedUser = localStorage.getItem('User');
-//         if (storedUser) {
-//           const parsedUser = JSON.parse(storedUser);
-//           setUser(parsedUser);
-//         }
-//     }, []);
-
-//     const handleLogout = () => {
-//       localStorage.removeItem('User');
-//       setUser(null);
-//     };
 
     // ФУНКЦИЯ ДЛЯ СКЕЛЕТОНА КАТЕГОРИЙ
     useEffect(() => {
@@ -78,23 +57,18 @@ const Sidebar = () => {
         <S.SidebarBlock>
             <S.SidebarList>
                 <S.SidebarItem>
-                    <Link to="category/1">
-                    {isLoading ? renderSkeleton() : renderImage(playlist1, "day's playlist")}
+                    <Link to="/category/1">
+                    {isLoading ? renderSkeleton() : renderImage(playlist1, "Classic")}
                     </Link>
                 </S.SidebarItem>
                 <S.SidebarItem>
                 <Link to="category/2">
-                {isLoading ? renderSkeleton() : renderImage(playlist2, "day's playlist")}
+                {isLoading ? renderSkeleton() : renderImage(playlist2, "Electro")}
                 </Link>
                 </S.SidebarItem>
                 <S.SidebarItem>
                 <Link to="category/3">
-                {isLoading ? renderSkeleton() : renderImage(playlist3, "day's playlist")}
-                </Link>
-                </S.SidebarItem>
-                <S.SidebarItem>
-                <Link to="category/4">
-                {isLoading ? renderSkeleton() : renderImage(playlist4, "day's playlist")}
+                {isLoading ? renderSkeleton() : renderImage(playlist3, "Rock")}
                 </Link>
                 </S.SidebarItem>
             </S.SidebarList>

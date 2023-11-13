@@ -76,7 +76,8 @@ height: 150px;
 margin-bottom: 30px;
 transition: all .3s;
 &:hover {
-    transform: scale(1.05);
+    /* transform: scale(1.02); */
+    box-shadow: 0 0 10px #4e4e4e;
   }
 `
 export const SidebarLink = styled.a`
