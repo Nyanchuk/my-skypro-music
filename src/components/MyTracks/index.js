@@ -25,7 +25,6 @@ function MyTracks({ onTrackClick }) {
     const [genres, setGenres] = useState([]);                             // Состояние для жанров
     const [error, setError] = useState(null);                             // Состояние  ошибке загрузки
     const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
-   
 
   useEffect(() => {
     getFetchTracksFavorite()

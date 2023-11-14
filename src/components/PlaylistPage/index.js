@@ -3,7 +3,7 @@ import sprite from "../../img/icon/sprite.svg";
 import TrackSkeleton from "../Skeleton/index";
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
-import { getFetchTracksFavorite } from "../../api";
+import { getFetchCategoryTracks, getFetchTracksFavorite } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from "../../store/actions/creators/playerActions";
 import { dislikeTrackThunk, likeTrackThunk } from "../../store/actions/thunks/playerThunks";
@@ -22,9 +22,7 @@ function PlaylistPage({ onTrackClick }) {
 
   const dispatch = useDispatch();
   const isPlayingGlobal = useSelector((state) => state.player.isPlaying);
-  const currentTrackIndex = useSelector(
-    (state) => state.player.currentTrackIndex
-  );
+  const currentTrackIndex = useSelector((state) => state.player.currentTrackIndex);
   const likedTracks = useSelector((state) => state.player.likedTracks); // Получение списка лайкнутых треков
 
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
@@ -34,21 +32,17 @@ function PlaylistPage({ onTrackClick }) {
   const [playingTrackId, setPlayingTrackId] = useState(null); // Состояние для трека
 
   useEffect(() => {
-    getFetchTracksFavorite()
+    getFetchCategoryTracks(id)
       .then((data) => {
-        setTracksData(data);
+        setTracksData(data.items);
         setIsLoading(false);
-        console.log(data);
       })
       .catch((error) => {
-        setError("Произошла ошибка при загрузке треков: " + error.message);
+        setError(`Произошла ошибка при загрузке треков: ${error.message}`);
         setIsLoading(false);
       });
-  }, []);
+  }, [id]);
 
-  const filteredTracks = tracksData.filter((track) =>
-    likedTracks.includes(track.id)
-  );
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {
@@ -134,7 +128,7 @@ function PlaylistPage({ onTrackClick }) {
           ) : (
             <>
               {!isLoading &&
-                filteredTracks.map((track) => (
+                tracksData.map((track) => (
                   <S.PlaylistItem
                     key={track.id}
                     onClick={() => handleTrackClick(track)}

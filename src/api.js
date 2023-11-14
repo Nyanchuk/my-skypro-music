@@ -19,13 +19,36 @@ export async function getFetchTracks() {
     }
 }
 
-// АПИ КАТЕГОРИЙ
+// АПИ ИЗБРАННЫХ
 export async function getFetchTracksFavorite() {
   try {
     const tokenArray = JSON.parse(localStorage.getItem('User'));
     const token = tokenArray.access;
     
     const response = await fetch(trackFavorite, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка получения данных');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Ошибка получения данных:', error);
+    throw error;
+  }
+}
+
+// АПИ КАТЕГОРИЙ
+export async function getFetchCategoryTracks(id) {
+  try {
+    const tokenArray = JSON.parse(localStorage.getItem('User'));
+    const token = tokenArray.access;
+    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/selection/${id}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

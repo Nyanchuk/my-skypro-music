@@ -29,6 +29,7 @@ const Main = ({ onTrackClick }) => {
   const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
  
 
+
   useEffect(() => {
     getFetchTracks()
       .then(data => {
