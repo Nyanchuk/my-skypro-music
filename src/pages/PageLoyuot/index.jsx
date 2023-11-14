@@ -13,7 +13,6 @@ import { useDispatch } from "react-redux";
 
 function PageLayuot() {
 
-  // const { id } = useParams();
   const dispatch = useDispatch();
   const location = useLocation();
   const [isTrackClicked, setIsTrackClicked] = useState(false);

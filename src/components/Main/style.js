@@ -34,6 +34,10 @@ export const TrackTitleSvg = styled.svg`
     }
   }
 `
+export const CenterBlockFilterCategory = styled.div`
+display: flex;
+justify-content: space-between;
+`
 
 export const Wrapper = styled.div`
 width: 100%;

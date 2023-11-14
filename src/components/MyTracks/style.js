@@ -136,7 +136,7 @@ color: #ffffff;
 }
 `
 export const CenterBlockH2 = styled.h2`
-color: violet;
+color: #b7ff00;
 font-style: normal;
 font-weight: 400;
 font-size: 64px;

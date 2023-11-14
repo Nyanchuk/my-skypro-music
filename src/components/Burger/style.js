@@ -39,6 +39,10 @@ export const BurgerLine = styled.span`
   width: 100%;
   height: 1px;
   background-color: #d3d3d3;
+  &:hover {
+    text-shadow: 0 0 7px #b7ff00;
+    color: #b7ff00;
+  }
   `
 export const MenuList = styled.ul`
   padding: 18px 0 10px 0;
@@ -54,8 +58,8 @@ export const MenuLink = styled.a`
   line-height: 24px;
   transition: all .3s;
   &:hover {
-    text-shadow: 0 0 7px violet;
-    color: violet;
+    text-shadow: 0 0 7px #b7ff00;
+    color: #b7ff00;
   }
   `
 export const NavMenu = styled.div`

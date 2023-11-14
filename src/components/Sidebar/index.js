@@ -4,12 +4,14 @@ import playlist3 from "../../img/PLAY1.jpg";
 import sprite from "../../img/icon/sprite.svg";
 import React, { useState, useEffect, useContext } from 'react';
 import * as S from './style'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UserContext } from '../../Context';
 
 
 
 const Sidebar = () => {
+
+    const location = useLocation();
     const { username, setUsername } = useContext(UserContext); // предполагается, что setUsername доступна в контексте
     const [isLoading, setLoading] = useState(true);
 
@@ -54,6 +56,7 @@ const Sidebar = () => {
                 </S.Icon>
             </Link>
         </S.SidebarPersonal>
+        {location.pathname === '/' && (
         <S.SidebarBlock>
             <S.SidebarList>
                 <S.SidebarItem>
@@ -73,6 +76,7 @@ const Sidebar = () => {
                 </S.SidebarItem>
             </S.SidebarList>
         </S.SidebarBlock>
+           )}
     </S.MainSidebar>
     );
 };

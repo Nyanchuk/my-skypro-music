@@ -18,7 +18,6 @@ const Main = ({ onTrackClick }) => {
   const currentTrackIndex = useSelector(state => state.player.currentTrackIndex);
   const likedTracks = useSelector(state => state.player.likedTracks); // Получение списка лайкнутых треков
 
-
   // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
   const [isLoading, setIsLoading] = useState(true);
   const [tracksData, setTracksData] = useState([]);
@@ -28,8 +27,6 @@ const Main = ({ onTrackClick }) => {
   const [error, setError] = useState(null);                             // Состояние  ошибке загрузки
   const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
  
-
-
   useEffect(() => {
     getFetchTracks()
       .then(data => {
@@ -114,6 +111,7 @@ return (<S.MainCenterBlock>
       <S.SearchText type="search" placeholder="Поиск" name="search" />
     </S.CenterBlockSearch>
     <S.CenterBlockH2>Главная</S.CenterBlockH2>
+    <S.CenterBlockFilterCategory>
     <S.CenterBlockFilter>
       <S.FilterTitle>Искать по:</S.FilterTitle>
 
@@ -131,26 +129,6 @@ return (<S.MainCenterBlock>
             {performers.map((performer, index) => (
               <S.FilterPerformItem key={index}>
                 {performer}
-              </S.FilterPerformItem>
-            ))}
-          </S.FilterPerformList>
-        )}
-      </S.FilterPerformWrap>
-
-    {/* ПОИСК ПО ГОДАМ */}
-
-      <S.FilterPerformWrap>
-        <div
-          className="filter__button button-author _btn-text"
-          onClick={() => handleFilterClick('years')}
-        >году выпуска 
-        </div>
-
-        {activeFilter === 'years' && (
-          <S.FilterPerformList>
-            {years.map((years, index) => (
-              <S.FilterPerformItem key={index}>
-                {years}
               </S.FilterPerformItem>
             ))}
           </S.FilterPerformList>
@@ -178,6 +156,32 @@ return (<S.MainCenterBlock>
       </S.FilterPerformWrap>
 
     </S.CenterBlockFilter>
+
+    <S.CenterBlockFilter>
+      <S.FilterTitle>Сортировка:</S.FilterTitle>
+
+    {/* ПОИСК ПО ГОДАМ */}
+
+      <S.FilterPerformWrap>
+        <div
+          className="filter__button button-author _btn-text"
+          onClick={() => handleFilterClick('years')}
+        >году выпуска 
+        </div>
+
+        {activeFilter === 'years' && (
+          <S.FilterPerformList>
+            {years.map((years, index) => (
+              <S.FilterPerformItem key={index}>
+                {years}
+              </S.FilterPerformItem>
+            ))}
+          </S.FilterPerformList>
+        )}
+      </S.FilterPerformWrap>
+    </S.CenterBlockFilter>
+    </S.CenterBlockFilterCategory>
+
     <S.CenterBlockContent>
       <S.ContentTitle>
         <S.PlaylistTitleCol $columnType="c_ol01">Трек</S.PlaylistTitleCol>

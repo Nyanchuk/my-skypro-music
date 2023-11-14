@@ -11,8 +11,8 @@ const StyledLink = styled(RouterLink)`
   color: #ffffff;
   transition: all .3s;
   &:hover {
-    text-shadow: 0px 0px 5px violet;
-    color: violet;
+    text-shadow: 0 0 7px #b7ff00;
+    color: #b7ff00;
   }
 `;
 

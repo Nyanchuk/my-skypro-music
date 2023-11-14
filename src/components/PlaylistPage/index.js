@@ -7,10 +7,12 @@ import { getFetchCategoryTracks, getFetchTracksFavorite } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from "../../store/actions/creators/playerActions";
 import { dislikeTrackThunk, likeTrackThunk } from "../../store/actions/thunks/playerThunks";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function PlaylistPage({ onTrackClick }) {
+
   const { id } = useParams();
+  const navigate = useNavigate();
 
   // Используйте значение id для отображения конкретного названия плейлиста
   const playlistTitles = {
@@ -49,9 +51,9 @@ function PlaylistPage({ onTrackClick }) {
     const isLiked = likedTracks.includes(track.id);
     console.log(isLiked);
     if (isLiked) {
-      dispatch(dislikeTrackThunk(track.id));
+      dispatch(dislikeTrackThunk(track.id, navigate));
     } else {
-      dispatch(likeTrackThunk(track.id));
+      dispatch(likeTrackThunk(track.id, navigate));
     }
     console.log("After dispatch:", likedTracks);
   };
@@ -103,9 +105,6 @@ function PlaylistPage({ onTrackClick }) {
         <S.SearchText type="search" placeholder="Поиск" name="search" />
       </S.CenterBlockSearch>
       <S.CenterBlockH2>{pageTitle}</S.CenterBlockH2>
-      <S.CenterBlockFilter>
-        <S.FilterTitle>Искать по:</S.FilterTitle>
-      </S.CenterBlockFilter>
       <S.CenterBlockContent>
         <S.ContentTitle>
           <S.PlaylistTitleCol $columnType="c_ol01">Трек</S.PlaylistTitleCol>
@@ -136,22 +135,10 @@ function PlaylistPage({ onTrackClick }) {
                     <S.PlaylistTrack>
                       <S.TrackTitle>
                         <S.TrackTitleImg>
-                          <S.TrackTitleSvg
-                            $isPlaying={
-                              isPlayingGlobal && track.id === currentTrackIndex
-                            }
-                            alt="music"
-                          >
-                            <circle
-                              cx="9"
-                              cy="9"
-                              r="7"
-                              stroke="#b7ff00"
-                              strokeWidth="1.2"
-                              fill="#222222"
-                            />
-                            <use href={`${sprite}#icon-note`} />
-                          </S.TrackTitleSvg>
+                        <S.TrackTitleSvg $isPlaying={isPlayingGlobal && track.id === currentTrackIndex } alt="music">
+                          <circle cx="9" cy="9" r="7" stroke="#b7ff00" strokeWidth="1.2" fill="#222222" />
+                          <use href={`${sprite}#icon-note`} />
+                        </S.TrackTitleSvg>
                         </S.TrackTitleImg>
                         <S.TrackTitleText>
                           <S.TrackTitleLink>
@@ -175,18 +162,15 @@ function PlaylistPage({ onTrackClick }) {
                         </S.TrackAlbumLink>
                       </S.TrackAlbum>
                       <S.TrackTime>
-                        <S.TrackTimeSvg
-                          alt="time"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleLikeDislike(track);
-                          }}
-                        >
-                          {likedTracks.includes(track.id) ? (
-                            <use href={`${sprite}#icon-activelike`} />
-                          ) : (
-                            <use href={`${sprite}#icon-like`} />
-                          )}
+                      <S.TrackTimeSvg alt="time" onClick={(e) => {
+                        e.stopPropagation(); 
+                        handleLikeDislike(track);
+                        }}>
+                        {likedTracks.includes(track.id) ? (
+                        <use href={`${sprite}#icon-activelike`}/>
+                      ) : (
+                        <use href={`${sprite}#icon-like`}/>
+                      )}
                         </S.TrackTimeSvg>
                         <S.TrackTimeText>
                           {convertSecondsToMinutes(track.duration_in_seconds)}
