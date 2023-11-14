@@ -40,7 +40,7 @@ width: 100%;
 min-height: 100%;
 overflow: hidden;
 background-color: #383838;
-height: 100vh;
+/* height: 100vh; */
 `
 export const Container = styled.div`
 max-width: 1920px;
