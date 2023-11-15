@@ -178,7 +178,9 @@ return (<S.MainCenterBlock>
               } else {
                 setSelectedPerformers(selectedPerformers.concat(performer));
               }
-            }}>
+            }}
+            style={{color: selectedPerformers.includes(performer) ? '#b7ff00' : 'inherit'}}
+            >
               {performer}
             </S.FilterPerformItem>
           ))}
@@ -202,7 +204,9 @@ return (<S.MainCenterBlock>
                 } else {
                   setSelectedGenres(selectedGenres.concat(genre));
                 }
-              }}>
+              }}
+              style={{color: selectedGenres.includes(genre) ? '#b7ff00' : 'inherit'}}
+              >
                 {genre}
               </S.FilterPerformItem>
             ))}
