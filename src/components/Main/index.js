@@ -194,19 +194,31 @@ return (<S.MainCenterBlock>
     {/* СОРТИРОВКА ПО ДАТЕ */}
 
     <S.FilterPerformWrap>
-      <select 
-        className="filter__button button-author _btn-text" 
-        onChange={e => handleSortOrderChange(e.target.value)}
-      >
-        <option value="default">По умолчанию</option>
-        <option value="new">Сначала новые</option>
-        <option value="old">Сначала старые</option>
-      </select>
+      <div
+      className="filter__button button-author _btn-text"
+      onClick={() => handleFilterClick('sortOrder')}
+    >
+      {sortOrder === 'default' ? 'По умолчанию' :
+      sortOrder === 'new' ? 'Сначала новые' : 'Сначала старые'}
+    </div>
+
+      {activeFilter === 'sortOrder' && (
+        <S.FilterPerformList>
+          <S.FilterPerformItem onClick={() => handleSortOrderChange('default')}>
+            По умолчанию
+          </S.FilterPerformItem>
+          <S.FilterPerformItem onClick={() => handleSortOrderChange('new')}>
+            Сначала новые
+          </S.FilterPerformItem>
+          <S.FilterPerformItem onClick={() => handleSortOrderChange('old')}>
+            Сначала старые
+          </S.FilterPerformItem>
+        </S.FilterPerformList>
+      )}
     </S.FilterPerformWrap>
    
     </S.CenterBlockFilter>
     </S.CenterBlockFilterCategory>
-
     <S.CenterBlockContent>
       <S.ContentTitle>
         <S.PlaylistTitleCol $columnType="c_ol01">Трек</S.PlaylistTitleCol>

@@ -42,8 +42,8 @@
   }
   
   ._btn-text:hover {
-    border-color: violet;
-    color: violet;
+    border-color: #9bf204;
+    color: #b7ff00;
     cursor: pointer;
   }
   
@@ -54,8 +54,8 @@
   }
   
   ._btn-text:active {
-    border-color: #ad61ff;
-    color: #ad61ff;
+    border-color: #75a300;
+    color: #75a300;
     cursor: pointer;
   }
   

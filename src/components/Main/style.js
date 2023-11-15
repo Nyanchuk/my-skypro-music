@@ -34,6 +34,7 @@ export const TrackTitleSvg = styled.svg`
     }
   }
 `
+
 export const CenterBlockFilterCategory = styled.div`
 display: flex;
 justify-content: space-between;
@@ -178,7 +179,7 @@ justify-content: flex-start;
 gap: 10px;
 font-weight: 300;
 font-size: 14px;
-height: 200px;
+height: 140px;
 position: absolute;
 left: 15px;
 right: 0;
@@ -197,9 +198,9 @@ overflow-y: auto;
   background-color: #5e5d5d;
 }
 &::-webkit-scrollbar-thumb {
-  border: 1px solid violet;
+  border: 1px solid #b7ff00;
   border-radius: 10px;
-  background-color: violet;
+  background-color: #b7ff00;
 }
 `
 export const FilterPerformItem = styled.div`
@@ -207,7 +208,7 @@ padding: 5px 10px;
 cursor: pointer;
 transition: all .5s;
 &:hover {
-  color: violet;
+  color: #b7ff00;
   transform: scale(1.02);
 }
 `
