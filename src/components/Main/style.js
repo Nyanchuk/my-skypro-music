@@ -211,6 +211,9 @@ transition: all .5s;
   color: #b7ff00;
   transform: scale(1.02);
 }
+&:active {
+  color: #b7ff00;
+}
 `
 export const CenterBlockContent = styled.div`
 padding-bottom: 50px;

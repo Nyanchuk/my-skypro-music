@@ -26,9 +26,9 @@ const Main = ({ onTrackClick }) => {
   const [error, setError] = useState(null);                             // Состояние  ошибке загрузки
   const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
   const [sortOrder, setSortOrder] = useState('default');                // Состояние для метода сортировки
-  const [originalTracksData, setOriginalTracksData] = useState([]);      // Новое состояние
-  const [selectedPerformer, setSelectedPerformer] = useState(null);
-  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [originalTracksData, setOriginalTracksData] = useState([]);     // Состояние для сортировки по новизне
+  const [selectedPerformers, setSelectedPerformers] = useState([]);     // Состояние для сортировки по исполнителям
+  const [selectedGenres, setSelectedGenres] = useState([]);             // Состоение для сортировки по жанрам
 
   useEffect(() => {
     getFetchTracks()
@@ -49,24 +49,24 @@ const Main = ({ onTrackClick }) => {
 
   useEffect(() => {
     let sortedTracks = [...originalTracksData];
- 
+  
     if (sortOrder === 'new') {
       sortedTracks.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
     }
     else if (sortOrder === 'old') {
       sortedTracks.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
     }
-    
-    if (selectedGenre !== null) {
-      sortedTracks = sortedTracks.filter(track => track.genre === selectedGenre);
+  
+    if (selectedGenres.length > 0) {
+      sortedTracks = sortedTracks.filter(track => selectedGenres.includes(track.genre));
     }
- 
-    if (selectedPerformer !== null) {
-      sortedTracks = sortedTracks.filter(track => track.author === selectedPerformer);
+  
+    if (selectedPerformers.length > 0) {
+      sortedTracks = sortedTracks.filter(track => selectedPerformers.includes(track.author));
     }
- 
+  
     setTracksData(sortedTracks);
-  }, [sortOrder, selectedGenre, selectedPerformer]);
+  }, [sortOrder, selectedGenres, selectedPerformers]);
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {
@@ -167,40 +167,48 @@ return (<S.MainCenterBlock>
       <S.FilterPerformWrap>
       <div className="filter__button _btn-text" 
        onClick={() => handleFilterClick('performers', 'performer')}>
-    Исполнителю
-  </div>
-
-        {activeFilter === 'performers' && (
-        <S.FilterPerformList>
+        Исполнителю
+      </div>
+      {activeFilter === 'performers' && (
+          <S.FilterPerformList>
           {performers.map((performer, index) => (
-            <S.FilterPerformItem key={index} onClick={() => setSelectedPerformer(performer)}>
+            <S.FilterPerformItem key={index} onClick={() => {
+              if (selectedPerformers.includes(performer)) {
+                setSelectedPerformers(selectedPerformers.filter(selectedPerformer => selectedPerformer !== performer));
+              } else {
+                setSelectedPerformers(selectedPerformers.concat(performer));
+              }
+            }}>
               {performer}
             </S.FilterPerformItem>
           ))}
         </S.FilterPerformList>
-      )}
+        )}
       </S.FilterPerformWrap>
 
     {/* ПОИСК ПО ЖАНРАМ */}
 
       <S.FilterPerformWrap>
-      <div
-    className="filter__button button-author _btn-text"
-    onClick={() => handleFilterClick('genres', 'genre')}
-  >жанру
-  </div>
+        <div className="filter__button button-author _btn-text" onClick={() => handleFilterClick('genres', 'genre')}>
+          жанру
+        </div>
 
-  {activeFilter === 'genres' && (
-  <S.FilterPerformList>
-    {genres.map((genre, index) => (
-      <S.FilterPerformItem key={index} onClick={() => setSelectedGenre(genre)}>
-        {genre}
-      </S.FilterPerformItem>
-    ))}
-  </S.FilterPerformList>
-)}
+        {activeFilter === 'genres' && (
+          <S.FilterPerformList>
+            {genres.map((genre, index) => (
+              <S.FilterPerformItem key={index} onClick={() => {
+                if (selectedGenres.includes(genre)) {
+                  setSelectedGenres(selectedGenres.filter(selectedGenre => selectedGenre !== genre));
+                } else {
+                  setSelectedGenres(selectedGenres.concat(genre));
+                }
+              }}>
+                {genre}
+              </S.FilterPerformItem>
+            ))}
+          </S.FilterPerformList>
+        )}
       </S.FilterPerformWrap>
-
     </S.CenterBlockFilter>
 
     <S.CenterBlockFilter>
