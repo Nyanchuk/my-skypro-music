@@ -27,6 +27,8 @@ const Main = ({ onTrackClick }) => {
   const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
   const [sortOrder, setSortOrder] = useState('default');                // Состояние для метода сортировки
   const [originalTracksData, setOriginalTracksData] = useState([]);      // Новое состояние
+  const [selectedPerformer, setSelectedPerformer] = useState(null);
+  const [selectedGenre, setSelectedGenre] = useState(null);
 
   useEffect(() => {
     getFetchTracks()
@@ -47,16 +49,24 @@ const Main = ({ onTrackClick }) => {
 
   useEffect(() => {
     let sortedTracks = [...originalTracksData];
-
+ 
     if (sortOrder === 'new') {
       sortedTracks.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
     }
     else if (sortOrder === 'old') {
       sortedTracks.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
     }
-
+    
+    if (selectedGenre !== null) {
+      sortedTracks = sortedTracks.filter(track => track.genre === selectedGenre);
+    }
+ 
+    if (selectedPerformer !== null) {
+      sortedTracks = sortedTracks.filter(track => track.author === selectedPerformer);
+    }
+ 
     setTracksData(sortedTracks);
-  }, [sortOrder]);
+  }, [sortOrder, selectedGenre, selectedPerformer]);
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {
@@ -97,17 +107,23 @@ const Main = ({ onTrackClick }) => {
 
   let sortedTracksData = [...tracksData]; // создаем копию, чтобы не изменять исходные данные
 
-switch(sortOrder) {
-  case 'new':
-    sortedTracksData.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
-    break;
-  case 'old':
-    sortedTracksData.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
-    break;
-  default:
-    // default order (можно представить в том же порядке, в котором они были получены, или использовать любую другую логику сортировки по умолчанию)
-    break;
-}
+  switch(sortOrder) {
+    case 'new':
+      sortedTracksData.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+      break;
+    case 'old':
+      sortedTracksData.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+      break;
+    case 'performer':
+      sortedTracksData.sort((a, b) => a.author.localeCompare(b.author));
+      break;
+    case 'genre':
+      sortedTracksData.sort((a, b) => a.genre.localeCompare(b.genre));
+      break;
+    default:
+      // default order (можно представить в том же порядке, в котором они были получены, или использовать любую другую логику сортировки по умолчанию)
+      break;
+  }
 
 // ВРЕМЯ ТРЕКА В МИНУТАХ
 
@@ -149,41 +165,40 @@ return (<S.MainCenterBlock>
     {/* ПОИСК ПО ИСПОЛНИТЕЛЮ */}
 
       <S.FilterPerformWrap>
-        <div
-          className="filter__button _btn-text"
-          onClick={() => handleFilterClick('performers')}
-        >Исполнителю
-        </div>
+      <div className="filter__button _btn-text" 
+       onClick={() => handleFilterClick('performers', 'performer')}>
+    Исполнителю
+  </div>
 
         {activeFilter === 'performers' && (
-          <S.FilterPerformList>
-            {performers.map((performer, index) => (
-              <S.FilterPerformItem key={index}>
-                {performer}
-              </S.FilterPerformItem>
-            ))}
-          </S.FilterPerformList>
-        )}
+        <S.FilterPerformList>
+          {performers.map((performer, index) => (
+            <S.FilterPerformItem key={index} onClick={() => setSelectedPerformer(performer)}>
+              {performer}
+            </S.FilterPerformItem>
+          ))}
+        </S.FilterPerformList>
+      )}
       </S.FilterPerformWrap>
 
     {/* ПОИСК ПО ЖАНРАМ */}
 
       <S.FilterPerformWrap>
-        <div
-          className="filter__button button-author _btn-text"
-          onClick={() => handleFilterClick('genres')}
-        >жанру
-        </div>
+      <div
+    className="filter__button button-author _btn-text"
+    onClick={() => handleFilterClick('genres', 'genre')}
+  >жанру
+  </div>
 
-        {activeFilter === 'genres' && (
-          <S.FilterPerformList>
-            {genres.map((genres, index) => (
-              <S.FilterPerformItem key={index}>
-                {genres}
-              </S.FilterPerformItem>
-            ))}
-          </S.FilterPerformList>
-        )}
+  {activeFilter === 'genres' && (
+  <S.FilterPerformList>
+    {genres.map((genre, index) => (
+      <S.FilterPerformItem key={index} onClick={() => setSelectedGenre(genre)}>
+        {genre}
+      </S.FilterPerformItem>
+    ))}
+  </S.FilterPerformList>
+)}
       </S.FilterPerformWrap>
 
     </S.CenterBlockFilter>
