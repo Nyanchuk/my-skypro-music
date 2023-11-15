@@ -34,6 +34,23 @@ export const TrackTitleSvg = styled.svg`
     }
   }
 `
+export const CountBubble = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%); // если вы хотите сместить на половину размеров кружка вверх и вправо, чтобы он был точно по центру относительно границы родительского элемента
+  display: inline-block;
+  padding-top: 2px;
+  margin-left: 5px;
+  background-color: #b7ff00;
+  color: black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 20px;
+`;
 
 export const CenterBlockFilterCategory = styled.div`
 display: flex;

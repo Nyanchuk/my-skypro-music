@@ -167,7 +167,8 @@ return (<S.MainCenterBlock>
       <S.FilterPerformWrap>
       <div className="filter__button _btn-text" 
        onClick={() => handleFilterClick('performers', 'performer')}>
-        Исполнителю
+        Исполнителю 
+        {selectedPerformers.length > 0 && <S.CountBubble>{selectedPerformers.length}</S.CountBubble>} {/* Если есть выбранные исполнители, показываем*/}
       </div>
       {activeFilter === 'performers' && (
           <S.FilterPerformList>
@@ -193,6 +194,7 @@ return (<S.MainCenterBlock>
       <S.FilterPerformWrap>
         <div className="filter__button button-author _btn-text" onClick={() => handleFilterClick('genres', 'genre')}>
           жанру
+          {selectedGenres.length > 0 && <S.CountBubble>{selectedGenres.length}</S.CountBubble>}
         </div>
 
         {activeFilter === 'genres' && (

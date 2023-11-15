@@ -259,7 +259,7 @@ export const TrackPlayAuthor = styled.div`
 grid-row: 1;
 grid-column: 2;
 grid-area: author;
-min-width: 49px;
+min-width: 100px;
 `
 export const TrackPlayAuthorLink = styled.a`
 font-style: normal;
@@ -273,7 +273,7 @@ export const TrackPlayAlbum = styled.div`
 grid-row: 2;
 grid-column: 2;
 grid-area: album;
-min-width: 90px;
+min-width: 100px;
 `
 export const TrackPlayAlbumLink = styled.a`
 font-style: normal;
@@ -293,7 +293,7 @@ flex-direction: row;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
-margin-left: 26%;
+margin-left: 15%;
 `
 export const TrackPlayLike = styled.div`
 padding: 5px;
