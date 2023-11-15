@@ -6,7 +6,7 @@ bottom: 0;
 right: 0;
 top: auto;
 width: 100%;
-background: rgba(28, 28, 28, 0.5);
+background: rgba(28, 28, 28);
 `
 export const BarContent = styled.div`
 display: -webkit-box;
@@ -273,7 +273,7 @@ export const TrackPlayAlbum = styled.div`
 grid-row: 2;
 grid-column: 2;
 grid-area: album;
-min-width: 49px;
+min-width: 90px;
 `
 export const TrackPlayAlbumLink = styled.a`
 font-style: normal;

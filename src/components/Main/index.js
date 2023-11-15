@@ -22,29 +22,41 @@ const Main = ({ onTrackClick }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [tracksData, setTracksData] = useState([]);
   const [performers, setPerformers] = useState([]);                     // Состояние для исполнителей
-  const [years, setYears] = useState([]);                               // Состояние для года
   const [genres, setGenres] = useState([]);                             // Состояние для жанров
   const [error, setError] = useState(null);                             // Состояние  ошибке загрузки
   const [playingTrackId, setPlayingTrackId] = useState(null);           // Состояние для трека
- 
+  const [sortOrder, setSortOrder] = useState('default');                // Состояние для метода сортировки
+  const [originalTracksData, setOriginalTracksData] = useState([]);      // Новое состояние
+
   useEffect(() => {
     getFetchTracks()
-      .then(data => {
+      .then((data) => {
+        setOriginalTracksData(data); // Сохраняем оригинальные данные
         setTracksData(data);
         setIsLoading(false);
-        console.log(data);
         const uniquePerformers = [...new Set(data.map((track) => track.author))];
-        setPerformers(uniquePerformers);      // Заполнение state 1 с исполнителями, полученными из GET-запроса
-        const uniqueYears = [...new Set(data.map((track) => track.release_date))];
-        setYears(uniqueYears);                // Заполнение state 2 с годами, полученными из GET-запроса
+        setPerformers(uniquePerformers);
         const uniqueGenres = [...new Set(data.map((track) => track.genre))];
-        setGenres(uniqueGenres);              // Заполнение state 3 с жанрами, полученными из GET-запроса
+        setGenres(uniqueGenres);
       })
-      .catch(error => {
+      .catch((error) => {
         setError("Произошла ошибка при загрузке треков: " + error.message);
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    let sortedTracks = [...originalTracksData];
+
+    if (sortOrder === 'new') {
+      sortedTracks.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+    }
+    else if (sortOrder === 'old') {
+      sortedTracks.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+    }
+
+    setTracksData(sortedTracks);
+  }, [sortOrder]);
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {
@@ -77,6 +89,25 @@ const Main = ({ onTrackClick }) => {
   const handleFilterClick = (filterName) => {
     setActiveFilter(prev => prev === filterName ? null : filterName); // если фильтр уже активен, мы его деактивируем (устанавливаем null), в противном случае активируем нажатый фильтр
   };
+
+// ВЫБРАТЬ ОДИН ИЗ ВАРИАНТОВ СОРТИРОВКИ
+  const handleSortOrderChange = (newSortOrder) => {
+    setSortOrder(newSortOrder);
+  };
+
+  let sortedTracksData = [...tracksData]; // создаем копию, чтобы не изменять исходные данные
+
+switch(sortOrder) {
+  case 'new':
+    sortedTracksData.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+    break;
+  case 'old':
+    sortedTracksData.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+    break;
+  default:
+    // default order (можно представить в том же порядке, в котором они были получены, или использовать любую другую логику сортировки по умолчанию)
+    break;
+}
 
 // ВРЕМЯ ТРЕКА В МИНУТАХ
 
@@ -160,25 +191,19 @@ return (<S.MainCenterBlock>
     <S.CenterBlockFilter>
       <S.FilterTitle>Сортировка:</S.FilterTitle>
 
-    {/* ПОИСК ПО ГОДАМ */}
+    {/* СОРТИРОВКА ПО ДАТЕ */}
 
-      <S.FilterPerformWrap>
-        <div
-          className="filter__button button-author _btn-text"
-          onClick={() => handleFilterClick('years')}
-        >году выпуска 
-        </div>
-
-        {activeFilter === 'years' && (
-          <S.FilterPerformList>
-            {years.map((years, index) => (
-              <S.FilterPerformItem key={index}>
-                {years}
-              </S.FilterPerformItem>
-            ))}
-          </S.FilterPerformList>
-        )}
-      </S.FilterPerformWrap>
+    <S.FilterPerformWrap>
+      <select 
+        className="filter__button button-author _btn-text" 
+        onChange={e => handleSortOrderChange(e.target.value)}
+      >
+        <option value="default">По умолчанию</option>
+        <option value="new">Сначала новые</option>
+        <option value="old">Сначала старые</option>
+      </select>
+    </S.FilterPerformWrap>
+   
     </S.CenterBlockFilter>
     </S.CenterBlockFilterCategory>
 
