@@ -2,7 +2,7 @@ import logoModal from "../../img/logo_modal.png";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as S from './style'
-import { UserContext } from "../../Context.js";
+import { UserContext } from "../../Context.jsx";
 import { getToken, login } from "../../api";
 import { validateEmail, validatePassword } from "../../helpers";
 
