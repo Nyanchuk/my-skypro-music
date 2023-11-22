@@ -294,9 +294,6 @@ const Bar = () => {
                         </S.TrackPlayLikeSvg>
                       </S.TrackPlayLike>
                       <S.TrackPlayDislike>
-                        {/* <S.TrackPlayDislikeSvg alt="dislike">
-                            <use href={`${sprite}#icon-dislike`} />
-                        </S.TrackPlayDislikeSvg> */}
                       </S.TrackPlayDislike>
                       <S.CurrentTime> {formatTime(currentTime)} </S.CurrentTime>
                     </S.TrackPlayLikeDis>

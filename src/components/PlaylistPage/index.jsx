@@ -8,25 +8,21 @@ import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from "../
 import { dislikeTrackThunk, likeTrackThunk } from "../../store/actions/thunks/playerThunks";
 import { useNavigate, useParams } from "react-router-dom";
 
+const playlistTitles = {
+  1: "Classic music",
+  2: "Electro music",
+  3: "Rock music",
+}
+
 function PlaylistPage({ onTrackClick }) {
 
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // Используйте значение id для отображения конкретного названия плейлиста
-  const playlistTitles = {
-      1: "Classic music",
-      2: "Electro music",
-      3: "Rock music",
-  }
-  const pageTitle = playlistTitles[id];
-
   const dispatch = useDispatch();
+  const pageTitle = playlistTitles[id];
   const isPlayingGlobal = useSelector((state) => state.player.isPlaying);
   const currentTrackIndex = useSelector((state) => state.player.currentTrackIndex);
   const likedTracks = useSelector((state) => state.player.likedTracks); // Получение списка лайкнутых треков
-
-  // ПОЛУЧЕНИЕ ТРЕКОВ ИЗ GET-запроса
   const [isLoading, setIsLoading] = useState(true);
   const [tracksData, setTracksData] = useState([]);
   const [error, setError] = useState(null); // Состояние  ошибке загрузки
@@ -43,7 +39,6 @@ function PlaylistPage({ onTrackClick }) {
         setIsLoading(false);
       });
   }, [id]);
-
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {

@@ -1,16 +1,17 @@
-* {
+import { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
+  * {
     margin: 0;
     padding: 0;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
-  
-  *:before,
-  *:after {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    color: #d6d5d5;
   }
-  
+
   a,
   a:visited {
     text-decoration: none;
@@ -23,7 +24,15 @@
     overflow: hidden;
     transition: max-height 0.3s ease-in-out;
   }
-  
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    font-family: "StratosSkyeng", sans-serif;
+    color: #ffffff;
+  }
+
   button,
   ._btn {
     cursor: pointer;
@@ -32,15 +41,7 @@
   ul li {
     list-style: none;
   }
-  
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-    font-family: "StratosSkyeng", sans-serif;
-    color: #ffffff;
-  }
-  
+
   ._btn-text:hover {
     border-color: violet;
     color: violet;
@@ -86,4 +87,18 @@
   .filter__button {
     margin-right: 10px;
   }
-  
+
+  body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+`;

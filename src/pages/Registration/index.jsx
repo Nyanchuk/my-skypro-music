@@ -18,7 +18,6 @@ const Registration = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorResponse, setErrorResponse] = useState("");
 
-
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleRepeatPasswordChange = (e) => setRepeatPassword(e.target.value);
@@ -80,11 +79,9 @@ const Registration = () => {
       <S.ContainerSignup>
         <S.ModalBlock>
           <S.ModalFormLogin onSubmit={handleSignup}>
-            {/* <a href="../"> */}
             <S.ModalLogo>
               <img src={logoModal} alt="logo" />
             </S.ModalLogo>
-            {/* </a> */}
             <S.ModalInput
               type="text"
               name="email"

@@ -1,6 +1,18 @@
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
 
 // Стили для бургера
+
+export const Link = styled(RouterLink)`
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: all .3s;
+  &:hover {
+    text-shadow: 0 0 7px #b7ff00;
+    color: #b7ff00;
+  }
+`;
 
 export const MainNav = styled.nav`
   width: 244px;

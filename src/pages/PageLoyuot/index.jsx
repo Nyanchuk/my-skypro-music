@@ -1,11 +1,10 @@
-import "./App.css";
 import Burger from "../../components/Burger/index";
 import Main from "../../components/Main/index";
 import Sidebar from "../../components/Sidebar/index";
 import Bar from "../../components/Bar/index";
 import React, { useEffect, useState } from "react";
 import * as S from "./style";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import MyTracks from "../../components/MyTracks";
 import PlaylistPage from "../../components/PlaylistPage/index";
 import { fetchLikedTracksThunk } from "../../store/actions/thunks/playerThunks";

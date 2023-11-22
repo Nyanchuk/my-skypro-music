@@ -2,19 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as S from './style'
 import logo from "../../img/logo.png";
 import night_gay from "../../img/night:sun.png";
-import styled from 'styled-components';
-import { Link as RouterLink } from 'react-router-dom';
-
-const StyledLink = styled(RouterLink)`
-  margin-bottom: 10px;
-  text-decoration: none;
-  color: #ffffff;
-  transition: all .3s;
-  &:hover {
-    text-shadow: 0 0 7px #b7ff00;
-    color: #b7ff00;
-  }
-`;
 
 const Burger = () => {
     const [menuVisible, setMenuVisible] = useState(false);        // Состояние на развердки меню
@@ -34,9 +21,6 @@ const Burger = () => {
     localStorage.removeItem('UserData');
     setUser(null);
   };
-
-
-
     const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
@@ -52,13 +36,13 @@ const Burger = () => {
         <S.NavMenu $menuVisible={menuVisible}>
           <S.MenuList>
             <S.MenuItem>
-            <StyledLink to="/">Главное</StyledLink>
+            <S.Link to="/">Главное</S.Link>
             </S.MenuItem>
             <S.MenuItem>
-            <StyledLink to="/favorites" >Мой плейлист</StyledLink>
+            <S.Link to="/favorites" >Мой плейлист</S.Link>
             </S.MenuItem>
             <S.MenuItem>
-            <StyledLink onClick={handleLogout} to="/login">Выйти</StyledLink>
+            <S.Link onClick={handleLogout} to="/login">Выйти</S.Link>
             </S.MenuItem>
             <img src={night_gay} alt="day's playlist"/>
           </S.MenuList>
