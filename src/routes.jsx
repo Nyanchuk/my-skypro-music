@@ -7,9 +7,7 @@ import UserContext from "./Context"
 import { useContext } from "react"
 
 export const AppRoutes = () => {
-
     const { userToken } = useContext(UserContext); // Получаем userToken для входа
-
     return (
         <Routes>
             {/* Незащищенные страницы */}

@@ -1,4 +1,3 @@
-import "./App.css";
 import sprite from "../../img/icon/sprite.svg";
 import TrackSkeleton from "../Skeleton/index";
 import React, { useState, useEffect } from "react";

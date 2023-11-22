@@ -121,7 +121,7 @@ const Main = ({ onTrackClick }) => {
       sortedTracksData.sort((a, b) => a.genre.localeCompare(b.genre));
       break;
     default:
-      // default order (можно представить в том же порядке, в котором они были получены, или использовать любую другую логику сортировки по умолчанию)
+      // default order 
       break;
   }
 

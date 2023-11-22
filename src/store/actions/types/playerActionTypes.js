@@ -7,7 +7,6 @@ export const PLAY_PAUSE = 'PLAY_PAUSE';
 // Для переключения треков вперед/назад
 export const PREVIOUS_TRACK = 'PREVIOUS_TRACK';
 export const NEXT_TRACK = 'NEXT_TRACK';
-
 export const SET_TRACKS_DATA = 'SET_TRACKS_DATA';
 // анимация пульсации
 export const SET_CURRENT_TRACK_INDEX = 'SET_CURRENT_TRACK_INDEX';

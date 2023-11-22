@@ -38,7 +38,7 @@ export const CountBubble = styled.span`
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, -50%); // если вы хотите сместить на половину размеров кружка вверх и вправо, чтобы он был точно по центру относительно границы родительского элемента
+  transform: translate(10%, -50%); // если вы хотите сместить на половину размеров кружка вверх и вправо, чтобы он был точно по центру относительно границы родительского элемента
   display: inline-block;
   padding-top: 2px;
   margin-left: 5px;

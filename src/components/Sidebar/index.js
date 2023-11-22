@@ -7,12 +7,10 @@ import * as S from './style'
 import { Link, useLocation } from 'react-router-dom';
 import { UserContext } from '../../Context';
 
-
-
 const Sidebar = () => {
 
     const location = useLocation();
-    const { username, setUsername } = useContext(UserContext); // предполагается, что setUsername доступна в контексте
+    const { username, setUsername } = useContext(UserContext); 
     const [isLoading, setLoading] = useState(true);
 
     // ФУНКЦИЯ ДЛЯ СБРОСА ПОЛЬЗОВАТЕЛЯ

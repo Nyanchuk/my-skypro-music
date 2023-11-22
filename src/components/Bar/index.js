@@ -65,59 +65,6 @@ const Bar = () => {
     }
   };
 
-  // const handlePrevTrack = () => {
-  //   if (shuffleMode) {
-  //     const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
-      
-  //     if (currentOrderIndex > 0) {
-  //       dispatch(setCurrentTrackIndex(tracksData[playlistOrder[currentOrderIndex - 1]]));
-  //     } else {
-  //       dispatch(setCurrentTrackIndex(tracksData[playlistOrder[playlistOrder.length - 1]]));
-  //     }    
-  //   } else {
-  //     if (currentTime > 5) {
-  //       setCurrentTime(0);
-  //       audioRef.current.currentTime = 0;
-  //     } else if (currentTrackId > 0) {
-  //       const prevTrack = tracksData.find(track => track.id === (currentTrackId - 1));
-        
-  //       if (prevTrack) {
-  //         dispatch(setCurrentTrackIndex(prevTrack));
-  //         dispatch(playPause(true));
-  //       } 
-  //     }
-  //   }
-  // };
-
-  // const handlePrevTrack = () => {
-  //   if (shuffleMode) {
-  //     const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
-      
-  //     if (currentOrderIndex > 0) {
-  //       dispatch(setCurrentTrackIndex(tracksData[playlistOrder[currentOrderIndex - 1]]));
-  //     } else {
-  //       dispatch(setCurrentTrackIndex(tracksData[playlistOrder[playlistOrder.length - 1]]));
-  //     }    
-  //   } else {
-  //     const tracksIndexes = tracksData.map(track => track.id);
-  //     const currentTrackIndex = tracksIndexes.indexOf(currentTrackId);
-      
-  //     if (currentTrackIndex > 0) {
-  //       const prevTrackId = tracksIndexes[currentTrackIndex - 1];
-  //       const prevTrack = tracksData.find(track => track.id === prevTrackId);
-        
-  //       if (prevTrack) {
-  //         dispatch(setCurrentTrackIndex(prevTrack));
-  //         dispatch(playPause(true));
-          
-  //         // Добавим обнуление времени для нового трека
-  //         setCurrentTime(0);
-  //         audioRef.current.currentTime = 0;
-  //       }
-  //     } 
-  //   }
-  // };
-
   const handlePrevTrack = () => {
     if (shuffleMode) {
       const currentOrderIndex = playlistOrder.indexOf(currentTrackId);
