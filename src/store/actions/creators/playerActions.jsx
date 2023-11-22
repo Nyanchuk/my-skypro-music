@@ -10,16 +10,6 @@ export const setPlayStatus = (status) => ({
   payload: status
 });
 
-export const setVolume = (volume) => ({
-  type: SET_VOLUME,
-  payload: volume
-});
-
-export const setLooping = (looping) => ({
-  type: SET_LOOPING,
-  payload: looping
-});
-
 export const playPause = (isPlaying) => ({
   type: PLAY_PAUSE,
   payload: isPlaying

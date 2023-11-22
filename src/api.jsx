@@ -79,9 +79,9 @@ export const registerUser = async ({email, password, username}) => {
           username: email,
       }),
   });
-  localStorage.setItem('UserData', JSON.stringify(data)); 
   const data = await response.json();
-
+  localStorage.setItem('UserData', JSON.stringify(data)); 
+  
   if (!response.ok) {
     const error = new Error('Ошибка авторизации: ' + response.status + ' ' + response.statusText);
     error.statusCode = response.status; // Добавили statusCode в объект ошибки

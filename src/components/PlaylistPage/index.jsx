@@ -2,7 +2,7 @@ import sprite from "../../img/icon/sprite.svg";
 import TrackSkeleton from "../Skeleton/index";
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
-import { getFetchCategoryTracks, getFetchTracksFavorite } from "../../api";
+import { getFetchCategoryTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from "../../store/actions/creators/playerActions";
 import { dislikeTrackThunk, likeTrackThunk } from "../../store/actions/thunks/playerThunks";
