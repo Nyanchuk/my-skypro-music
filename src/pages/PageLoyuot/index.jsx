@@ -17,6 +17,12 @@ function PageLayuot() {
   const [isTrackClicked, setIsTrackClicked] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [selectedTrackIndex, setSelectedTrackIndex] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); // Добавила переменную состояния для поиска
+
+  // Функция для обработки изменений строки поиска
+  const handleSearchChange = event => {
+    setSearchTerm(event.target.value);
+  };
 
   useEffect(() => {
     dispatch(fetchLikedTracksThunk());
@@ -35,11 +41,11 @@ function PageLayuot() {
         <S.Main>
           <Burger />
           {location.pathname === "/" ? (
-            <Main onTrackClick={handleTrackClick} />
+            <Main onTrackClick={handleTrackClick} searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
           ) : location.pathname === "/favorites" ? (
-            <MyTracks onTrackClick={handleTrackClick} />
+            <MyTracks onTrackClick={handleTrackClick} searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
           ) : location.pathname.includes('/category/') ? ( // Проверяем, содержит ли путь '/category/', указывающий на наличие id
-            <PlaylistPage onTrackClick={handleTrackClick} />
+            <PlaylistPage onTrackClick={handleTrackClick} searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
           ) : null}
           <Sidebar />
           

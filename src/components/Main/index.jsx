@@ -9,7 +9,7 @@ import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../
 import { likeTrackThunk, dislikeTrackThunk } from '../../store/actions/thunks/playerThunks';
 import { useNavigate } from 'react-router-dom';
 
-const Main = ({ onTrackClick }) => {
+const Main = ({ onTrackClick, searchTerm, handleSearchChange }) => {
 
   // Работа с Redux Store
   const dispatch = useDispatch();
@@ -67,6 +67,15 @@ const Main = ({ onTrackClick }) => {
   
     setTracksData(sortedTracks);
   }, [sortOrder, selectedGenres, selectedPerformers]);
+
+  useEffect(() => {
+    const newTracks = originalTracksData.filter(
+      (track) => track.name.toLowerCase().includes(searchTerm.toLowerCase())
+      || track.author.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setTracksData(newTracks);
+  }, [searchTerm, originalTracksData]);
+  
 
   // Функция для обработки лайка или дизлайка трека
   const handleLikeDislike = (track) => {
@@ -155,7 +164,13 @@ return (<S.MainCenterBlock>
       <S.SearchSvg>
       <use href={`${sprite}#icon-search`} />
       </S.SearchSvg>
-      <S.SearchText type="search" placeholder="Поиск" name="search" />
+      <S.SearchText 
+      type="search" 
+      placeholder="Поиск" 
+      name="search"
+      value={searchTerm}
+      onChange={handleSearchChange}
+       />
     </S.CenterBlockSearch>
     <S.CenterBlockH2>Главная</S.CenterBlockH2>
     <S.CenterBlockFilterCategory>
@@ -265,7 +280,8 @@ return (<S.MainCenterBlock>
         ? Array.from({ length: 11 }).map((_, index) => <TrackSkeleton key={index} />)
         : ( 
         <>
-        {!isLoading &&
+        {tracksData.length === 0 && <p>Треков не найдено</p>}
+        {!isLoading && 
           tracksData.map((track) => (
             <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track)}>
               <S.PlaylistTrack>
