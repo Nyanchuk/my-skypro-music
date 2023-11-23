@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import UserContext, { useUser } from '../../Context';
+import UserContext from '../../Context';
 import { useNavigate } from 'react-router-dom';
 
 export const ProtectedRoute = ({ isAllowed, children }) => {
@@ -16,7 +16,4 @@ export const ProtectedRoute = ({ isAllowed, children }) => {
 
   return <>{children}</>;
 
-  // return isAllowed && Boolean(userToken)
-  //   ? children
-  //   : navigate("/login");
 };
