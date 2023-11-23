@@ -14,7 +14,7 @@ const playlistTitles = {
   3: "Rock music",
 }
 
-function PlaylistPage({ onTrackClick }) {
+function PlaylistPage({ onTrackClick, searchTerm, handleSearchChange }) {
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -93,10 +93,16 @@ function PlaylistPage({ onTrackClick }) {
   return (
     <S.MainCenterBlock>
       <S.CenterBlockSearch>
-        <S.SearchSvg>
-          <use href={`${sprite}#icon-search`} />
-        </S.SearchSvg>
-        <S.SearchText type="search" placeholder="Поиск" name="search" />
+      <S.SearchSvg>
+            <use href={`${sprite}#icon-search`} />
+            </S.SearchSvg>
+            <S.SearchText 
+            type="search" 
+            placeholder="Поиск" 
+            name="search"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            />
       </S.CenterBlockSearch>
       <S.CenterBlockH2>{pageTitle}</S.CenterBlockH2>
       <S.CenterBlockContent>
@@ -121,7 +127,9 @@ function PlaylistPage({ onTrackClick }) {
           ) : (
             <>
               {!isLoading &&
-                tracksData.map((track) => (
+                tracksData
+                .filter((track) => track.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                .map((track) => (
                   <S.PlaylistItem
                     key={track.id}
                     onClick={() => handleTrackClick(track)}

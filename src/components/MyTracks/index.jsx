@@ -8,7 +8,7 @@ import { playPause, setCurrentTrack, setTracks, setCurrentTrackIndex } from '../
 import { dislikeTrackThunk, likeTrackThunk } from '../../store/actions/thunks/playerThunks';
 import { useNavigate } from 'react-router-dom';
 
-function MyTracks({ onTrackClick }) {
+function MyTracks({ onTrackClick, searchTerm, handleSearchChange }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -91,7 +91,13 @@ useEffect(() => {
             <S.SearchSvg>
             <use href={`${sprite}#icon-search`} />
             </S.SearchSvg>
-            <S.SearchText type="search" placeholder="Поиск" name="search" />
+            <S.SearchText 
+            type="search" 
+            placeholder="Поиск" 
+            name="search"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            />
           </S.CenterBlockSearch>
           <S.CenterBlockH2>Мой плейлист</S.CenterBlockH2>
           <S.CenterBlockContent>
@@ -111,8 +117,9 @@ useEffect(() => {
               ? Array.from({ length: 11 }).map((_, index) => <TrackSkeleton key={index} />)
               : ( 
               <>
+              {tracksData.length === 0 && <p>Треков не найдено</p>}
               {!isLoading &&
-                filteredTracks.map(track => (
+                filteredTracks.filter((track) => track.name.toLowerCase().includes(searchTerm.toLowerCase())).map(track => (
                   <S.PlaylistItem key={track.id} onClick={() => handleTrackClick(track)}>
                     <S.PlaylistTrack>
                       <S.TrackTitle>
